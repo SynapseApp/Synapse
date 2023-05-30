@@ -1,0 +1,15 @@
+# Dependency directories
+/node_modules
+
+# Environment variables
+/.env
+
+# Logs
+/logs
+
+# Build output
+/build
+
+# Development-specific files
+/coverage
+/debug.log
