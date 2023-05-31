@@ -1,0 +1,41 @@
+# Ignore build output and dependencies
+node_modules/
+dist/
+
+# Ignore development environment files
+.env
+
+# Ignore TypeScript compilation artifacts
+*.js
+*.js.map
+*.d.ts
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+
+# Ignore logs and debugging files
+logs/
+*.log
+npm-debug.log*
+
+# Ignore package lock files
+package-lock.json
+yarn.lock
+
+# Ignore test coverage reports
+coverage/
+
+# Ignore editor-specific temporary files
+*.bak
+*.backup
+*.tmp
+*.temp
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore any other project-specific files or directories
