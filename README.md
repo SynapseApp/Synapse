@@ -4,8 +4,6 @@ A social chat app
 
 # Contributing
 
-Fork the repository.
-
 Create a new branch:
 
 `git checkout -b feature/your-feature-name`
