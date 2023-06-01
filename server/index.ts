@@ -1,13 +1,23 @@
-// IMPORTS
-import express from 'express'
+import express from "express";
+import userRoutes from "./routes/userRoutes";
+import path from "path";
+import { url } from "./store";
+
 const app = express();
-import userRoutes from './routes/userRoutes';
 
-// USING userRoutes
-app.use('/', userRoutes);
+// serves our build file
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
-// PORT
-app.listen(3000)
+// using routes...
+app.use("/user", userRoutes);
 
-// EXPORTING
-export default app
+// starting server
+app.listen(3000, () => {
+  console.log(`server is up and running at ${url}`);
+
+  // Ank connect to database here to ensure that we will be connecting to db after server is ready
+});
+
+export default app;
