@@ -5,7 +5,7 @@ import {
   deleteUser,
   findUser,
   updateUser,
-} from "../database/userDB";
+} from "../controller/userCRUD";
 import { defaultResponse } from "../store";
 import { UserInterface } from "../models/userModel";
 
