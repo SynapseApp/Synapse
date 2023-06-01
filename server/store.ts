@@ -5,3 +5,20 @@
 export const port = process.env.PORT || 3000;
 
 export const url = `http://localhost:${port}`;
+
+interface ResponseInterface {
+  success: boolean;
+  log: string;
+  data: any;
+}
+
+// create default response
+export function defaultResponse() {
+  const response: ResponseInterface = {
+    success: false,
+    log: "default response",
+    data: undefined,
+  };
+
+  return response;
+}
