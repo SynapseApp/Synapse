@@ -1,12 +1,18 @@
-import { Router } from 'express';
-import { authenticateUser, createUser, deleteUser, findUser, updateUser } from '../controllers/userCRUD';
-import { defaultResponse } from '../store';
-import { userInterface } from '../schemas';
+import { Router } from "express";
+import {
+  authenticateUser,
+  createUser,
+  deleteUser,
+  findUser,
+  updateUser,
+} from "../controllers/userCRUD";
+import { defaultResponse } from "../store";
+import { userInterface } from "../schemas";
 const userRoutes = Router();
 
 // Setup of a RESTful api
 
-userRoutes.post('/login', async (req, res) => {
+userRoutes.post("/login", async (req, res) => {
   // query: email, password
   // response: did password match with the user of provided email (will be used for login)
 
@@ -26,20 +32,20 @@ userRoutes.post('/login', async (req, res) => {
     if (userAuthenticated) {
       // give success response
       response.success = true;
-      response.log = 'user authenticated';
+      response.log = "user authenticated";
       response.data = { user };
     } else {
-      response.log = 'wrong password or username';
+      response.log = "wrong password or username";
     }
   } else {
-    response.log = 'user not found';
+    response.log = "user not found";
   }
 
   // respond evaluated response
   res.json(response);
 });
 
-userRoutes.post('/register', async (req, res) => {
+userRoutes.post("/register", async (req, res) => {
   // body: userDetails
   // response (if userDetails.email is unique): newly created user from provided userDetails
   // response (if userDetails.email is used): error message saying user already exists
@@ -51,14 +57,14 @@ userRoutes.post('/register', async (req, res) => {
   const response = defaultResponse();
 
   if (userExists) {
-    response.log = 'user already exists';
+    response.log = "user already exists";
   } else {
     const user = await createUser(userDetails);
     if (user === undefined) {
-      response.log = 'failed to create user';
+      response.log = "failed to create user";
     } else {
       response.success = true;
-      response.log = 'user created';
+      response.log = "user created";
       response.data = { user };
     }
   }
@@ -66,7 +72,7 @@ userRoutes.post('/register', async (req, res) => {
   res.json(response);
 });
 
-userRoutes.get('/:_id/', async (req, res) => {
+userRoutes.get("/:_id/", async (req, res) => {
   // params: id
   // response: user details from provided id
 
@@ -75,17 +81,17 @@ userRoutes.get('/:_id/', async (req, res) => {
   const response = defaultResponse();
 
   if (user === undefined) {
-    response.log = 'user not found';
+    response.log = "user not found";
   } else {
     response.success = true;
-    response.log = 'user found';
+    response.log = "user found";
     response.data = { user };
   }
 
   res.json(response);
 });
 
-userRoutes.patch('/:_id/', async (req, res) => {
+userRoutes.patch("/:_id/", async (req, res) => {
   // params: _id
   // body: updateKeys
   // response: updated user
@@ -97,17 +103,17 @@ userRoutes.patch('/:_id/', async (req, res) => {
   const user = await updateUser(_id, updateKeys);
 
   if (user === undefined) {
-    response.log = 'user not found';
+    response.log = "user not found";
   } else {
     response.success = true;
-    response.log = 'user updated';
+    response.log = "user updated";
     response.data = { user };
   }
 
   res.json(response);
 });
 
-userRoutes.delete('/:_id/', async (req, res) => {
+userRoutes.delete("/:_id/", async (req, res) => {
   // params: _id
   // response: deletes user
 
@@ -116,10 +122,11 @@ userRoutes.delete('/:_id/', async (req, res) => {
   const userDeleted = await deleteUser(_id);
 
   if (!userDeleted) {
-    response.log = 'failed to delete user';
+    response.log = "failed to delete user";
   } else {
     response.success = true;
-    response.log = 'user deleted';
+    response.log = "user deleted";
+    response.data = { user: userDeleted };
   }
 
   res.json(response);
