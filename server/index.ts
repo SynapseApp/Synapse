@@ -1,23 +1,28 @@
-import express from "express";
-import userRoutes from "./routes/userRoutes";
-import path from "path";
-import { url } from "./store";
+import express from 'express';
+import userRoutes from './routes/userRoutes';
+import path from 'path';
+import { url } from './store';
+import connectDatabase from './database/mongodb';
+import bodyParser from 'body-parser';
 
 const app = express();
 
+app.use(express.json());
+// app.use(bodyParser.urlencoded({ extended: true })); //might need this in the future
+
 // serves our build file
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // using routes...
-app.use("/user", userRoutes);
+app.use('/user', userRoutes);
 
 // starting server
 app.listen(3000, () => {
   console.log(`server is up and running at ${url}`);
 
-  // Ank connect to database here to ensure that we will be connecting to db after server is ready
+  connectDatabase();
 });
 
 export default app;
