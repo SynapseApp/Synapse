@@ -1,13 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { mongoDB_url } from "../store";
 
-const url = 'mongodb://127.0.0.1/Synapse';
+const url = mongoDB_url;
 
 const connectDatabase = () => {
   console.log(`Connecting to MongoDB...`);
   try {
     mongoose.connect(url);
 
-    console.log('MongoDB connected');
+    console.log("MongoDB connected");
   } catch (error) {
     console.log(`MongoDB connection error:`, error);
   }

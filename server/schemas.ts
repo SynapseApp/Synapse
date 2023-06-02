@@ -1,13 +1,15 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Schema } from "mongoose";
 
-//interface used as type because ig ts needs it or something
-export interface userInterface extends Document {
+export interface userDetailsInterface {
   username: string;
   age: number;
   email: string;
   password: string;
   imageUrl?: string;
 }
+
+//interface used as type because ig ts needs it or something
+export interface userInterface extends Document, userDetailsInterface {}
 
 // User schema defined
 
