@@ -72,7 +72,7 @@ userRoutes.post("/register", async (req, res) => {
   res.json(response);
 });
 
-userRoutes.get("/:_id/", async (req, res) => {
+userRoutes.get("/:_id", async (req, res) => {
   // params: id
   // response: user details from provided id
 
@@ -80,7 +80,7 @@ userRoutes.get("/:_id/", async (req, res) => {
   const user = await findUser({ _id });
   const response = defaultResponse();
 
-  if (user === undefined) {
+  if (user) {
     response.log = "user not found";
   } else {
     response.success = true;
@@ -91,7 +91,7 @@ userRoutes.get("/:_id/", async (req, res) => {
   res.json(response);
 });
 
-userRoutes.patch("/:_id/", async (req, res) => {
+userRoutes.patch("/:_id", async (req, res) => {
   // params: _id
   // body: updateKeys
   // response: updated user
@@ -102,7 +102,7 @@ userRoutes.patch("/:_id/", async (req, res) => {
   const response = defaultResponse();
   const user = await updateUser(_id, updateKeys);
 
-  if (user === undefined) {
+  if (user) {
     response.log = "user not found";
   } else {
     response.success = true;
@@ -113,7 +113,7 @@ userRoutes.patch("/:_id/", async (req, res) => {
   res.json(response);
 });
 
-userRoutes.delete("/:_id/", async (req, res) => {
+userRoutes.delete("/:_id", async (req, res) => {
   // params: _id
   // response: deletes user
 
