@@ -1,5 +1,11 @@
+import "./App.css";
+
 function App() {
-  return <div className="App"></div>;
+  return (
+    <>
+      <h1>Synapse</h1>
+    </>
+  );
 }
 
 export default App;
