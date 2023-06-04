@@ -1,1 +1,1 @@
-.
+pages here nested inside folders like they would be nested in url
