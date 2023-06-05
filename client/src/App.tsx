@@ -1,9 +1,13 @@
-import "./App.css";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
     <>
-      <h1>Synapse</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage/>}/></Routes>
+    </BrowserRouter>
     </>
   );
 }

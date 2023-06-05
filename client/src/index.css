@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.gradient-btn {
+    background: rgb(93,252,195);
+    background: linear-gradient(90deg, rgba(93,252,195,0.8) 62%, rgba(250,255,65,1) 80%);
+}
+
+.gradient-border {
+    border-image: linear-gradient(270deg, rgba(93,252,195,0.8) 62%, rgba(250,255,65,1) 80%) 30;
+    border-bottom: 2px;
+    border-style: solid;
+}
+
+.gradient-border-all {
+    border-image: linear-gradient(90deg, rgba(93,252,195,0.8) 62%, rgba(250,255,65,1) 80%) 30;
+    border-width: 0.22vh;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    padding-left: 4vh;
+}
+
