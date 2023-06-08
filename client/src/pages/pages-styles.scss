@@ -1,4 +1,4 @@
-@import "../index.scss";
+@import '../index.scss';
 
 #Login-Page {
   @apply w-screen h-screen text-center p-5
@@ -9,11 +9,11 @@
       flex flex-col justify-center items-center gap-5;
 
     > #Google-Auth-Button {
-      @apply w-full flex justify-center items-center gap-5;
+      @apply w-full flex justify-center items-center gap-5 text-xl;
     }
 
     > #Submit-Button {
-      @apply flex justify-between;
+      @apply flex justify-between text-xl;
 
       > svg > path {
         fill: black;
