@@ -1,0 +1,34 @@
+@import "../index.scss";
+
+#Login-Page {
+  @apply w-screen h-screen text-center p-5
+        flex flex-col justify-between items-center;
+
+  > main > #Login-Component {
+    @apply w-[400px]
+      flex flex-col justify-center items-center gap-5;
+
+    > #Google-Auth-Button {
+      @apply w-full flex justify-center items-center gap-5;
+    }
+
+    > #Submit-Button {
+      @apply flex justify-between;
+
+      > svg > path {
+        fill: black;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #Login-Page {
+    > header > h3 {
+      @apply text-3xl;
+    }
+    > main > #Login-Component {
+      @apply w-screen p-10;
+    }
+  }
+}

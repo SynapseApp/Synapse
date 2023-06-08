@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$transition: all 0.1s ease-in-out;
+$linear-gradient: linear-gradient(
+  120deg,
+  rgba(93, 252, 195, 0.8) 62%,
+  rgba(250, 255, 65, 1) 80%
+);
+
+body {
+  @apply w-screen h-screen overflow-x-hidden;
+  background: linear-gradient(
+    120deg,
+    rgba(93, 252, 194, 0.1) 62%,
+    rgba(250, 255, 65, 0.3) 80%
+  );
+  background-color: #121418;
+  // background-color: #ffffff;
+}
+
+* {
+  transition: $transition;
+  color: #ffffff;
+}
+
+h1 {
+  @apply text-6xl font-bold;
+}
+
+h2 {
+  @apply text-5xl font-bold;
+}
+
+h3 {
+  @apply text-4xl font-bold;
+}
+
+h4 {
+  @apply text-3xl font-bold;
+}
+
+h5 {
+  @apply text-2xl font-bold;
+}
+
+h6 {
+  @apply text-xl font-bold;
+}
+
+.icon-danger * {
+  color: rgb(255, 37, 37);
+}
+
+.icon-success * {
+  color: rgb(60, 255, 60);
+}
+
+.gradient-btn {
+  @apply w-full p-5 px-7 rounded-md text-slate-950 font-semibold text-left;
+  background: $linear-gradient;
+}
+
+.gradient-border {
+  @apply hover:px-5;
+  border-image: linear-gradient(
+      120deg,
+      rgba(93, 252, 195, 0.8) 62%,
+      rgba(250, 255, 65, 1) 80%
+    )
+    30;
+  border-bottom: 2px;
+  border-style: solid;
+}
+
+.gradient-border-all {
+  @apply border-2 p-5 px-7 rounded-md;
+
+  border-image: $linear-gradient;
+}
+
+.gradient-box {
+  @apply p-5 px-7 rounded-lg;
+
+  position: relative;
+  $border: 1px;
+  background-color: #121418;
+
+  background-clip: padding-box; /* !importanté */
+  border: solid $border transparent; /* !importanté */
+
+  &:before {
+    content: "";
+    transition: $transition;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$border; /* !importanté */
+    border-radius: inherit; /* !importanté */
+    background: $linear-gradient;
+  }
+}
+
+.gradient-box:hover {
+  $border: 3px;
+  border: solid $border transparent; /* !importanté */
+
+  &:before {
+    margin: -$border;
+  }
+}
+
+.glow-effect {
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.glow-effect:hover {
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.glow-effect-text {
+  cursor: pointer;
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  --tw-drop-shadow: drop-shadow(0px 0px 1px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 2px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.glow-effect-text:hover {
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.glow-effect-border {
+  &:before {
+    --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+      drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+}
+
+.glow-effect-border:hover {
+  &:before {
+    --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8))
+      drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+}
