@@ -4,12 +4,6 @@
   @apply w-screen h-screen text-center p-5
         flex flex-col justify-between items-center;
 
-  background: linear-gradient(
-    120deg,
-    rgba(93, 252, 194, 0.1) 62%,
-    rgba(250, 255, 65, 0.3) 80%
-  );
-
   > main > #Login-Component {
     @apply w-[400px]
       flex flex-col justify-center items-center gap-5;

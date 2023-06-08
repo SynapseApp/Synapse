@@ -11,6 +11,11 @@ $linear-gradient: linear-gradient(
 
 body {
   @apply w-screen h-screen overflow-x-hidden;
+  background: linear-gradient(
+    120deg,
+    rgba(93, 252, 194, 0.1) 62%,
+    rgba(250, 255, 65, 0.3) 80%
+  );
   background-color: #121418;
   // background-color: #ffffff;
 }
@@ -42,6 +47,14 @@ h5 {
 
 h6 {
   @apply text-xl font-bold;
+}
+
+.icon-danger * {
+  color: rgb(255, 37, 37);
+}
+
+.icon-success * {
+  color: rgb(60, 255, 60);
 }
 
 .gradient-btn {

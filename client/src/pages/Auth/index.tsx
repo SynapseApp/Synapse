@@ -1,7 +1,7 @@
 import "../pages-styles.scss";
 import AuthComponent from "./AuthComponent";
 
-const LoginPage = () => {
+export default function AuthPage() {
   return (
     <section id="Login-Page">
       <header>
@@ -17,6 +17,4 @@ const LoginPage = () => {
       <footer>Copyright@Synapse {new Date().getFullYear()}</footer>
     </section>
   );
-};
-
-export default LoginPage;
+}

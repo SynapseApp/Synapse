@@ -38,6 +38,7 @@ export default function InputGroup({ type, placeholder }: PropInterface) {
           <FontAwesomeIcon
             icon={inputIsValid ? faCheckCircle : faCircleExclamation}
             size="lg"
+            className={`icon-${inputIsValid ? "success" : "danger"}`}
           />
         </div>
       </div>
