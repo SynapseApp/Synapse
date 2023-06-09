@@ -9,13 +9,33 @@ export default function AuthComponent() {
   const [valueEmail, setValueEmail] = useState('');
   const [valuePassword, setValuePassword] = useState('');
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    const formData = {
+      email: valueEmail,
+      password: valuePassword,
+    }
+
     if (method === 'Login') {
-      //login user
+      const response = await fetch("http://localhost:3000/user/login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log(response)
+
     } else {
-      // Register the user
+      const response = await fetch("http://localhost:3000/user/register", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log(response)
     }
   }
 
