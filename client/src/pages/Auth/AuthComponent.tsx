@@ -43,7 +43,7 @@ export default function AuthComponent() {
             else setMethod('Login');
           }}
         >
-          {method === 'Login' ? 'Already have an account? ' : 'Create an account '}
+          {method === 'Login' ? "Don't have an account? " : "Already have an account? "}
           <b className="gradient-border">{method === 'Login' ? 'Sign up' : 'Login'}</b>
         </p>
       </form>
