@@ -22,6 +22,45 @@
   }
 }
 
+#home {
+  @apply bg-white w-[100vw] h-[100vh] flex flex-row;
+  * {
+    color: black;
+  }
+  #left-bar {
+    @apply bg-white w-[10rem] h-[100vh] flex flex-col pt-[10rem] border-4 border-slate-200;
+  } 
+  #icon {
+    margin-bottom: 3rem;
+  }
+  path {
+    fill: black;
+    @apply hover:cursor-pointer
+  }
+
+}
+
+#message-menu {
+  @apply bg-white w-[100vw] h-[100vh];
+  #search-component {
+    @apply bg-white h-[100vh] w-[20rem] border-r-4 border-slate-200;
+    form {
+      @apply flex justify-center items-center justify-center pl-[0.5rem] border-y-4 border-slate-200;
+    }
+    #search-icon {
+      @apply pr-[0.5rem]
+    }
+    input {
+      @apply font-semibold w-[100%] text-black placeholder:text-slate-500 text-center py-[0.5rem] text-xl focus:text-left pr-[2rem] focus:outline-0;
+    }
+  }
+
+  #synapse-header {
+    @apply bg-white flex items-center h-[5rem] border-2 border-t-0 border-slate-200 pl-[1rem];
+  } 
+}
+
+
 @media screen and (max-width: 600px) {
   #Login-Page {
     > header > h3 {
