@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormEvent, useState } from 'react';
 
 
+
 const Search = () => {
     const [placeholderValue, setPlaceholderValue] = useState("Search Here");
     const [inputValue, setInputValue] = useState("")
@@ -11,9 +12,21 @@ const Search = () => {
         const target = event.target as HTMLInputElement;
         setInputValue(target.value);
     }
-    if (inputValue !== "") {
-        const input = document.getElementById("query")
 
+    const getInput = document.getElementById("query")
+
+    if (getInput.value === "") {
+        getInput.classList.add = "center";
+    }
+
+    let userChats = [{ friend: "Aditya", message: "hello" }]
+    const printChats = function () {
+        for (let i = 0; i <= userChats.length; i++) {
+            <div className='chat'>
+                <h1>{userChats[i].friend}</h1>
+                <p>{userChats[i].message}</p>
+            </div>
+        }
     }
 
 
@@ -27,6 +40,7 @@ const Search = () => {
                 <FontAwesomeIcon id='search-icon' icon={faMagnifyingGlass} size='xl' />
                 <input id='query' type='text' onChange={handleChange} value={inputValue} onFocus={() => { setPlaceholderValue("") }} onBlur={() => setPlaceholderValue("Search Here")} placeholder={placeholderValue}></input>
             </form>
+
         </div>
     )
 }
