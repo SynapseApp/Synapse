@@ -53,11 +53,33 @@
     input {
       @apply font-semibold w-[100%] text-black placeholder:text-slate-500 text-center py-[0.5rem] text-xl focus:text-left pr-[2rem] focus:outline-0;
     }
+    .input-text-left {
+      @apply text-left;
+    }
   }
 
   #synapse-header {
     @apply bg-white flex items-center h-[5rem] border-2 border-t-0 border-slate-200 pl-[1rem];
-  } 
+  }
+  .chat {
+    background-color: #D9D9D9;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    padding-left: 0.5rem;
+    height: 5rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+
+    img {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+  .contact-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
 }
 
 
