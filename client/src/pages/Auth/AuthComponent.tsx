@@ -15,27 +15,38 @@ export default function AuthComponent() {
     const formData = {
       email: valueEmail,
       password: valuePassword,
-    }
+    };
 
     if (method === 'Login') {
-      const response = await fetch("http://localhost:3000/user/login", {
+      // Perform login request
+      const response = await fetch('http://localhost:3000/login/password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // Send form data as JSON payload
       });
-      console.log(response)
 
+      if (response.url) {
+        // If response has a URL, it's a redirect response from the server
+        window.location.href = response.url; // Redirect the page to the provided URL
+      } else {
+        // Otherwise, assume the response is JSON data
+        const data = await response.json(); // Parse response as JSON
+        window.location.href = data.redirectUrl; // Redirect the page to the provided redirect URL
+      }
     } else {
-      const response = await fetch("http://localhost:3000/user/register", {
+      // Perform registration request
+      const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // Send form data as JSON payload
       });
-      console.log(response)
+
+      const data = await response.json(); // Parse response as JSON
+      window.location.href = data.redirectUrl; // Redirect the page to the provided redirect URL
     }
   }
 
@@ -63,7 +74,7 @@ export default function AuthComponent() {
             else setMethod('Login');
           }}
         >
-          {method === 'Login' ? "Don't have an account? " : "Already have an account? "}
+          {method === 'Login' ? "Don't have an account? " : 'Already have an account? '}
           <b className="gradient-border">{method === 'Login' ? 'Sign up' : 'Login'}</b>
         </p>
       </form>

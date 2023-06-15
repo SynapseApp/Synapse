@@ -17,9 +17,9 @@ export default function InputGroup({ type, placeholder, setValueInput }: PropInt
   async function handleInput(event: FormEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
 
-    await setValue(target.value);
+    setValue(target.value);
 
-    setValueInput(value);
+    setValueInput(target.value);
 
     const validatedData = validateInput(target.value, type);
     setInputIsValid(validatedData.isValid);

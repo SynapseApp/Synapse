@@ -1,12 +1,10 @@
 // CRUD on users
 
-import { userInterface } from "../schemas";
-import User from "../models/userModel";
+import { UserInterface } from '../schemas';
+import User from '../models/userModel';
 
-export async function createUser(
-  userDetails: userInterface
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = undefined;
+export async function createUser(userDetails: UserInterface): Promise<undefined | UserInterface> {
+  let user: undefined | UserInterface = undefined;
 
   try {
     // creates user
@@ -19,43 +17,28 @@ export async function createUser(
     user = newUser;
     return user;
   } catch (error) {
-    throw new Error("Failed to create user");
+    throw new Error('Failed to create user');
   }
 }
 
-export async function findUser(
-  reference: object
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = undefined;
+export async function findUser(reference: object): Promise<undefined | UserInterface> {
+  let user: undefined | UserInterface = undefined;
 
   try {
     // finds user using the reference
-    const foundUser = await User.findOne<userInterface>(reference);
+    const foundUser = await User.findOne<UserInterface>(reference);
     if (foundUser) {
       user = foundUser;
       return user;
     }
     // if user found update user variable
   } catch (error) {
-    throw new Error("Failed to get user");
+    throw new Error('Failed to get user');
   }
 }
 
-export async function authenticateUser(user: userInterface, password: string) {
-  let userAuthenticated = false;
-
-  if (user?.password === password) {
-    userAuthenticated = true;
-  }
-
-  return userAuthenticated;
-}
-
-export async function updateUser(
-  _id: string,
-  updateKeys: object
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = await findUser({ _id });
+export async function updateUser(_id: string, updateKeys: object): Promise<undefined | UserInterface> {
+  let user: undefined | UserInterface = await findUser({ _id });
 
   try {
     // update user based on the update keys
@@ -63,28 +46,28 @@ export async function updateUser(
       new: true,
     });
     if (!updatedUser) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     user = updatedUser;
     return user;
   } catch (error) {
-    throw new Error("Failed to update user");
+    throw new Error('Failed to update user');
   }
 }
 
 export async function deleteUser(_id: string) {
-  const user: undefined | userInterface = await findUser({ _id });
+  const user: undefined | UserInterface = await findUser({ _id });
 
   let deleteSuccessful = false;
 
   try {
     // delete user
     await User.findByIdAndDelete(_id);
-    if (!deleteUser) throw new Error("User not found");
+    if (!deleteUser) throw new Error('User not found');
     // if deleted set deleteSuccessful to true
     deleteSuccessful = true;
     return user;
   } catch (error) {
-    throw new Error("Failed to delete user");
+    throw new Error('Failed to delete user');
   }
 }
