@@ -20,8 +20,11 @@ const Search = () => {
         for (let i = 0; i <= userChats.length; i++) {
             return <div className='chat'>
                 <img src={userChats[i].picture}></img>
-                <p className='contact-name'>{userChats[i].friend}</p>
-                <p>{userChats[i].message}</p>
+                <div className='chat-text'>
+                    <p className='contact-name'>{userChats[i].friend}</p>
+                    <p>{userChats[i].message}</p>
+
+                </div>
             </div>
         }
     }
