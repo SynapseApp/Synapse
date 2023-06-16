@@ -3,11 +3,13 @@ import { faArrowRight, faG } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from '../../assets/InputGroup';
 import { useState } from 'react';
 import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthComponent() {
   const [method, setMethod] = useState('Login');
   const [valueEmail, setValueEmail] = useState('');
   const [valuePassword, setValuePassword] = useState('');
+  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,13 +29,12 @@ export default function AuthComponent() {
         body: JSON.stringify(formData), // Send form data as JSON payload
       });
 
-      if (response.url) {
-        // If response has a URL, it's a redirect response from the server
-        window.location.href = response.url; // Redirect the page to the provided URL
+      if (response.ok) {
+        // Handle successful authentication
+        navigate('/home');
       } else {
-        // Otherwise, assume the response is JSON data
-        const data = await response.json(); // Parse response as JSON
-        window.location.href = data.redirectUrl; // Redirect the page to the provided redirect URL
+        // Handle login failure
+        // Display error message or perform other actions
       }
     } else {
       // Perform registration request
@@ -45,11 +46,15 @@ export default function AuthComponent() {
         body: JSON.stringify(formData), // Send form data as JSON payload
       });
 
-      const data = await response.json(); // Parse response as JSON
-      window.location.href = data.redirectUrl; // Redirect the page to the provided redirect URL
+      if (response.ok) {
+        // Handle successful authentication
+        navigate('/home');
+      } else {
+        // Handle login failure
+        // Display error message or perform other actions
+      }
     }
   }
-
   return (
     <>
       <form id="Login-Component" className="" onSubmit={handleSubmit}>

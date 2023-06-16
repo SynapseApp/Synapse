@@ -1,5 +1,10 @@
-import "../pages-styles.scss";
-import AuthComponent from "./AuthComponent";
+import '../pages-styles.scss';
+import AuthComponent from './AuthComponent';
+// import { ReactElement, Dispatch, SetStateAction } from 'react';
+
+// interface AuthPageProps {
+//   handleAuthChange: Dispatch<SetStateAction<boolean>>; // Use Dispatch and SetStateAction types
+// }
 
 export default function AuthPage() {
   return (
@@ -14,7 +19,7 @@ export default function AuthPage() {
         <AuthComponent />
       </main>
 
-      <footer>Copyright@Synapse {new Date().getFullYear()}</footer>
+      <footer>{`Copyright@Synapse ${new Date().getFullYear()}`}</footer>
     </section>
   );
 }

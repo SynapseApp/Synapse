@@ -3,8 +3,11 @@ import { url } from './store';
 import connectDatabase from './database/mongodb';
 import passport from 'passport';
 import session from 'express-session';
+import User from './models/userModel';
+import { UserInterface } from './schemas';
 import connectMongoDBSession from 'connect-mongodb-session';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -29,8 +32,7 @@ const store = new MongoDBStore(storeOptions);
 // Configure app middleware and settings
 app.use(cors());
 app.use(express.json());
-app.use(passport.initialize());
-
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'default_secret',
@@ -38,14 +40,29 @@ app.use(
     saveUninitialized: false,
     store: store,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // Set cookie expiration time (in milliseconds), adjust as needed
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      secure: false, // Set cookie expiration time (in milliseconds), adjust as needed
     },
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Define routes
 app.use('/user', userRoutes); // User-related routes
 app.use('/', authRoutes); // Authentication routes
+
+// Serialize user object to store in the session
+passport.serializeUser((user: any, cb) => {
+  cb(null, user.id);
+});
+// Deserialize user object from the session
+passport.deserializeUser(function (id, cb) {
+  console.log(id);
+  User.findById(id, (err: any, user: UserInterface) => {
+    cb(err, user);
+  });
+});
 
 // Start the server
 app.listen(3000, () => {

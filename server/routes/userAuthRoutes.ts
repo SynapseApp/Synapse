@@ -68,7 +68,7 @@ authRoutes.post('/register', async (req, res, next) => {
         }
 
         // Redirect the user to the home page
-        res.status(200).json({ redirectUrl: 'http://localhost:8000/' });
+        res.status(200).json({ redirectUrl: 'http://localhost:8000/home' });
       });
     });
   } catch (err) {
@@ -90,18 +90,22 @@ authRoutes.post('/logout', function (req, res, next) {
 
 // Route for user login using email and password
 authRoutes.post('/login/password', (req, res, next) => {
-  passport.authenticate('local', (err: any, user: Express.User, info: any) => {
-    if (err) {
-      // Handle authentication error
-      console.log(err);
-      return res.redirect('http://localhost:8000/auth');
-    }
+  passport.authenticate('local', async (err: any, user: Express.User, info: any) => {
+    // if (err) {
+    //   // Handle authentication error
+    //   console.log(err);
+    //   return res.redirect('http://localhost:8000/auth');
+    // }
 
     if (!user) {
       // Handle authentication failure (incorrect email or password)
       return res.redirect('http://localhost:8000/auth');
     }
 
+    console.log(req.body);
+    console.log(user);
+
+    req.session.save();
     // Manually log in the user by associating the user object with the current session
     req.login(user, (err) => {
       if (err) {
@@ -109,26 +113,23 @@ authRoutes.post('/login/password', (req, res, next) => {
         return res.redirect('http://localhost:8000/auth');
       }
 
+      // Save the session explicitly
       // Redirect the user to the home page after successful login
-      return res.redirect('http://localhost:8000/');
+      return res.redirect('http://localhost:8000/home');
     });
   })(req, res, next);
 });
 
-// Serialize user object to store in the session
-passport.serializeUser((User: any, cb) => {
-  process.nextTick(function () {
-    cb(null, User.id);
-  });
-});
-
-// Deserialize user object from the session
-passport.deserializeUser(function (User: any, cb) {
-  process.nextTick(function () {
-    User.findById(User.id, (err: any, User: UserInterface) => {
-      cb(err, User);
-    });
-  });
+authRoutes.get('/api/check-auth', (req, res) => {
+  // Check if the user is authenticated
+  // console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    // User is authenticated
+    res.status(200).json({ isAuthenticated: true });
+  } else {
+    // User is not authenticated
+    res.status(200).json({ isAuthenticated: false });
+  }
 });
 
 export default authRoutes;
