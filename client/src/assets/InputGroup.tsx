@@ -1,8 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './assets-styles.scss';
-import { faCheckCircle, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { FormEvent, useState } from 'react';
-import { validateInput } from '../modules/methods';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./assets-styles.scss";
+import {
+  faCheckCircle,
+  faCircleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+import { FormEvent, useState } from "react";
+import { validateInput } from "../modules/methods";
 
 interface PropInterface {
   type: string;
@@ -10,16 +13,20 @@ interface PropInterface {
   setValueInput: any;
 }
 
-export default function InputGroup({ type, placeholder, setValueInput }: PropInterface) {
-  const [value, setValue] = useState('');
+export default function InputGroup({
+  type,
+  placeholder,
+  setValueInput,
+}: PropInterface) {
+  const [value, setValue] = useState("");
   const [inputIsValid, setInputIsValid] = useState(false);
 
   async function handleInput(event: FormEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
 
-    await setValue(target.value);
+    setValue(target.value);
 
-    setValueInput(value);
+    setValueInput(target.value);
 
     const validatedData = validateInput(target.value, type);
     setInputIsValid(validatedData.isValid);
@@ -28,9 +35,18 @@ export default function InputGroup({ type, placeholder, setValueInput }: PropInt
   return (
     <>
       <div className="InputGroup">
-        <input type={type} placeholder={placeholder} value={value} onInput={handleInput} />
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onInput={handleInput}
+        />
         <div className="indicator">
-          <FontAwesomeIcon icon={inputIsValid ? faCheckCircle : faCircleExclamation} size="lg" className={`icon-${inputIsValid ? 'success' : 'danger'}`} />
+          <FontAwesomeIcon
+            icon={inputIsValid ? faCheckCircle : faCircleExclamation}
+            size="lg"
+            className={`icon-${inputIsValid ? "success" : "danger"}`}
+          />
         </div>
       </div>
     </>
