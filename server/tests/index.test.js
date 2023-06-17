@@ -1,7 +1,7 @@
 // a simple test file for you guys to get started
 
 import path from "path";
-import { url } from "../store";
+import { url } from "../store.js";
 import fs from "fs";
 
 // describes a test batch

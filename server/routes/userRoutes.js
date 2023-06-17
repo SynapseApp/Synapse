@@ -5,9 +5,8 @@ import {
   deleteUser,
   findUser,
   updateUser,
-} from "../controllers/userCRUD";
-import { defaultResponse } from "../store";
-import { userInterface } from "../schemas";
+} from "../controllers/userCRUD.js";
+import { defaultResponse } from "../store.js";
 const userRoutes = Router();
 
 // Setup of a RESTful api
@@ -16,8 +15,8 @@ userRoutes.post("/login", async (req, res) => {
   // query: email, password
   // response: did password match with the user of provided email (will be used for login)
 
-  const email = req.body.email as string;
-  const password = req.body.password as string;
+  const email = req.body.email;
+  const password = req.body.password;
 
   // gets a default response object
   const response = defaultResponse();
@@ -50,8 +49,9 @@ userRoutes.post("/register", async (req, res) => {
   // response (if userDetails.email is unique): newly created user from provided userDetails
   // response (if userDetails.email is used): error message saying user already exists
 
-  const userDetails = req.body as userInterface;
-  const email = userDetails.email as string;
+  const userDetails = req.body;
+  const email = userDetails.email;
+  console.log(email);
   const userExists = (await findUser({ email })) !== undefined;
 
   const response = defaultResponse();
@@ -76,7 +76,7 @@ userRoutes.get("/:_id", async (req, res) => {
   // params: id
   // response: user details from provided id
 
-  const _id = req.params._id as string;
+  const _id = req.params._id;
   const user = await findUser({ _id });
   const response = defaultResponse();
 
@@ -96,7 +96,7 @@ userRoutes.patch("/:_id", async (req, res) => {
   // body: updateKeys
   // response: updated user
 
-  const _id = req.params._id as string;
+  const _id = req.params._id;
   const updateKeys = req.body;
 
   const response = defaultResponse();
@@ -117,7 +117,7 @@ userRoutes.delete("/:_id", async (req, res) => {
   // params: _id
   // response: deletes user
 
-  const _id = req.params._id as string;
+  const _id = req.params._id;
   const response = defaultResponse();
   const userDeleted = await deleteUser(_id);
 

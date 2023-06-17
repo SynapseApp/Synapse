@@ -5,11 +5,6 @@ dist/
 # Ignore development environment files
 .env
 
-# Ignore TypeScript compilation artifacts
-*.js
-*.js.map
-*.d.ts
-
 # Ignore IDE and editor files
 .vscode/
 .idea/

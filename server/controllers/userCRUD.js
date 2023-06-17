@@ -1,12 +1,8 @@
 // CRUD on users
+import User from "../models/userModel.js";
 
-import { userInterface } from "../schemas";
-import User from "../models/userModel";
-
-export async function createUser(
-  userDetails: userInterface
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = undefined;
+export async function createUser(userDetails) {
+  let user = undefined;
 
   try {
     // creates user
@@ -23,14 +19,12 @@ export async function createUser(
   }
 }
 
-export async function findUser(
-  reference: object
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = undefined;
+export async function findUser(reference) {
+  let user = undefined;
 
   try {
     // finds user using the reference
-    const foundUser = await User.findOne<userInterface>(reference);
+    const foundUser = await User.findOne(reference);
     if (foundUser) {
       user = foundUser;
       return user;
@@ -41,7 +35,7 @@ export async function findUser(
   }
 }
 
-export async function authenticateUser(user: userInterface, password: string) {
+export async function authenticateUser(user, password) {
   let userAuthenticated = false;
 
   if (user?.password === password) {
@@ -51,11 +45,8 @@ export async function authenticateUser(user: userInterface, password: string) {
   return userAuthenticated;
 }
 
-export async function updateUser(
-  _id: string,
-  updateKeys: object
-): Promise<undefined | userInterface> {
-  let user: undefined | userInterface = await findUser({ _id });
+export async function updateUser(_id, updateKeys) {
+  let user = await findUser({ _id });
 
   try {
     // update user based on the update keys
@@ -72,8 +63,8 @@ export async function updateUser(
   }
 }
 
-export async function deleteUser(_id: string) {
-  const user: undefined | userInterface = await findUser({ _id });
+export async function deleteUser(_id) {
+  const user = await findUser({ _id });
 
   let deleteSuccessful = false;
 

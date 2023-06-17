@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { mongoDB_url } from "../store";
+import { mongoDB_url } from "../store.js";
 
 const url = mongoDB_url;
 

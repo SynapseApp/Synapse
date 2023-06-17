@@ -10,17 +10,11 @@ export const url = `http://localhost:${port}`;
 // export const mongoDB_url = "atlas url"
 
 // comment this out if you are a backend developer
-export const mongoDB_url = "mongodb://127.0.0.1/Synapse"
-
-interface ResponseInterface {
-  success: boolean;
-  log: string;
-  data: any;
-}
+export const mongoDB_url = "mongodb://127.0.0.1/Synapse";
 
 // create default response
 export function defaultResponse() {
-  const response: ResponseInterface = {
+  const response = {
     success: false,
     log: "default response",
     data: undefined,
