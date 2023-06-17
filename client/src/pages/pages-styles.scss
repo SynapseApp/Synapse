@@ -4,28 +4,29 @@
   @apply w-screen h-screen text-center p-5
         flex flex-col justify-between items-center;
 
-  > main > #Login-Component {
-    @apply w-[400px]
+  > main {
+    #Login-Component {
+      @apply w-[400px]
       flex-col justify-center items-center gap-5;
 
-    > #Google-Auth-Button {
-      @apply w-full flex justify-center items-center gap-5 text-xl;
-    }
+      > #Google-Auth-Button {
+        @apply w-full flex justify-center items-center gap-5 text-xl;
+      }
 
-    > #Submit-Button {
-      @apply flex justify-between text-xl;
+      > #Submit-Button {
+        @apply flex justify-between text-xl;
 
-      > svg > path {
-        fill: black;
+        > svg > path {
+          fill: black;
+        }
       }
     }
-  }
-
-  main {
     #MoreInfo-Parent {
       @apply w-full h-full;
+
       #MoreInfo {
         @apply flex flex-col justify-center items-center gap-5;
+
         .pfp {
           @apply w-[12rem] h-[12rem] rounded-full bg-slate-600;
         }
