@@ -15,8 +15,10 @@ export default function AuthComponent() {
     event.preventDefault();
 
     const formData = {
+      username: "Default",
       email: valueEmail,
       password: valuePassword,
+      age: 69,
     };
 
     if (method === "Login") {
