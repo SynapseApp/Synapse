@@ -63,15 +63,8 @@ connectDatabase().then(() => {
   app.use(passport.session());
   passport.use(User.createStrategy());
 
-  passport.serializeUser((user, done) => {
-    // console.log('Serialized user:', user);
-    done(null, user);
-  });
-
-  passport.deserializeUser((user, done) => {
-    // console.log('Deserialized user:', user);
-    done(null, user);
-  });
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
 
   // app.use(bodyParser.urlencoded({ extended: true })); //might need this in the future
 
