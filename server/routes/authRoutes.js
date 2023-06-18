@@ -22,8 +22,8 @@ authRouter.post('/register', async (req, res) => {
     // Set the password using the desired method (e.g., hashing)
     req.login(registeredUser, (err) => {
       if (err) return next(err);
-      console.log(req.isAuthenticated());
-      console.log(req.session);
+      //   console.log(req.isAuthenticated());
+      //   console.log(req.session);
       // Redirect or send a response indicating successful registration and login
       res.json({ message: 'Registration and login successful' });
     });
@@ -34,10 +34,9 @@ authRouter.post('/register', async (req, res) => {
   }
 });
 
-authRouter.get('/api/check-auth', isAuthenticated, (req, res) => {
-  console.log(req.session.passport);
+authRouter.get('/api/check-auth', (req, res) => {
   console.log(req.isAuthenticated());
-  if (req.session.passport?.user !== undefined) {
+  if (req.isAuthenticated()) {
     // User is authenticated
     res.json({ authenticated: true });
   } else {

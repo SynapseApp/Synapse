@@ -61,7 +61,7 @@ connectDatabase().then(() => {
   app.use(express.json());
   app.use(passport.initialize());
   app.use(passport.session());
-  passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
+  passport.use(User.createStrategy());
 
   passport.serializeUser((user, done) => {
     // console.log('Serialized user:', user);
