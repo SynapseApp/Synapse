@@ -36,15 +36,23 @@ authRouter.post('/register', async (req, res, next) => {
   }
 });
 
-authRouter.get('/api/check-auth', (req, res) => {
-  console.log(req.isAuthenticated());
-  if (req.isAuthenticated()) {
-    // User is authenticated
-    res.json({ authenticated: true });
-  } else {
-    // User is not authenticated
-    res.json({ authenticated: false });
+authRouter.get(
+  '/api/check-auth',
+  (req, res, next) => {
+    console.log('Before authentication middleware');
+    next();
+  },
+  passport.authenticate('local'),
+  (req, res) => {
+    console.log(req.isAuthenticated());
+    if (req.isAuthenticated()) {
+      // User is authenticated
+      res.json({ authenticated: true });
+    } else {
+      // User is not authenticated
+      res.json({ authenticated: false });
+    }
   }
-});
+);
 
 module.exports = authRouter;

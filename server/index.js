@@ -51,13 +51,18 @@ const sessionConfig = {
 };
 
 connectDatabase().then(() => {
-  app.use(cookieParser());
-  app.use(session(sessionConfig));
-
-  app.use(cors(corsOptions)); // Use this after the variable declaration
-  app.use(express.json());
-  app.use(passport.initialize());
-  app.use(passport.session());
+  try {
+    app.use(cookieParser());
+    app.use(session(sessionConfig));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(express.json());
+    app.use(cors(corsOptions));
+    app.use(passport.initialize());
+    app.use(passport.session());
+  } catch (e) {
+    console.log(e);
+  }
   passport.use(User.createStrategy());
 
   passport.serializeUser(User.serializeUser());
