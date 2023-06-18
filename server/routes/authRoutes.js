@@ -10,7 +10,7 @@ authRouter.get('/logout', (req, res) => {
   res.json({ message: 'Logout successful' });
 });
 
-authRouter.post('/register', async (req, res) => {
+authRouter.post('/register', async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
 
@@ -19,12 +19,14 @@ authRouter.post('/register', async (req, res) => {
 
     const registeredUser = await User.register(user, password);
 
+    // Serialize the registered user
+    passport.serializeUser((user, done) => {
+      done(null, user);
+    });
+
     // Set the password using the desired method (e.g., hashing)
     req.login(registeredUser, (err) => {
       if (err) return next(err);
-      console.log(req.isAuthenticated());
-      console.log(req.session);
-      // Redirect or send a response indicating successful registration and login
       res.json({ message: 'Registration and login successful' });
     });
   } catch (error) {
