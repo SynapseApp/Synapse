@@ -1,33 +1,86 @@
-const express = require("express");
-const cors = require("cors");
-const userRoutes = require("./routes/userRoutes.js");
-const path = require("path");
-const { url } = require("./store.js");
-const connectDatabase = require("./database/mongodb.js");
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongo')(session);
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
+
+const { mongoDB_url, port } = require('./store.js');
+const connectDatabase = require('./database/mongodb.js');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('./models/userModel.js');
+
+const userRoutes = require('./routes/userRoutes.js');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const corsOptions = {
-  origin: "*",
+  origin: '*',
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
-app.use(cors(corsOptions)); // Use this after the variable declaration
-app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true })); //might need this in the future
 
-// serves our build file
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+const secret = process.env.SESSION_SECRET || `randomSecret`;
+
+console.log(secret);
+
+const store = new MongoDBStore({
+  url: mongoDB_url,
+  secret,
+  touchAfter: 24 * 60 * 60,
 });
 
-// using routes...
-app.use("/user", userRoutes);
-
-// starting server
-app.listen(3000, () => {
-  console.log(`server is up and running at ${url}`);
-
-  connectDatabase();
+store.on(`error`, function (e) {
+  console.log(`Session Store Error!`);
 });
 
-module.exports = app;
+const sessionConfig = {
+  store,
+  name: `session`,
+  secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    // secure: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+connectDatabase().then(() => {
+  try {
+    app.use(cookieParser());
+    app.use(session(sessionConfig));
+  } catch (e) {
+    // console.log(e);
+  }
+  app.use(cors(corsOptions)); // Use this after the variable declaration
+  app.use(express.json());
+  app.use(passport.initialize());
+  app.use(passport.session());
+  passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
+
+  passport.serializeUser((user, done) => {
+    // console.log('Serialized user:', user);
+    done(null, user);
+  });
+
+  passport.deserializeUser((user, done) => {
+    // console.log('Deserialized user:', user);
+    done(null, user);
+  });
+
+  // app.use(bodyParser.urlencoded({ extended: true })); //might need this in the future
+
+  // using routes...
+  app.use('/user', userRoutes);
+  app.use('/auth', authRoutes);
+
+  // starting server
+  app.listen(port, () => {
+    console.log(`server is up and running at ${port}`);
+  });
+});
