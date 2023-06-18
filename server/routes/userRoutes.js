@@ -1,12 +1,12 @@
-import { Router } from "express";
-import {
+const { Router } = require("express");
+const {
   authenticateUser,
   createUser,
   deleteUser,
   findUser,
   updateUser,
-} from "../controllers/userCRUD.js";
-import { defaultResponse } from "../store.js";
+} = require("../controllers/userCRUD.js");
+const { defaultResponse } = require("../store.js");
 const userRoutes = Router();
 
 // Setup of a RESTful api
@@ -132,4 +132,4 @@ userRoutes.delete("/:_id", async (req, res) => {
   res.json(response);
 });
 
-export default userRoutes;
+module.exports = userRoutes;
