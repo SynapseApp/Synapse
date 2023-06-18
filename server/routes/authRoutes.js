@@ -22,8 +22,8 @@ authRouter.post('/register', async (req, res) => {
     // Set the password using the desired method (e.g., hashing)
     req.login(registeredUser, (err) => {
       if (err) return next(err);
-      //   console.log(req.isAuthenticated());
-      //   console.log(req.session);
+      console.log(req.isAuthenticated());
+      console.log(req.session);
       // Redirect or send a response indicating successful registration and login
       res.json({ message: 'Registration and login successful' });
     });

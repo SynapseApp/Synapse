@@ -9,6 +9,6 @@ const userSchema = new Schema({
   imageUrl: String,
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 
 module.exports = mongoose.model(`User`, userSchema);
