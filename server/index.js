@@ -44,19 +44,16 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: false,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
 
 connectDatabase().then(() => {
-  try {
-    app.use(cookieParser());
-    app.use(session(sessionConfig));
-  } catch (e) {
-    // console.log(e);
-  }
+  app.use(cookieParser());
+  app.use(session(sessionConfig));
+
   app.use(cors(corsOptions)); // Use this after the variable declaration
   app.use(express.json());
   app.use(passport.initialize());
