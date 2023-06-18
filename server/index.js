@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import userRoutes from "./routes/userRoutes.js";
-import path from "path";
-import { url } from "./store.js";
-import connectDatabase from "./database/mongodb.js";
+const express = require("express");
+const cors = require("cors");
+const userRoutes = require("./routes/userRoutes.js");
+const path = require("path");
+const { url } = require("./store.js");
+const connectDatabase = require("./database/mongodb.js");
 
 const app = express();
 const corsOptions = {
@@ -30,4 +30,4 @@ app.listen(3000, () => {
   connectDatabase();
 });
 
-export default app;
+module.exports = app;

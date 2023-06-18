@@ -1,7 +1,7 @@
 // CRUD on users
-import User from "../models/userModel.js";
+const User = require("../models/userModel.js");
 
-export async function createUser(userDetails) {
+exports.createUser = async function createUser(userDetails) {
   let user = undefined;
 
   try {
@@ -19,7 +19,7 @@ export async function createUser(userDetails) {
   }
 }
 
-export async function findUser(reference) {
+exports.findUser = async function findUser(reference) {
   let user = undefined;
 
   try {
@@ -35,7 +35,7 @@ export async function findUser(reference) {
   }
 }
 
-export async function authenticateUser(user, password) {
+exports.authenticateUser = async function authenticateUser(user, password) {
   let userAuthenticated = false;
 
   if (user?.password === password) {
@@ -45,7 +45,7 @@ export async function authenticateUser(user, password) {
   return userAuthenticated;
 }
 
-export async function updateUser(_id, updateKeys) {
+exports.updateUser = async function updateUser(_id, updateKeys) {
   let user = await findUser({ _id });
 
   try {
@@ -63,7 +63,7 @@ export async function updateUser(_id, updateKeys) {
   }
 }
 
-export async function deleteUser(_id) {
+exports.deleteUser = async function deleteUser(_id) {
   const user = await findUser({ _id });
 
   let deleteSuccessful = false;

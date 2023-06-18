@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { mongoDB_url } from "../store.js";
+const mongoose = require("mongoose");
+const { mongoDB_url } = require("../store.js");
 
 const url = mongoDB_url;
 
-const connectDatabase = () => {
+module.exports = connectDatabase = () => {
   console.log(`Connecting to MongoDB...`);
   try {
     mongoose.connect(url);
@@ -13,5 +13,3 @@ const connectDatabase = () => {
     console.log(`MongoDB connection error:`, error);
   }
 };
-
-export default connectDatabase;

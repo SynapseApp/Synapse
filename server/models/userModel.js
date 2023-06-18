@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import { userSchema } from "../schemas.js";
+const mongoose = require("mongoose");
+const { userSchema } = require("../schemas.js");
 
 //creation of user model
 const User = mongoose.model(`User`, userSchema);
 
-export default User;
+module.exports = User;
