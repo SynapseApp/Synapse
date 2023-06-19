@@ -22,8 +22,8 @@ export default function InputGroup({ type, placeholder, name, setValueInput }: P
 
     setValueInput(target.value);
 
-    const validatedData = validateInput(target.value, type);
-    setInputIsValid(validatedData.isValid);
+    // const validatedData = validateInput(target.value, type);
+    setInputIsValid(true);
   }
 
   return (

@@ -1,16 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongo')(session);
 require('dotenv').config();
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 
 const { mongoDB_url, port } = require('./store.js');
 const connectDatabase = require('./database/mongodb.js');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('./models/userModel.js');
+const passport = require('./config/passport.js');
 
 const userRoutes = require('./routes/userRoutes.js');
 const authRoutes = require('./routes/authRoutes');
@@ -21,32 +19,28 @@ const app = express();
 const corsOptions = {
   origin: 'http://localhost:8000',
   credentials: true,
-  optionSuccessStatus: 200,
 };
 
-// const secret = process.env.SESSION_SECRET || `randomSecret`;
+const secret = process.env.SESSION_SECRET || `randomSecret`;
 
-// console.log(secret);
+console.log(secret);
 
-// const store = new MongoDBStore({
-//   url: mongoDB_url,
-//   secret,
-//   touchAfter: 24 * 60 * 60,
-// });
+const store = new MongoDBStore({
+  url: mongoDB_url,
+  secret,
+  touchAfter: 24 * 60 * 60,
+});
 
-// store.on(`error`, function (e) {
-//   console.log(`Session Store Error!`);
-// });
+store.on(`error`, function (e) {
+  console.log(`Session Store Error!`);
+});
 
 // Set up session middleware
 const sessionConfig = {
-  secret: 'your-secret-key',
+  secret,
   resave: false,
   saveUninitialized: false,
-  store: new MongoDBStore({
-    url: 'mongodb://127.0.0.1/Synapse',
-    collection: 'sessions',
-  }),
+  store,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
   },
@@ -59,10 +53,10 @@ app.use(session(sessionConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {
+  console.log(req.body, 'hey');
+});
 
 // using routes...
 app.use('/user', userRoutes);

@@ -4,13 +4,19 @@ const User = require('../models/userModel');
 const authRouter = express.Router();
 
 authRouter.post('/login', passport.authenticate('local'), (req, res) => {
+  console.log(req.body);
   res.send('logged in');
 });
+
+// authRouter.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {
+//   console.log(req.body, 'hey');
+// });
 
 authRouter.post('/register', (req, res) => {
   const { email, username, password } = req.body;
 
   const newUser = new User({ username, email });
+  console.log(newUser);
   User.register(newUser, password, (err) => {
     if (err) {
       console.log(err);

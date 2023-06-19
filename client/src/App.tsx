@@ -16,6 +16,7 @@ function App() {
     try {
       const response = await fetch('http://localhost:3000/auth/check', { credentials: 'include' });
       const data = await response.json();
+      console.log(data);
       setAuthenticated(data.authenticated);
       setAuthChecked(true); // Mark authentication check as complete
     } catch (error) {
@@ -34,7 +35,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RootPage />} />
-        <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" />} />
+        {/* <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} /> */}
+        <Route path="/home" element={<Home />} />
         <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </BrowserRouter>

@@ -13,46 +13,66 @@ export default function AuthComponent() {
   const [valueEmail, setValueEmail] = useState('');
   const [valuePassword, setValuePassword] = useState('');
   const [valueUsername, setValueUsername] = useState('');
+
   const navigate = useNavigate();
+  let formData: { username: string; password: string; email?: string };
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const formData = {
+  if (method === 'Login') {
+    if (valueEmail === '') {
+      formData = {
+        username: valueUsername,
+        password: valuePassword,
+      };
+    } else if (valueUsername === '') {
+      formData = {
+        username: valueEmail,
+        password: valuePassword,
+      };
+    }
+  } else {
+    formData = {
       username: valueUsername,
       email: valueEmail,
       password: valuePassword,
     };
+  }
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
     if (method === 'Login') {
       console.log(formData);
+
       const response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        credentials: 'include', // Include cookies in the request
       });
-      console.log(response);
+
+      console.log(response.status);
+
       if (response.status === 200) {
-        // Redirect to '/home'
         navigate('/home');
       }
     } else {
       console.log(formData);
+
       const response = await fetch('http://localhost:3000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        credentials: 'include', // Include cookies in the request
       });
-      console.log(response);
+
+      console.log(response.status);
+
       if (response.status === 200) {
-        // Redirect to '/home'
         navigate('/home');
       }
-      // setTakingMoreInfo(true);
     }
   }
 
@@ -70,7 +90,7 @@ export default function AuthComponent() {
         </button>
 
         {method !== 'Login' && <InputGroup type="text" placeholder="Username" name="username" setValueInput={setValueUsername} />}
-        <InputGroup type="email" placeholder={method === 'Login' ? 'Email or username' : 'Email'} name={method === 'Login' ? 'username' : 'email'} setValueInput={setValueEmail} />
+        <InputGroup type={method === 'Login' ? 'username' : 'email'} placeholder={method === 'Login' ? 'Email or username' : 'Email'} name={method === 'Login' ? 'username' : 'email'} setValueInput={setValueEmail} />
         <InputGroup type="password" placeholder="Password" name="password" setValueInput={setValuePassword} />
         {method === 'Login' && <p className="gradient-border">Forgot Password?</p>}
         <button id="Submit-Button" className="gradient-btn glow-effect">
