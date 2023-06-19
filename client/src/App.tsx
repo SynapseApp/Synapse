@@ -12,6 +12,12 @@ function App() {
     checkAuth();
   }, []);
 
+  /**
+   * Check the user's authentication status by sending a request to the server.
+   * If the user is authenticated, update the 'authenticated' state to true.
+   * If there's an error or the user is not authenticated, update the 'authenticated' state to false.
+   * Set 'authChecked' state to true to mark the authentication check as complete.
+   */
   const checkAuth = async () => {
     try {
       const response = await fetch('http://localhost:3000/auth/check', { credentials: 'include' });
@@ -35,8 +41,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RootPage />} />
+        {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
         <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
-        {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
       </Routes>
     </BrowserRouter>

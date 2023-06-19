@@ -1,13 +1,16 @@
 const { Router } = require('express');
 const { deleteUser, findUser, updateUser } = require('../controllers/userCRUD.js');
 const { defaultResponse } = require('../store.js');
+
+// Create a new Router instance
 const userRoutes = Router();
 
-// Setup of a RESTful api
+// RESTful API routes for user operations
 
 userRoutes.get('/:_id', async (req, res) => {
-  // params: id
-  // response: user details from provided id
+  // Endpoint to get user details based on the provided ID
+  // Params: _id - User ID
+  // Response: User details from the provided ID
 
   const _id = req.params._id;
   const user = await findUser({ _id });
@@ -25,9 +28,10 @@ userRoutes.get('/:_id', async (req, res) => {
 });
 
 userRoutes.patch('/:_id', async (req, res) => {
-  // params: _id
-  // body: updateKeys
-  // response: updated user
+  // Endpoint to update user details based on the provided ID
+  // Params: _id - User ID
+  // Body: updateKeys - Updated user data
+  // Response: Updated user
 
   const _id = req.params._id;
   const updateKeys = req.body;
@@ -47,8 +51,9 @@ userRoutes.patch('/:_id', async (req, res) => {
 });
 
 userRoutes.delete('/:_id', async (req, res) => {
-  // params: _id
-  // response: deletes user
+  // Endpoint to delete a user based on the provided ID
+  // Params: _id - User ID
+  // Response: Deletes the user
 
   const _id = req.params._id;
   const response = defaultResponse();
@@ -65,4 +70,5 @@ userRoutes.delete('/:_id', async (req, res) => {
   res.json(response);
 });
 
+// Export the userRoutes for use in other parts of the application
 module.exports = userRoutes;

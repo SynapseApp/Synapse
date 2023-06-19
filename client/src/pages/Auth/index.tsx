@@ -18,7 +18,10 @@ export default function AuthPage({ setAuthenticated }: AuthPageProps) {
         <AuthComponent setAuthenticated={setAuthenticated} />
       </main>
 
-      <footer>Copyright@Synapse {new Date().getFullYear()}</footer>
+      <footer>
+        {/* Display the copyright year */}
+        Copyright@Synapse {new Date().getFullYear()}
+      </footer>
     </section>
   );
 }
