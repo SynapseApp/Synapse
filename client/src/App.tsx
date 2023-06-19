@@ -14,7 +14,7 @@ function App() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auth/api/auth', { credentials: 'include' });
+      const response = await fetch('http://localhost:3000/auth/check', { credentials: 'include' });
       const data = await response.json();
       setAuthenticated(data.authenticated);
       setAuthChecked(true); // Mark authentication check as complete

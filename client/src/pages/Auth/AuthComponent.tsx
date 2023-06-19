@@ -69,8 +69,8 @@ export default function AuthComponent() {
           {method} With Google
         </button>
 
-        <InputGroup type="text" placeholder="Username" name="username" setValueInput={setValueUsername} />
-        <InputGroup type="email" placeholder="Email" name="email" setValueInput={setValueEmail} />
+        {method !== 'Login' && <InputGroup type="text" placeholder="Username" name="username" setValueInput={setValueUsername} />}
+        <InputGroup type="email" placeholder={method === 'Login' ? 'Email or username' : 'Email'} name="email" setValueInput={setValueEmail} />
         <InputGroup type="password" placeholder="Password" name="password" setValueInput={setValuePassword} />
         {method === 'Login' && <p className="gradient-border">Forgot Password?</p>}
         <button id="Submit-Button" className="gradient-btn glow-effect">

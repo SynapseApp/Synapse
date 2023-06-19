@@ -22,7 +22,7 @@ authRouter.post('/register', (req, res) => {
   });
 });
 
-authRouter.get('/api/auth', (req, res) => {
+authRouter.get('/check', (req, res) => {
   console.log(req.isAuthenticated());
   if (req.isAuthenticated()) {
     res.json({ authenticated: true });

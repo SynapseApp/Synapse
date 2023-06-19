@@ -8,6 +8,6 @@ const userSchema = new Schema({
   // imageUrl: String,
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, { usernameQueryFields: ['email'] });
 
 module.exports = mongoose.model(`User`, userSchema);
