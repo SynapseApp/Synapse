@@ -8,10 +8,6 @@ authRouter.post('/login', passport.authenticate('local'), (req, res) => {
   res.send('logged in');
 });
 
-// authRouter.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {
-//   console.log(req.body, 'hey');
-// });
-
 authRouter.post('/register', (req, res) => {
   const { email, username, password } = req.body;
 
