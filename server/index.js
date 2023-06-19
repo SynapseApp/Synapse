@@ -1,33 +1,84 @@
-const express = require("express");
-const cors = require("cors");
-const userRoutes = require("./routes/userRoutes.js");
-const path = require("path");
-const { url } = require("./store.js");
-const connectDatabase = require("./database/mongodb.js");
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongo')(session);
+require('dotenv').config();
 
+const { mongoDB_url, port } = require('./store.js');
+const connectDatabase = require('./database/mongodb.js');
+const passport = require('./config/passport.js');
+
+const userRoutes = require('./routes/userRoutes.js');
+const authRoutes = require('./routes/authRoutes');
+
+// Connect to the MongoDB database
+connectDatabase();
+
+// Create an instance of the Express application
 const app = express();
+
+// Configure Cross-Origin Resource Sharing (CORS) options
 const corsOptions = {
-  origin: "*",
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
+  origin: 'http://localhost:8000', // Allow requests from this origin
+  credentials: true, // Enable sending cookies in cross-origin requests
 };
-app.use(cors(corsOptions)); // Use this after the variable declaration
+
+// Configure session options
+const secret = process.env.SESSION_SECRET || `randomSecret`;
+
+// Create a new MongoDBStore instance to store session data
+const store = new MongoDBStore({
+  url: mongoDB_url, // MongoDB connection URL
+  secret, // Secret used to sign the session ID cookie
+  touchAfter: 24 * 60 * 60, // Time period in seconds after which session data is updated
+});
+
+// Handle errors from the session store
+store.on(`error`, function (e) {
+  console.log(`Session Store Error!`);
+});
+
+// Configure session middleware
+const sessionConfig = {
+  secret, // Secret used to sign the session ID cookie
+  resave: false, // Disable saving session data on every request
+  saveUninitialized: false, // Prevent saving uninitialized sessions
+  store, // Use the MongoDBStore to store session data
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // Set the maximum age of the session cookie to 1 day
+  },
+};
+
+// Enable Cross-Origin Resource Sharing (CORS)
+app.use(cors(corsOptions));
+
+// Parse request bodies as JSON
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true })); //might need this in the future
 
-// serves our build file
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+// Parse URL-encoded request bodies
+app.use(express.urlencoded({ extended: true }));
+
+// Use the session middleware with the configured options
+app.use(session(sessionConfig));
+
+// Initialize Passport.js for authentication
+app.use(passport.initialize());
+
+// Enable persistent login sessions using session middleware
+app.use(passport.session());
+
+// Endpoint to handle HTTP GET request to '/home'
+app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {
+  console.log(req.body, 'hey');
 });
 
-// using routes...
-app.use("/user", userRoutes);
+// Route handlers for user-related functionality
+app.use('/user', userRoutes);
 
-// starting server
-app.listen(3000, () => {
-  console.log(`server is up and running at ${url}`);
+// Route handlers for authentication-related functionality
+app.use('/auth', authRoutes);
 
-  connectDatabase();
+// Start the server and listen for incoming requests
+app.listen(port, () => {
+  console.log(`Server is up and running at ${port}`);
 });
-
-module.exports = app;

@@ -1,81 +1,89 @@
-// CRUD on users
-const User = require("../models/userModel.js");
+const User = require('../models/userModel.js');
 
+/**
+ * Creates a new user in the database.
+ *
+ * @param {Object} userDetails - Details of the user to be created.
+ * @returns {Object} - The created user.
+ * @throws {Error} - If failed to create user.
+ */
 exports.createUser = async function createUser(userDetails) {
   let user = undefined;
 
   try {
-    // creates user
     const newUser = new User(userDetails);
-
-    // stores it in database
     await newUser.save();
-
-    // update user variable
     user = newUser;
     return user;
   } catch (error) {
-    throw new Error("Failed to create user");
+    throw new Error('Failed to create user');
   }
-}
+};
 
+/**
+ * Finds a user in the database based on the provided reference.
+ *
+ * @param {Object} reference - Reference to find the user.
+ * @returns {Object} - The found user.
+ * @throws {Error} - If failed to get user.
+ */
 exports.findUser = async function findUser(reference) {
   let user = undefined;
 
   try {
-    // finds user using the reference
     const foundUser = await User.findOne(reference);
     if (foundUser) {
       user = foundUser;
       return user;
     }
-    // if user found update user variable
   } catch (error) {
-    throw new Error("Failed to get user");
+    throw new Error('Failed to get user');
   }
-}
+};
 
-exports.authenticateUser = async function authenticateUser(user, password) {
-  let userAuthenticated = false;
-
-  if (user?.password === password) {
-    userAuthenticated = true;
-  }
-
-  return userAuthenticated;
-}
-
+/**
+ * Updates a user in the database based on the provided ID and update keys.
+ *
+ * @param {string} _id - ID of the user to update.
+ * @param {Object} updateKeys - Keys and values to update.
+ * @returns {Object} - The updated user.
+ * @throws {Error} - If failed to update user.
+ */
 exports.updateUser = async function updateUser(_id, updateKeys) {
   let user = await findUser({ _id });
 
   try {
-    // update user based on the update keys
     const updatedUser = await User.findByIdAndUpdate(_id, updateKeys, {
       new: true,
     });
     if (!updatedUser) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     user = updatedUser;
     return user;
   } catch (error) {
-    throw new Error("Failed to update user");
+    throw new Error('Failed to update user');
   }
-}
+};
 
+/**
+ * Deletes a user from the database based on the provided ID.
+ *
+ * @param {string} _id - ID of the user to delete.
+ * @returns {Object} - The deleted user.
+ * @throws {Error} - If failed to delete user.
+ */
 exports.deleteUser = async function deleteUser(_id) {
   const user = await findUser({ _id });
 
   let deleteSuccessful = false;
 
   try {
-    // delete user
     await User.findByIdAndDelete(_id);
-    if (!deleteUser) throw new Error("User not found");
-    // if deleted set deleteSuccessful to true
+    if (!deleteUser) throw new Error('User not found');
     deleteSuccessful = true;
     return user;
   } catch (error) {
-    throw new Error("Failed to delete user");
+    throw new Error('Failed to delete user');
   }
-}
+};
