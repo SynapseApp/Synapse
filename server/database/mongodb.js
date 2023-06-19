@@ -4,14 +4,13 @@ const { mongoDB_url } = require('../store.js');
 const url = mongoDB_url;
 
 module.exports = async function connectDatabase() {
-  console.log(`Connecting to MongoDB...`);
-  try {
-    await mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+  mongoose
+    .connect('mongodb://127.0.0.1/Synapse', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log(`MONGO CONNECTION OPEN!!`);
+    })
+    .catch((err) => {
+      console.log(`ERROR MONGO CONNECTION`);
+      console.log(err);
     });
-    console.log('MongoDB connected');
-  } catch (error) {
-    console.log(`MongoDB connection error:`, error);
-  }
 };

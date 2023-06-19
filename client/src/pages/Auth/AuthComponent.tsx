@@ -1,85 +1,78 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faG } from "@fortawesome/free-solid-svg-icons";
-import InputGroup from "../../assets/InputGroup";
-import { useState } from "react";
-import { FormEvent } from "react";
-import MoreInfo from "./MoreInfo";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faG } from '@fortawesome/free-solid-svg-icons';
+import InputGroup from '../../assets/InputGroup';
+import { useState } from 'react';
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// import MoreInfo from './MoreInfo';
 
 export default function AuthComponent() {
-  const [takingMoreInfo, setTakingMoreInfo] = useState(false);
-  const [method, setMethod] = useState("Login");
-  const [valueEmail, setValueEmail] = useState("");
-  const [valuePassword, setValuePassword] = useState("");
+  // const [takingMoreInfo, setTakingMoreInfo] = useState(false);
+  const [method, setMethod] = useState('Login');
+  const [valueEmail, setValueEmail] = useState('');
+  const [valuePassword, setValuePassword] = useState('');
+  const [valueUsername, setValueUsername] = useState('');
+  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = {
-      username: "Default",
+      username: valueUsername,
       email: valueEmail,
       password: valuePassword,
-      age: 69,
     };
 
-    if (method === "Login") {
-      const response = await fetch("http://localhost:3000/user/login", {
-        method: "POST",
+    if (method === 'Login') {
+      console.log(formData);
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
       console.log(response);
+      if (response.status === 200) {
+        // Redirect to '/home'
+        navigate('/home');
+      }
     } else {
-      const response = await fetch("http://localhost:3000/user/register", {
-        method: "POST",
+      console.log(formData);
+      const response = await fetch('http://localhost:3000/auth/register', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
       console.log(response);
-      setTakingMoreInfo(true);
+      if (response.status === 200) {
+        // Redirect to '/home'
+        navigate('/home');
+      }
+      // setTakingMoreInfo(true);
     }
   }
 
   return (
     <>
-      <div id="MoreInfo-Parent" className={takingMoreInfo ? "flex" : "hidden"}>
+      {/* <div id="MoreInfo-Parent" className={takingMoreInfo ? 'flex' : 'hidden'}>
         <MoreInfo />
-      </div>
-      <form
-        id="Login-Component"
-        className={takingMoreInfo ? "hidden" : "flex"}
-        onSubmit={handleSubmit}
-      >
-        <h6>
-          {method === "Login"
-            ? "Login To Your Account"
-            : "Register A New Account"}
-        </h6>
+      </div> */}
+      <form id="Login-Component" onSubmit={handleSubmit}>
+        <h6>{method === 'Login' ? 'Login To Your Account' : 'Register A New Account'}</h6>
 
-        <button
-          id="Google-Auth-Button"
-          className="gradient-box glow-effect-border"
-        >
+        <button id="Google-Auth-Button" className="gradient-box glow-effect-border">
           <FontAwesomeIcon icon={faG} size="xl" />
           {method} With Google
         </button>
 
-        <InputGroup
-          type="email"
-          placeholder="Email"
-          setValueInput={setValueEmail}
-        />
-        <InputGroup
-          type="password"
-          placeholder="Password"
-          setValueInput={setValuePassword}
-        />
-        {method === "Login" && (
-          <p className="gradient-border">Forgot Password?</p>
-        )}
+        <InputGroup type="text" placeholder="Username" name="username" setValueInput={setValueUsername} />
+        <InputGroup type="email" placeholder="Email" name="email" setValueInput={setValueEmail} />
+        <InputGroup type="password" placeholder="Password" name="password" setValueInput={setValuePassword} />
+        {method === 'Login' && <p className="gradient-border">Forgot Password?</p>}
         <button id="Submit-Button" className="gradient-btn glow-effect">
           Continue
           <FontAwesomeIcon icon={faArrowRight} size="xl" />
@@ -87,16 +80,12 @@ export default function AuthComponent() {
 
         <p
           onClick={() => {
-            if (method === "Login") setMethod("Sign up");
-            else setMethod("Login");
+            if (method === 'Login') setMethod('Sign up');
+            else setMethod('Login');
           }}
         >
-          {method === "Login"
-            ? "Don't have an account? "
-            : "Already have an account? "}
-          <b className="gradient-border">
-            {method === "Login" ? "Sign up" : "Login"}
-          </b>
+          {method === 'Login' ? "Don't have an account? " : 'Already have an account? '}
+          <b className="gradient-border">{method === 'Login' ? 'Sign up' : 'Login'}</b>
         </p>
       </form>
     </>

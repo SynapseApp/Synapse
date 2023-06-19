@@ -3,56 +3,41 @@ const passport = require(`passport`);
 const User = require('../models/userModel');
 const authRouter = express.Router();
 
-authRouter.post('/login', passport.authenticate(`local`, { keepSessionInfo: true })); // Authentication successful, handle the response
+authRouter.post('/login', passport.authenticate('local'), (req, res) => {
+  res.send('logged in');
+});
+
+authRouter.post('/register', (req, res) => {
+  const { email, username, password } = req.body;
+
+  const newUser = new User({ username, email });
+  User.register(newUser, password, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      passport.authenticate('local')(req, res, () => {
+        res.send('registered and logged in');
+      });
+    }
+  });
+});
+
+authRouter.get('/api/auth', (req, res) => {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    res.json({ authenticated: true });
+  } else {
+    res.json({ authenticated: false });
+  }
+});
 
 authRouter.get('/logout', (req, res) => {
-  req.logout();
-  res.json({ message: 'Logout successful' });
-});
-
-authRouter.post('/register', async (req, res, next) => {
-  try {
-    const { username, email, password } = req.body;
-
-    // Create a new user object
-    const user = new User({ username, email });
-
-    const registeredUser = await User.register(user, password);
-
-    // Serialize the registered user
-    passport.serializeUser((user, done) => {
-      done(null, user);
-    });
-
-    // Set the password using the desired method (e.g., hashing)
-    req.login(registeredUser, (err) => {
-      if (err) return next(err);
-      res.json({ message: 'Registration and login successful' });
-    });
-  } catch (error) {
-    // Handle registration error
-    console.log(error);
-    res.status(450).json({ message: 'Registration failed' });
-  }
-});
-
-authRouter.get(
-  '/api/check-auth',
-  (req, res, next) => {
-    console.log('Before authentication middleware');
-    next();
-  },
-  passport.authenticate('local'),
-  (req, res) => {
+  console.log(req.isAuthenticated());
+  req.logout(req.user, (err) => {
+    if (err) return next(err);
     console.log(req.isAuthenticated());
-    if (req.isAuthenticated()) {
-      // User is authenticated
-      res.json({ authenticated: true });
-    } else {
-      // User is not authenticated
-      res.json({ authenticated: false });
-    }
-  }
-);
+    res.redirect('/');
+  });
+});
 
 module.exports = authRouter;

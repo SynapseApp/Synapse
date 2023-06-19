@@ -1,24 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./assets-styles.scss";
-import {
-  faCheckCircle,
-  faCircleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, useState } from "react";
-import { validateInput } from "../modules/methods";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './assets-styles.scss';
+import { faCheckCircle, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { FormEvent, useState } from 'react';
+import { validateInput } from '../modules/methods';
 
 interface PropInterface {
   type: string;
   placeholder: string;
+  name: string;
   setValueInput: any;
 }
 
-export default function InputGroup({
-  type,
-  placeholder,
-  setValueInput,
-}: PropInterface) {
-  const [value, setValue] = useState("");
+export default function InputGroup({ type, placeholder, name, setValueInput }: PropInterface) {
+  const [value, setValue] = useState('');
   const [inputIsValid, setInputIsValid] = useState(false);
 
   async function handleInput(event: FormEvent<HTMLInputElement>) {
@@ -35,18 +29,9 @@ export default function InputGroup({
   return (
     <>
       <div className="InputGroup">
-        <input
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onInput={handleInput}
-        />
+        <input type={type} placeholder={placeholder} value={value} name={name} onInput={handleInput} />
         <div className="indicator">
-          <FontAwesomeIcon
-            icon={inputIsValid ? faCheckCircle : faCircleExclamation}
-            size="lg"
-            className={`icon-${inputIsValid ? "success" : "danger"}`}
-          />
+          <FontAwesomeIcon icon={inputIsValid ? faCheckCircle : faCircleExclamation} size="lg" className={`icon-${inputIsValid ? 'success' : 'danger'}`} />
         </div>
       </div>
     </>
