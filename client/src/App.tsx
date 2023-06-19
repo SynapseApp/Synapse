@@ -35,9 +35,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RootPage />} />
-        {/* <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} /> */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
+        {/* <Route path="/home" element={<Home />} /> */}
+        <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
       </Routes>
     </BrowserRouter>
   );

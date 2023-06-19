@@ -7,7 +7,11 @@ import { useNavigate } from 'react-router-dom';
 
 // import MoreInfo from './MoreInfo';
 
-export default function AuthComponent() {
+type AuthComponentProps = {
+  setAuthenticated: (value: boolean) => void;
+};
+
+export default function AuthComponent({ setAuthenticated }: AuthComponentProps) {
   // const [takingMoreInfo, setTakingMoreInfo] = useState(false);
   const [method, setMethod] = useState('Login');
   const [valueEmail, setValueEmail] = useState('');
@@ -53,8 +57,12 @@ export default function AuthComponent() {
 
       console.log(response.status);
 
+      // Add a small delay before reloading and redirecting
       if (response.status === 200) {
-        navigate('/home');
+        setAuthenticated(true);
+        setTimeout(() => {
+          navigate('/home'); // Redirect to /home
+        }, 500); // Adjust the delay time as needed
       }
     } else {
       console.log(formData);
@@ -70,8 +78,12 @@ export default function AuthComponent() {
 
       console.log(response.status);
 
+      // Add a small delay before reloading and redirecting
       if (response.status === 200) {
-        navigate('/home');
+        setAuthenticated(true);
+        setTimeout(() => {
+          navigate('/home'); // Redirect to /home
+        }, 500); // Adjust the delay time as needed
       }
     }
   }

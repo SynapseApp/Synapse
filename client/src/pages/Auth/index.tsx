@@ -1,7 +1,11 @@
-import "../pages-styles.scss";
-import AuthComponent from "./AuthComponent";
+import '../pages-styles.scss';
+import AuthComponent from './AuthComponent';
 
-export default function AuthPage() {
+type AuthPageProps = {
+  setAuthenticated: (value: boolean) => void;
+};
+
+export default function AuthPage({ setAuthenticated }: AuthPageProps) {
   return (
     <section id="Login-Page">
       <header>
@@ -11,7 +15,7 @@ export default function AuthPage() {
       </header>
 
       <main>
-        <AuthComponent />
+        <AuthComponent setAuthenticated={setAuthenticated} />
       </main>
 
       <footer>Copyright@Synapse {new Date().getFullYear()}</footer>
