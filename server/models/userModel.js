@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 // Define the user schema
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, // User's email field
+  displayName: { type: String, required: true, unique: true },
   // imageUrl: String, // Uncomment this line to include an imageUrl field
 });
 

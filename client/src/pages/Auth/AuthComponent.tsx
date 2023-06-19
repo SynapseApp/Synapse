@@ -101,10 +101,13 @@ export default function AuthComponent({ setAuthenticated }: AuthComponentProps) 
         <h6>{method === 'Login' ? 'Login To Your Account' : 'Register A New Account'}</h6>
 
         {/* Google authentication button */}
-        <button id="Google-Auth-Button" className="gradient-box glow-effect-border">
+        <a
+          id="Google-Auth-Button" className="gradient-box glow-effect-border"
+          href="http://localhost:3000/login/federated/google"
+        >
           <FontAwesomeIcon icon={faG} size="xl" />
           {method} With Google
-        </button>
+        </a>
 
         {/* Username input (only for register method) */}
         {method !== 'Login' && <InputGroup type="text" placeholder="Username" name="username" setValueInput={setValueUsername} />}
