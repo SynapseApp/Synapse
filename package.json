@@ -16,5 +16,8 @@
     "url": "https://github.com/Anky-y/Synapse/issues"
   },
   "homepage": "https://github.com/Anky-y/Synapse#readme",
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.4.0"
+  }
 }

@@ -1,5 +1,5 @@
-import '../pages-styles.scss';
-import AuthComponent from './AuthComponent';
+import "../pages-styles.scss";
+import Auth from "./Auth";
 
 type AuthPageProps = {
   setAuthenticated: (value: boolean) => void;
@@ -7,7 +7,7 @@ type AuthPageProps = {
 
 export default function AuthPage({ setAuthenticated }: AuthPageProps) {
   return (
-    <section id="Login-Page">
+    <section id="Auth-Page">
       <header>
         <h3 className="italic">
           Welcome To <span className="brand glow-effect-text">Synapse</span>
@@ -15,7 +15,7 @@ export default function AuthPage({ setAuthenticated }: AuthPageProps) {
       </header>
 
       <main>
-        <AuthComponent setAuthenticated={setAuthenticated} />
+        <Auth setAuthenticated={setAuthenticated} />
       </main>
 
       <footer>

@@ -5,7 +5,7 @@
     @apply p-5 w-full px-7 rounded-tl-lg rounded-bl-lg bg-[#222222] outline-none focus:bg-[#000000];
   }
   > .indicator {
-    @apply bg-[#222222] rounded-tr-lg rounded-br-lg pr-5 flex items-center;
+    @apply bg-[#222222] rounded-tr-lg rounded-br-lg p-5 flex items-center;
   }
 
   > input:focus + .indicator {
