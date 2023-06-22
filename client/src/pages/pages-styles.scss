@@ -40,31 +40,6 @@
         }
       }
     }
-
-    #MoreInfo-Parent {
-      @apply w-full h-full;
-
-      #MoreInfo {
-        @apply flex flex-col justify-center items-center gap-5;
-
-        .pfp {
-          @apply w-[12rem] h-[12rem] rounded-full bg-slate-600;
-        }
-
-        #img-input {
-          @apply w-1 h-1 fixed top-0 -left-0;
-          visibility: hidden;
-        }
-
-        #Submit-Button {
-          @apply flex justify-between text-lg;
-
-          svg path {
-            fill: black;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -107,21 +82,36 @@
   #synapse-header {
     @apply bg-white flex items-center h-[5rem] border-2 border-t-0 border-slate-200 pl-[1rem];
   }
+
+  .chat:hover {
+    cursor: pointer;
+  }
+
+  .chat-container {
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: aqua;
+    width: 100%;
+    height: 100%;
+  }
+
   .chat {
     background-color: #d9d9d9;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     border-radius: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    padding-right: 1rem;
     padding-left: 1rem;
     height: 4rem;
     display: flex;
     text-align: center;
     align-items: center;
 
+
     .chat-text {
-      background-color: #d9d9d9;
-      width: 5rem;
+      background-color: #D9D9D9;
+      width: 100%;
       margin-left: 0.6rem;
 
       p {
@@ -138,13 +128,14 @@
   .contact-name {
     font-weight: 400;
     font-size: 1.2rem;
+
   }
 
   .chat-menu {
-    @apply bg-slate-400 h-[100vh] w-[100%];
+    @apply bg-white h-[100vh] w-[100%];
 
     .chat-nav {
-      @apply bg-white h-[5rem] flex items-center;
+      @apply bg-white h-[8%] flex items-center border-b-2 border-l-0 border-r-2 border-t-0 border-slate-200;
       justify-content: left;
     }
     .user-picture {
@@ -154,24 +145,32 @@
       @apply ml-[0.5rem] text-lg;
     }
     .user-status {
-      @apply ml-[0.5rem] text-lg;
+      @apply ml-[0.4rem] text-lg;
+    }
+
+    .chat-left {
+      @apply w-[50%] h-[100%] bg-white flex items-center;
+      
+      .user-info {
+        @apply ml-[0.5rem]
+      }
     }
     .chat-right {
-      @apply w-[20rem] flex;
+      @apply w-[50%] h-[100%] flex bg-white flex items-center;
+      justify-content: right;
+
+      .user-icon {
+        margin-right: 1.5rem;
+      }
     }
   }
 }
 
-@media screen and (max-width: 800px) {
-  #Auth-Page > main {
-    #Auth {
-      .row {
-        @apply p-0 flex-col;
-        .Local-Auths,
-        .Provided-Auths {
-          @apply w-full;
-        }
-      }
+
+@media screen and (max-width: 600px) {
+  #Login-Page {
+    > header > h3 {
+      @apply text-3xl;
     }
 
     #Auth-Local {
@@ -182,5 +181,7 @@
         left: 5vw;
       }
     }
+
   }
 }
+  
