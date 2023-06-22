@@ -1,6 +1,8 @@
-import { faCircleInfo, faPhone, faVideo } from '@fortawesome/free-solid-svg-icons'
+import { faCircleInfo, faFaceLaugh, faImage, faPaperPlane, faPhone, faRightLong, faVideo } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Chat from './Chat'
 import React from 'react'
+import ChatContainerComponent from './ChatContainerComponent'
 
 const ChatMenu = () => {
     let userChats = {
@@ -12,18 +14,26 @@ const ChatMenu = () => {
 
     return (
         <div className='chat-menu'>
+
             <div className='chat-nav'>
-                <img className='user-picture' src={userChats.picture}></img>
-                <div>
-                    <h6 className='user-username'>{userChats.friend}</h6>
-                    <p className='user-status'>{userChats.status}</p>
+                <div className='chat-left'>
+                    <img className='user-picture' src={userChats.picture}></img>
+                    <div className='user-info'>
+                        <h6 className='user-username'>{userChats.friend}</h6>
+                        <p className='user-status'>{userChats.status}</p>
+                    </div>
                 </div>
                 <div className='chat-right'>
-                    <FontAwesomeIcon size='2xl' icon={faPhone} />
-                    <FontAwesomeIcon size='2xl' icon={faVideo} />
-                    <FontAwesomeIcon size='2xl' icon={faCircleInfo} />
+                    <FontAwesomeIcon className='user-icon' size='2xl' icon={faPhone} />
+                    <FontAwesomeIcon className='user-icon' size='2xl' icon={faVideo} />
+                    <FontAwesomeIcon className='user-icon info-icon' size='2xl' icon={faCircleInfo} />
                 </div>
             </div>
+
+            <div className='component-div'>
+                <ChatContainerComponent />
+            </div>
+
         </div >
     )
 }
