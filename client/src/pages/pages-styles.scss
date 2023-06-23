@@ -91,8 +91,7 @@
     display: flex;
     text-align: center;
     align-items: center;
-
-
+    
     .chat-text {
       background-color: #D9D9D9;
       width: 100%;
@@ -116,7 +115,7 @@
   }
 
   .chat-menu {
-    @apply bg-white h-[100vh] w-[100%];
+    @apply bg-white h-[100vh] w-[100%] flex flex-col;
 
     .chat-nav {
       @apply bg-white h-[8%] flex items-center border-b-2 border-l-0 border-r-2 border-t-0 border-slate-200;
@@ -191,6 +190,56 @@
       @apply flex justify-center bg-slate-200 w-[10rem] h-[3rem] text-center items-center mr-[2rem] rounded-lg;
     }
   }
+
+  .x-icon {
+    display: flex;
+    justify-self: start;
+    align-self: flex-start;
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+
+.chat-info {
+  background-color: white;
+  display: flex;
+  position: absolute;
+  justify-self: end;
+  align-self: flex-end;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10000;
+  height: 100vh;
+  width: 20rem;
+  border: 0.1rem solid #D9D9D9;
+
+  .chat-info-pic {
+    width: 6rem;
+    height: 6rem;
+    margin-top: 5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5rem;
+  }
+  .chat-info-header {
+    margin-bottom: 1rem;
+  }
+
+  .chat-info-functions {
+    display: flex;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 0.2rem solid #D9D9D9;
+  }
+  .chat-info-icon {
+    margin-right: 0.5rem;
+  }
+  input {
+    width: 10rem;
+  }
+}
 
 
 @media screen and (max-width: 600px) {
