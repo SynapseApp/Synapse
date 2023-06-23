@@ -8,8 +8,9 @@ const { mongoDB_url, port } = require('./store.js');
 const connectDatabase = require('./database/mongodb.js');
 const passport = require('./config/passport.js');
 
-const userRoutes = require('./routes/userRoutes.js');
+const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const googleRoutes = require('./routes/googleAuth');
 
 // Connect to the MongoDB database
 connectDatabase();
@@ -77,6 +78,9 @@ app.use('/user', userRoutes);
 
 // Route handlers for authentication-related functionality
 app.use('/auth', authRoutes);
+
+// Route handlers for google authentication related functionality
+app.use('/', googleRoutes);
 
 // Start the server and listen for incoming requests
 app.listen(port, () => {

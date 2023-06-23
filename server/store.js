@@ -10,7 +10,6 @@ exports.url = `http://localhost:${port}`;
 
 // MongoDB connection URL
 exports.mongoDB_url = 'mongodb://127.0.0.1/Synapse';
-
 // Default response structure
 exports.defaultResponse = function () {
   // Create a default response object

@@ -6,7 +6,11 @@ const Schema = mongoose.Schema;
 
 // Define the user schema
 const userSchema = new Schema({
+  username: { type: String, sparse: true, unique: true },
   email: { type: String, required: true, unique: true }, // User's email field
+  displayName: { type: String, sparse: true },
+  googleId: { type: String, required: false, unique: true },
+  provider: { type: String, required: false }
   // imageUrl: String, // Uncomment this line to include an imageUrl field
 });
 
