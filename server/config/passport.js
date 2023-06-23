@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oidc');
 const User = require('../models/userModel');
+const { PromiseProvider } = require('mongoose');
 
 // Configure Passport
 
@@ -32,10 +33,8 @@ passport.use(new GoogleStrategy({
     callbackURL: '/oauth2/redirect/google',
     scope: ['profile', 'email'],
 }, async function verify(issuer, profile, cb) {
-    const param = await User.findOne({ displayName: profile.displayName });
-    console.log(param);
-    console.log(issuer);
-    if (param) {
+    const param = await User.findOne({ googleId: profile.id });
+    if (!param) {
         const userCreate = await User.create({
             email: profile.emails[0].value,
             displayName: profile.displayName,
