@@ -14,6 +14,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 
 // GOOGLE STRATEGY
+passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+        cb(null, { id: user.googleId, email: user.email });
+    });
+});
+
+passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
+        return cb(null, user);
+    });
+});
 
 passport.use(new GoogleStrategy({
     clientID: "441670067708-535huo2c4b5l3u05ntqf59dlsqteipm9.apps.googleusercontent.com",
@@ -21,42 +32,21 @@ passport.use(new GoogleStrategy({
     callbackURL: '/oauth2/redirect/google',
     scope: ['profile', 'email'],
 }, async function verify(issuer, profile, cb) {
-    const param = await User.find({ googleId: profile.id });
+    const param = await User.findOne({ displayName: profile.displayName });
+    console.log(param);
+    console.log(issuer);
     if (param) {
-        const user = await User.create({
+        const userCreate = await User.create({
             email: profile.emails[0].value,
             displayName: profile.displayName,
             googleId: profile.id,
             provider: issuer
         })
-        user.save();
-        passport.serializeUser(function (user, cb) {
-            process.nextTick(function () {
-                cb(null, { id: user.googleId, email: user.email });
-            });
-        });
+        userCreate.save();
 
-        passport.deserializeUser(function (user, cb) {
-            process.nextTick(function () {
-                return cb(null, user);
-            });
-        });
-        return cb(null, user);
+        return cb(null, userCreate);
     } else {
-        const user = User.find({ googleId: profile.id });
-        if (!user) { return cb(null, false); }
-        passport.serializeUser(function (user, cb) {
-            process.nextTick(function () {
-                cb(null, { id: user.id, username: user.username, name: user.name });
-            });
-        });
-
-        passport.deserializeUser(function (user, cb) {
-            process.nextTick(function () {
-                return cb(null, user);
-            });
-        });
-        return cb(null, user);
+        return cb(null, param);
     }
 }));
 
