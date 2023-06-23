@@ -28,6 +28,7 @@ export default function InputGroup({
 }: PropInterface) {
   const [value, setValue] = useState("");
   const [inputIsValid, setInputIsValid] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
   /**
    * Handle input change event.
@@ -45,26 +46,36 @@ export default function InputGroup({
 
     const validatedData = validateInput(target.value, type);
     setInputIsValid(validatedData.isValid);
+    setFeedback(validatedData.feedback);
   }
 
   return (
     <>
       <div className="InputGroup">
-        <input
-          type={type}
-          placeholder={placeholder}
-          autoComplete="off"
-          value={value}
-          name={name}
-          onInput={handleInput}
-        />
-        <div className="indicator">
-          <FontAwesomeIcon
-            icon={inputIsValid ? faCheckCircle : faCircleExclamation}
-            size="lg"
-            className={`icon-${inputIsValid ? "success" : "danger"}`}
+        <div className="row">
+          <input
+            type={type}
+            placeholder={placeholder}
+            autoComplete="off"
+            value={value}
+            name={name}
+            onInput={handleInput}
           />
+          <div className="indicator">
+            <FontAwesomeIcon
+              icon={inputIsValid ? faCheckCircle : faCircleExclamation}
+              size="lg"
+              className={`icon-${inputIsValid ? "success" : "danger"}`}
+            />
+          </div>
         </div>
+        <p
+          className={`feedback ${inputIsValid ? "success" : "danger"} ${
+            feedback === "" ? "hidden" : ""
+          }`}
+        >
+          {feedback}
+        </p>
       </div>
     </>
   );

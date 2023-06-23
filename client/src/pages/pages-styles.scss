@@ -24,7 +24,7 @@
 
     #Auth-Local {
       #Local-Backward {
-        @apply absolute top-[5vh] left-[20vw] hover:scale-90;
+        @apply absolute  hover:scale-90;
       }
 
       #Local {
@@ -90,7 +90,7 @@
   #search-component {
     @apply bg-white h-[100vh] w-[20rem] border-r-4 border-slate-200;
     form {
-      @apply flex justify-center items-center justify-center pl-[0.5rem] border-y-4 border-slate-200;
+      @apply flex items-center justify-center pl-[0.5rem] border-y-4 border-slate-200;
     }
 
     #search-icon {
@@ -162,19 +162,25 @@
   }
 }
 
-@media screen and (max-width: 600px) {
-  #Auth-Page > main > #Auth {
-    .row {
-      @apply p-0 flex-col;
-      .Local-Auths,
-      .Provided-Auths {
-        @apply w-full;
+@media screen and (max-width: 800px) {
+  #Auth-Page > main {
+    #Auth {
+      .row {
+        @apply p-0 flex-col;
+        .Local-Auths,
+        .Provided-Auths {
+          @apply w-full;
+        }
       }
     }
-  }
 
-  #Login {
-    @apply p-5;
-    width: 100vw !important;
+    #Auth-Local {
+      @apply p-5 justify-center;
+      width: 100vw !important;
+
+      #Local-Backward {
+        left: 5vw;
+      }
+    }
   }
 }

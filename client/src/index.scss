@@ -57,6 +57,14 @@ h6 {
   color: rgb(60, 255, 60);
 }
 
+.danger {
+  color: rgb(255, 37, 37);
+}
+
+.success {
+  color: rgb(60, 255, 60);
+}
+
 .gradient-btn {
   @apply w-full p-5 px-7 rounded-md text-slate-950 font-semibold text-left;
   background: $linear-gradient;
