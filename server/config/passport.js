@@ -2,8 +2,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oidc');
 const User = require('../models/userModel');
-const { PromiseProvider } = require('mongoose');
-
 // Configure Passport
 
 /**
