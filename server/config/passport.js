@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oidc');
 const User = require('../models/userModel');
 
 // Configure Passport
@@ -10,6 +11,54 @@ const User = require('../models/userModel');
  * It utilizes the User.authenticate() method for validating the user's credentials.
  */
 passport.use(new LocalStrategy(User.authenticate()));
+
+
+// GOOGLE STRATEGY
+
+passport.use(new GoogleStrategy({
+    clientID: "441670067708-535huo2c4b5l3u05ntqf59dlsqteipm9.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: '/oauth2/redirect/google',
+    scope: ['profile', 'email'],
+}, async function verify(issuer, profile, cb) {
+    const param = await User.find({ googleId: profile.id });
+    if (param) {
+        const user = await User.create({
+            email: profile.emails[0].value,
+            displayName: profile.displayName,
+            googleId: profile.id,
+            provider: issuer
+        })
+        user.save();
+        passport.serializeUser(function (user, cb) {
+            process.nextTick(function () {
+                cb(null, { id: user.googleId, email: user.email });
+            });
+        });
+
+        passport.deserializeUser(function (user, cb) {
+            process.nextTick(function () {
+                return cb(null, user);
+            });
+        });
+        return cb(null, user);
+    } else {
+        const user = User.find({ googleId: profile.id });
+        if (!user) { return cb(null, false); }
+        passport.serializeUser(function (user, cb) {
+            process.nextTick(function () {
+                cb(null, { id: user.id, username: user.username, name: user.name });
+            });
+        });
+
+        passport.deserializeUser(function (user, cb) {
+            process.nextTick(function () {
+                return cb(null, user);
+            });
+        });
+        return cb(null, user);
+    }
+}));
 
 /**
  * Serialize the user's session data to be stored in the session.
