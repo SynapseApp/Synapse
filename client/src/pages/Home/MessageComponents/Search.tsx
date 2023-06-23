@@ -41,14 +41,14 @@ const Search = () => {
         const renderedChats = [];
 
         for (let i = 0; i < userChats.length; i++) {
-            userChats[i].friend = truncateText(userChats[i].friend, 16);
-            userChats[i].message = truncateText(userChats[i].message, 15);
+            userChats[i].friend = truncateText(userChats[i].friend, 18);
+            userChats[i].message = truncateText(userChats[i].message, 20);
 
 
             renderedChats.push(
                 <div className='chat' key={i}>
                     <img src={userChats[i].picture} alt='Profile' />
-                    <div className='chat-text'>
+                    <div className='chat-text' onClick={removeHiddenChatMenu}>
                         <p className='contact-name'>{userChats[i].friend}</p>
                         <p>{userChats[i].message}</p>
                     </div>
@@ -58,6 +58,14 @@ const Search = () => {
 
         return renderedChats;
     };
+
+    function removeHiddenChatMenu(user: any): void {
+        const element = document.querySelector<HTMLElement>(".chat-menu");
+        if (element) {
+            element.classList.remove("hidden");
+        }
+    }
+
     const renderedChats = printChats();
 
     return (
