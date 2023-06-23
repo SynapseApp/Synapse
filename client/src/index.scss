@@ -2,13 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-
 $transition: all 0.1s ease-in-out;
-$linear-gradient: linear-gradient(120deg, rgba(93, 252, 195, 0.8) 62%, rgba(250, 255, 65, 1) 80%);
+$linear-gradient: linear-gradient(
+  120deg,
+  rgba(93, 252, 195, 0.8) 62%,
+  rgba(250, 255, 65, 1) 80%
+);
 
 body {
   @apply w-screen h-screen overflow-x-hidden;
-  background: linear-gradient(120deg, rgba(93, 252, 194, 0.1) 62%, rgba(250, 255, 65, 0.3) 80%);
+  background: linear-gradient(
+    120deg,
+    rgba(93, 252, 194, 0.1) 62%,
+    rgba(250, 255, 65, 0.3) 80%
+  );
   background-color: #121418;
   // background-color: #ffffff;
 }
@@ -57,7 +64,12 @@ h6 {
 
 .gradient-border:hover {
   @apply hover:px-2;
-  border-image: linear-gradient(270deg, rgba(93, 252, 195, 0.8) 60%, rgba(250, 255, 65, 1) 80%) 10;
+  border-image: linear-gradient(
+      270deg,
+      rgba(93, 252, 195, 0.8) 60%,
+      rgba(250, 255, 65, 1) 80%
+    )
+    10;
 
   border-bottom: 2px;
   border-style: solid;
@@ -81,7 +93,7 @@ h6 {
   border: solid $border transparent; /* !importanté */
 
   &:before {
-    content: '';
+    content: "";
     transition: $transition;
     position: absolute;
     top: 0;
@@ -105,46 +117,80 @@ h6 {
 }
 
 .glow-effect {
-  background: -webkit-linear-gradient(0deg, rgba(93, 252, 195, 0.8) 62%, rgba(250, 255, 65, 1) 80%);
-  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .glow-effect:hover {
-  background: -webkit-linear-gradient(0deg, rgba(93, 252, 195, 0.8) 62%, rgba(250, 255, 65, 1) 80%);
-  --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
+  --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .glow-effect-text {
   cursor: pointer;
-  background: -webkit-linear-gradient(0deg, rgba(93, 252, 195, 0.8) 62%, rgba(250, 255, 65, 1) 80%);
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  --tw-drop-shadow: drop-shadow(0px 0px 1px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 2px rgba(250, 255, 65, 0.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  --tw-drop-shadow: drop-shadow(0px 0px 1px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 2px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .glow-effect-text:hover {
-  background: -webkit-linear-gradient(0deg, rgba(93, 252, 195, 0.8) 62%, rgba(250, 255, 65, 1) 80%);
+  background: -webkit-linear-gradient(
+    0deg,
+    rgba(93, 252, 195, 0.8) 62%,
+    rgba(250, 255, 65, 1) 80%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+    drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+    var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate)
+    var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .glow-effect-border {
   &:before {
-    --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
-    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-drop-shadow: drop-shadow(0px 0px 2.5px rgba(93, 252, 195, 0.8))
+      drop-shadow(0px 0px 5px rgba(250, 255, 65, 0.5));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
   }
 }
 
 .glow-effect-border:hover {
   &:before {
-    --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8)) drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
-    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-drop-shadow: drop-shadow(0px 0px 5px rgba(93, 252, 195, 0.8))
+      drop-shadow(0px 0px 10px rgba(250, 255, 65, 0.5));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
   }
 }

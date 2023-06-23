@@ -2,7 +2,6 @@
 // its something like what we got tsconfig.json for typescript
 
 module.exports = {
-  preset: "ts-jest",
   testEnvironment: "node",
   moduleNameMapper: {
     "^@exmpl/(.*)$": "<rootDir>/src/$1",

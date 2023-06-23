@@ -1,12 +1,10 @@
-import { getRandomValues } from "crypto";
-import { userInterface, userDetailsInterface } from "../schemas";
-import { defaultResponse, url } from "../store";
+import { defaultResponse, url } from "../store.js";
 
 describe("perform CRUD on user", () => {
-  const userDetails: userDetailsInterface = generateRandomUser();
+  const userDetails = generateRandomUser();
   console.log("Generated user:", userDetails);
 
-  let user: undefined | userInterface = undefined;
+  let user = undefined;
 
   it("creates a new user in database", async () => {
     const response = await createUser(userDetails);
@@ -105,7 +103,7 @@ describe("perform CRUD on user", () => {
 });
 
 // generates a random user data for testing
-function generateRandomUser(): userDetailsInterface {
+function generateRandomUser() {
   const names = ["John", "Jane", "Alice", "Bob", "Emma", "David"];
   const emails = ["gmail.com", "yahoo.com", "outlook.com"];
   const passwords = ["pass123", "secret", "password123", "letmein"];
@@ -133,7 +131,7 @@ function generateRandomUser(): userDetailsInterface {
 
 // frontend developers can copy functions from here and use them instead of creating fetch requests
 
-async function createUser(userDetails: userDetailsInterface) {
+async function createUser(userDetails) {
   // return newly created user
 
   let response = defaultResponse();
@@ -152,7 +150,7 @@ async function createUser(userDetails: userDetailsInterface) {
   return response;
 }
 
-async function authenticateUser(email: string, password: string) {
+async function authenticateUser(email, password) {
   // return wether user is authenticated or not
 
   let response = defaultResponse();
@@ -174,7 +172,7 @@ async function authenticateUser(email: string, password: string) {
   return response;
 }
 
-async function fetchUserData(_id: string) {
+async function fetchUserData(_id) {
   // return users data
 
   let response = defaultResponse();
@@ -192,7 +190,7 @@ async function fetchUserData(_id: string) {
   return response;
 }
 
-async function updateUserData(_id: string, updateKeys: object) {
+async function updateUserData(_id, updateKeys) {
   // update user
 
   let response = defaultResponse();
@@ -211,7 +209,7 @@ async function updateUserData(_id: string, updateKeys: object) {
   return response;
 }
 
-async function deleteUser(_id: string) {
+async function deleteUser(_id) {
   // deletes user
 
   let response = defaultResponse();

@@ -1,22 +1,48 @@
-@import '../index.scss';
+@import "../index.scss";
 
 #Login-Page {
   @apply w-screen h-screen text-center p-5
         flex flex-col justify-between items-center;
 
-  > main > #Login-Component {
-    @apply w-[400px]
-      flex flex-col justify-center items-center gap-5;
+  > main {
+    #Login-Component {
+      @apply w-[400px]
+      flex-col justify-center items-center gap-5;
 
-    > #Google-Auth-Button {
-      @apply w-full flex justify-center items-center gap-5 text-xl;
+      > #Google-Auth-Button {
+        @apply w-full flex justify-center items-center gap-5 text-xl;
+      }
+
+      > #Submit-Button {
+        @apply flex justify-between text-xl;
+
+        > svg > path {
+          fill: black;
+        }
+      }
     }
+    #MoreInfo-Parent {
+      @apply w-full h-full;
 
-    > #Submit-Button {
-      @apply flex justify-between text-xl;
+      #MoreInfo {
+        @apply flex flex-col justify-center items-center gap-5;
 
-      > svg > path {
-        fill: black;
+        .pfp {
+          @apply w-[12rem] h-[12rem] rounded-full bg-slate-600;
+        }
+
+        #img-input {
+          @apply w-1 h-1 fixed top-0 -left-0;
+          visibility: hidden;
+        }
+
+        #Submit-Button {
+          @apply flex justify-between text-lg;
+
+          svg path {
+            fill: black;
+          }
+        }
       }
     }
   }
@@ -33,15 +59,14 @@
   }
   #left-bar {
     @apply bg-white w-[10rem] h-[100vh] flex flex-col pt-[10rem] border-4 border-slate-200;
-  } 
+  }
   #icon {
     margin-bottom: 3rem;
   }
   path {
     fill: black;
-    @apply hover:cursor-pointer
+    @apply hover:cursor-pointer;
   }
-
 }
 
 #message-menu {
@@ -53,7 +78,7 @@
     }
 
     #search-icon {
-      @apply pr-[0.5rem]
+      @apply pr-[0.5rem];
     }
     input {
       @apply font-semibold w-[100%] text-black placeholder:text-slate-500 text-center py-[0.5rem] text-xl focus:text-left pr-[2rem] focus:outline-0;
@@ -240,7 +265,6 @@
     width: 10rem;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   #Login-Page {
