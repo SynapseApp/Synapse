@@ -43,6 +43,10 @@
   }
 }
 
+.hidden {
+  display: none;
+}
+
 #home {
   @apply bg-white w-[100vw] h-[100vh] flex flex-row;
   * {
@@ -107,9 +111,9 @@
     display: flex;
     text-align: center;
     align-items: center;
-    
+
     .chat-text {
-      background-color: #D9D9D9;
+      background-color: #d9d9d9;
       width: 100%;
       margin-left: 0.6rem;
 
@@ -127,10 +131,10 @@
   .contact-name {
     font-weight: 400;
     font-size: 1.2rem;
-
   }
 
   .chat-menu {
+    @apply bg-white h-[100vh] w-[100%] flex flex-col;
     @apply bg-white h-[100vh] w-[100%] flex flex-col;
 
     .chat-nav {
@@ -149,12 +153,27 @@
 
     .chat-left {
       @apply w-[50%] h-[100%] bg-white flex items-center;
-      
+
       .user-info {
-        @apply ml-[0.5rem]
+        @apply ml-[0.5rem];
+      }
+      @apply ml-[0.4rem] text-lg;
+    }
+
+    .chat-left {
+      @apply w-[50%] h-[100%] bg-white flex items-center;
+
+      .user-info {
+        @apply ml-[0.5rem];
       }
     }
     .chat-right {
+      @apply w-[50%] h-[100%] bg-white flex items-center;
+      justify-content: right;
+
+      .user-icon {
+        margin-right: 1.5rem;
+      }
       @apply w-[50%] h-[100%] flex bg-white flex items-center;
       justify-content: right;
 
@@ -165,30 +184,6 @@
   }
 }
 
-.component-div {
-  @apply w-[100%] h-[92%] bg-black flex;
-
-
-  
-  .message-container {
-    display: flex;
-    background-color: purple;
-    height: 8%;
-    width: 100%;
-    .message-form {
-      @apply flex w-[100%] bg-[#D9D9D9] items-center;
-    
-      .message-input {
-        @apply font-semibold placeholder-black bg-[#D9D9D9] mr-[2rem] ml-[2rem] w-[100%] h-[3rem] rounded-lg text-xl outline-0;
-      }
-      .msg-icon {
-        @apply h-[2rem] w-[2rem] mr-[1rem];
-      }
-    }
-  }
-  
-}
-
 .chat-content {
   background-color: white;
   height: 100%;
@@ -197,23 +192,22 @@
     @apply w-[100%] h-[5rem] bg-white flex justify-end items-center;
   }
 
-    .receiving-msg {
-      @apply w-[100%] h-[5rem] flex items-center bg-white justify-start pl-[2rem];  
-    }
-
-
-    .msg-div {
-      @apply flex justify-center bg-slate-200 w-[10rem] h-[3rem] text-center items-center mr-[2rem] rounded-lg;
-    }
+  .receiving-msg {
+    @apply w-[100%] h-[5rem] flex items-center bg-white justify-start pl-[2rem];
   }
 
-  .x-icon {
-    display: flex;
-    justify-self: start;
-    align-self: flex-start;
-    margin-left: 1rem;
-    margin-top: 1rem;
+  .msg-div {
+    @apply flex justify-center bg-slate-200 w-[10rem] h-[3rem] text-center items-center mr-[2rem] rounded-lg;
   }
+}
+
+.x-icon {
+  display: flex;
+  justify-self: start;
+  align-self: flex-start;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
 
 .chat-info {
   background-color: white;
@@ -226,7 +220,7 @@
   z-index: 10000;
   height: 100vh;
   width: 20rem;
-  border: 0.1rem solid #D9D9D9;
+  border: 0.1rem solid #d9d9d9;
 
   .chat-info-pic {
     width: 6rem;
@@ -247,7 +241,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-bottom: 0.2rem solid #D9D9D9;
+    border-bottom: 0.2rem solid #d9d9d9;
   }
   .chat-info-icon {
     margin-right: 0.5rem;
@@ -256,7 +250,6 @@
     width: 10rem;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   #Login-Page {
@@ -272,8 +265,5 @@
         left: 5vw;
       }
     }
-
   }
 }
-
-  
