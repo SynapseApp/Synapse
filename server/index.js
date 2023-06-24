@@ -1,16 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongo')(session);
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongo")(session);
+require("dotenv").config();
 
-const { mongoDB_url, port } = require('./store.js');
-const connectDatabase = require('./database/mongodb.js');
-const passport = require('./config/passport.js');
+const { mongoDB_url, port } = require("./store.js");
+const connectDatabase = require("./database/mongodb.js");
+const passport = require("./config/passport.js");
 
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
-const googleRoutes = require('./routes/googleAuth');
+const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
+const googleRoutes = require("./routes/googleAuth");
 
 // Connect to the MongoDB database
 connectDatabase();
@@ -20,7 +20,7 @@ const app = express();
 
 // Configure Cross-Origin Resource Sharing (CORS) options
 const corsOptions = {
-  origin: 'http://localhost:8000', // Allow requests from this origin
+  origin: "http://localhost:8000", // Allow requests from this origin
   credentials: true, // Enable sending cookies in cross-origin requests
 };
 
@@ -35,9 +35,7 @@ const store = new MongoDBStore({
 });
 
 // Handle errors from the session store
-store.on(`error`, function (e) {
-  console.log(`Session Store Error!`);
-});
+store.on(`error`, function (error) {});
 
 // Configure session middleware
 const sessionConfig = {
@@ -69,18 +67,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Endpoint to handle HTTP GET request to '/home'
-app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {
-  console.log(req.body, 'hey');
-});
+app.get(
+  "http://localhost:8000/home",
+  passport.authenticate("local"),
+  (req, res) => {}
+);
 
 // Route handlers for user-related functionality
-app.use('/user', userRoutes);
+app.use("/user", userRoutes);
 
 // Route handlers for authentication-related functionality
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
 
 // Route handlers for google authentication related functionality
-app.use('/', googleRoutes);
+app.use("/", googleRoutes);
 
 // Start the server and listen for incoming requests
 app.listen(port, () => {

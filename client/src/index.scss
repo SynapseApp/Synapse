@@ -57,6 +57,14 @@ h6 {
   color: rgb(60, 255, 60);
 }
 
+.danger {
+  color: rgb(255, 37, 37);
+}
+
+.success {
+  color: rgb(60, 255, 60);
+}
+
 .gradient-btn {
   @apply w-full p-5 px-7 rounded-md text-slate-950 font-semibold text-left;
   background: $linear-gradient;
@@ -90,7 +98,7 @@ h6 {
   background-color: #121418;
 
   background-clip: padding-box; /* !importanté */
-  border: solid $border transparent; /* !importanté */
+  outline: solid $border transparent; /* !importanté */
 
   &:before {
     content: "";
@@ -103,16 +111,27 @@ h6 {
     z-index: -1;
     margin: -$border; /* !importanté */
     border-radius: inherit; /* !importanté */
-    background: $linear-gradient;
+    background: linear-gradient(
+      120deg,
+      rgb(0, 255, 162) 62%,
+      rgb(249, 255, 89) 80%
+    );
   }
 }
 
 .gradient-box:hover {
+  @apply scale-100 font-extrabold;
+  color: #faff77;
+
   $border: 3px;
-  border: solid $border transparent; /* !importanté */
+  outline: solid $border transparent; /* !importanté */
 
   &:before {
     margin: -$border;
+  }
+
+  path {
+    @apply text-slate-50;
   }
 }
 
@@ -192,5 +211,17 @@ h6 {
     filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
       var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
       var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+}
+
+.fade-out-r-l {
+  animation: fade-out-r-l cubic-bezier(0.63, -0.29, 0.52, 1.42) 0.5s;
+}
+
+@keyframes fade-out-r-l {
+  100% {
+    opacity: 0;
+    transform-origin: 0 0;
+    transform: scale(0.7);
   }
 }

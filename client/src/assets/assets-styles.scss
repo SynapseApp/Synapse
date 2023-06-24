@@ -1,14 +1,30 @@
 .InputGroup {
-  @apply w-full flex;
+  @apply w-full flex flex-col items-end;
 
-  > input {
-    @apply p-5 w-full px-7 rounded-tl-lg rounded-bl-lg bg-[#222222] outline-none focus:bg-[#000000];
-  }
-  > .indicator {
-    @apply bg-[#222222] rounded-tr-lg rounded-br-lg pr-5 flex items-center;
+  > .row {
+    @apply w-full flex;
+
+    > input {
+      @apply p-5 w-full px-7 rounded-tl-lg rounded-bl-lg bg-[#222222] outline-none focus:bg-[#000000];
+    }
+    > .indicator {
+      @apply bg-[#222222] rounded-tr-lg rounded-br-lg p-5 flex items-center;
+    }
+
+    > input:focus + .indicator {
+      @apply bg-[#000000];
+    }
   }
 
-  > input:focus + .indicator {
-    @apply bg-[#000000];
+  .row:hover + p {
+    // display: block !important;
+    opacity: 1;
+  }
+
+  > p {
+    @apply fixed max-w-[25rem]  py-3 px-5 text-sm rounded-xl z-10 font-bold self-end translate-y-[4rem];
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    // display: none;
+    opacity: 0;
   }
 }
