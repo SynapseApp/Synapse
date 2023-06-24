@@ -146,7 +146,14 @@ export default function Local({
         )}
 
         {/* Submit button */}
-        <button id="Submit-Button" className="gradient-btn glow-effect">
+        <button
+          id="Submit-Button"
+          type="submit"
+          className="gradient-btn glow-effect"
+          onClick={() => {
+            console.log("first");
+          }}
+        >
           Continue
           <FontAwesomeIcon icon={faArrowRight} size="xl" />
         </button>

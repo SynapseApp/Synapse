@@ -57,13 +57,18 @@ export default function Auth({ setAuthenticated }: AuthComponentProps) {
           </div>
 
           <div className="Provided-Auths">
-            <button
-              id="Google-Auth-Button"
-              className="gradient-box glow-effect-border"
+            <a
+              className="w-full"
+              href="http://localhost:3000/login/federated/google"
             >
-              <FontAwesomeIcon icon={faGoogle} size="xl" />
-              Sign Up With Google
-            </button>
+              <button
+                id="Google-Auth-Button"
+                className="gradient-box glow-effect-border"
+              >
+                <FontAwesomeIcon icon={faGoogle} size="xl" />
+                Sign Up With Google
+              </button>
+            </a>
             <button
               id="Google-Auth-Button"
               className="gradient-box glow-effect-border"
