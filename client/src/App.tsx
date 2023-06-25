@@ -47,6 +47,8 @@ function App() {
           path="/home"
           element={authenticated ? <Home /> : <Navigate to="/auth" replace />}
         />
+
+
         <Route
           path="/auth"
           element={<AuthPage setAuthenticated={setAuthenticated} />}

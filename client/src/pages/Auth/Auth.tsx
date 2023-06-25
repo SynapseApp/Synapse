@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Local from "./Local";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faGoogle,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import { faF, faT, faG } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faFacebook,
+//   faGoogle,
+//   faTwitter,
+// } from "@fortawesome/free-brands-svg-icons";
+// import { faF, faT, faG } from "@fortawesome/free-solid-svg-icons";
 
 type AuthComponentProps = {
   setAuthenticated: (value: boolean) => void;
@@ -65,7 +65,7 @@ export default function Auth({ setAuthenticated }: AuthComponentProps) {
                 id="Google-Auth-Button"
                 className="gradient-box glow-effect-border"
               >
-                <FontAwesomeIcon icon={faGoogle} size="xl" />
+                {/* <FontAwesomeIcon icon={faGoogle} size="xl" /> */}
                 Sign Up With Google
               </button>
             </a>
@@ -73,14 +73,14 @@ export default function Auth({ setAuthenticated }: AuthComponentProps) {
               id="Google-Auth-Button"
               className="gradient-box glow-effect-border"
             >
-              <FontAwesomeIcon icon={faFacebook} size="xl" />
+              {/* <FontAwesomeIcon icon={faFacebook} size="xl" /> */}
               Sign Up With FaceBook
             </button>
             <button
               id="Google-Auth-Button"
               className="gradient-box glow-effect-border"
             >
-              <FontAwesomeIcon icon={faTwitter} size="xl" />
+              {/* <FontAwesomeIcon icon={faTwitter} size="xl" /> */}
               Sign Up With Twitter
             </button>
           </div>
