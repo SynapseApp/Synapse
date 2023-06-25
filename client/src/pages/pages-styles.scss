@@ -92,7 +92,7 @@
     @apply bg-white flex items-center h-[5rem] border-2 border-t-0 border-slate-200 pl-[1rem];
   }
 
-  .chat:hover {
+  .contact:hover {
     cursor: pointer;
   }
 
@@ -104,49 +104,28 @@
     height: 100%;
   }
 
-
   // Changes made by 'Emmanuel'
-  // Commented out changes were giving problems
-  .chat {
-    background-color: #D9D9D9;
-    // margin-left: 0.5rem;
-    // margin-right: 0.5rem;
-    // border-radius: 1rem;
-    // margin-top: 1rem;
-    // padding-right: 1rem;
-    // padding-left: 1rem;
-    // height: 4rem;
-    // display: flex;
-    // text-align: center;
-    align-items: center;
-    
-    .chat-text {
-      background-color: #D9D9D9;
-      width: 100%;
-      // margin-left: 0.6rem;
+  // Make Contact cards responsive
+  .contact {
+    background-color: #d9d9d9;
 
-      p {
-        // text-align: left;
-      }
+    :nth-child(2) {
+      background-color: #d9d9d9;
+      .contact__name {
+        font-size: calc(0.9vw + 0.3rem);
+        @media (width <= 910px) {
+          font-size: calc(0.8vw + 0.5rem);
+        }
       }
 
-    // img {
-    //   height: 2rem;
-    //   width: 2rem;
-    //   border-radius: 1rem;
-    // }
+      .contact__message {
+        font-size: calc(0.7vw + 0.5rem);
 
-    .chat__contact-img > img  {
-      width: 35px;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
+        @media (width <= 910px) {
+          font-size: calc(0.7vw + 0.5rem);
+        }
+      }
     }
-  }
-
-  
-  .contact-name {
-    font-weight: 500;
-    font-size: 1.1rem;
   }
 
   .chat-menu {
@@ -168,9 +147,9 @@
 
     .chat-left {
       @apply w-[50%] h-[100%] bg-white flex items-center;
-      
+
       .user-info {
-        @apply ml-[0.5rem]
+        @apply ml-[0.5rem];
       }
     }
     .chat-right {
@@ -187,8 +166,6 @@
 .component-div {
   @apply w-[100%] h-[92%] bg-black flex;
 
-
-  
   .message-container {
     display: flex;
     background-color: purple;
@@ -196,7 +173,7 @@
     width: 100%;
     .message-form {
       @apply flex w-[100%] bg-[#D9D9D9] items-center;
-    
+
       .message-input {
         @apply font-semibold placeholder-black bg-[#D9D9D9] mr-[2rem] ml-[2rem] w-[100%] h-[3rem] rounded-lg text-xl outline-0;
       }
@@ -205,7 +182,6 @@
       }
     }
   }
-  
 }
 
 .chat-content {
@@ -216,23 +192,22 @@
     @apply w-[100%] h-[5rem] bg-white flex justify-end items-center;
   }
 
-    .receiving-msg {
-      @apply w-[100%] h-[5rem] flex items-center bg-white justify-start pl-[2rem];  
-    }
-
-
-    .msg-div {
-      @apply flex justify-center bg-slate-200 w-[10rem] h-[3rem] text-center items-center mr-[2rem] rounded-lg;
-    }
+  .receiving-msg {
+    @apply w-[100%] h-[5rem] flex items-center bg-white justify-start pl-[2rem];
   }
 
-  .x-icon {
-    display: flex;
-    justify-self: start;
-    align-self: flex-start;
-    margin-left: 1rem;
-    margin-top: 1rem;
+  .msg-div {
+    @apply flex justify-center bg-slate-200 w-[10rem] h-[3rem] text-center items-center mr-[2rem] rounded-lg;
   }
+}
+
+.x-icon {
+  display: flex;
+  justify-self: start;
+  align-self: flex-start;
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
 
 .chat-info {
   background-color: white;
@@ -245,7 +220,7 @@
   z-index: 10000;
   height: 100vh;
   width: 20rem;
-  border: 0.1rem solid #D9D9D9;
+  border: 0.1rem solid #d9d9d9;
 
   .chat-info-pic {
     width: 6rem;
@@ -266,7 +241,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    border-bottom: 0.2rem solid #D9D9D9;
+    border-bottom: 0.2rem solid #d9d9d9;
   }
   .chat-info-icon {
     margin-right: 0.5rem;
@@ -284,11 +259,8 @@
     > main > #Login-Component {
       @apply w-screen p-10;
     }
-
   }
 }
 
-
 @media (orientation: portrait) {
-  
 }

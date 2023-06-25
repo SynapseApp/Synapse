@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        '2md': '910px',
+        'md-2': '910px',
       }
     },
   },

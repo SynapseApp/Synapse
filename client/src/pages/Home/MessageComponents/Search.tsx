@@ -56,14 +56,14 @@ const Search = () => {
       // This Should be a standalone component
     //   Used tailwind classes to style basic stuffs
       renderedChats.push(
-        <div className="chat flex flex-col gap-2 2md:flex-row rounded-md overflow-hidden p-2" key={i}>
-          <div className=" w-12 aspect-square rounded-full chat__contact-img">
-            <img src={userChats[i].picture} alt="Profile" className=" w-full" />
+        <div className="contact items-center flex gap-2 md-2:flex-row rounded-md overflow-hidden p-2" key={i}>
+          <div className=" w-12 aspect-square rounded-full contact__img">
+            <img src={userChats[i].picture} alt="Profile" className="w-[35px] aspect-square rounded-3xl" />
           </div>
 
-          <div className="chat-text text-center 2md:text-left" onClick={removeHiddenChatMenu}>
-            <p className="contact-name">{userChats[i].friend}</p>
-            <p>{userChats[i].message}</p>
+          <div className="text-left w-full" onClick={removeHiddenChatMenu}>
+            <p className="contact__name font-medium">{userChats[i].friend}</p>
+            <p className="contact__message">{userChats[i].message}</p>
           </div>
         </div>
       );
