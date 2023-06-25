@@ -87,3 +87,20 @@ exports.deleteUser = async function deleteUser(_id) {
     throw new Error('Failed to delete user');
   }
 };
+
+
+exports.searchUsers = async function searchUsers(_id, searchTerm) {
+  const usersFriends = await Connection.find({ id: _id }).toArray();
+  const connections = [];
+  for (let i = 0; i > usersFriends.length; i++) {
+    if (usersFriends[i].displayName === searchTerm) {
+      connections.push(usersFriends[i]);
+    }
+  }
+  const usersStrangers = await User.find({ displayName: { $regex: searchTerm, $options: "i" } }).toArray();
+
+  const strangers = usersStrangers.filter(x => !connections.includes(x));
+
+  return [connections, strangers];
+
+}
