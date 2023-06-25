@@ -1,45 +1,40 @@
 @import "../index.scss";
 
-#Login-Page {
+#Auth-Page {
   @apply w-screen h-screen text-center p-5
         flex flex-col justify-between items-center;
 
   > main {
-    #Login-Component {
-      @apply w-[400px]
-      flex-col justify-center items-center gap-5;
+    #Auth {
+      @apply w-screen;
+      .row {
+        @apply w-full flex justify-between p-10;
 
-      > #Google-Auth-Button {
-        @apply w-full flex justify-center items-center gap-5 text-xl;
-      }
+        .Local-Auths,
+        .Provided-Auths {
+          @apply flex flex-col w-[600px] gap-5 justify-center items-center p-10
+            text-xl;
 
-      > #Submit-Button {
-        @apply flex justify-between text-xl;
-
-        > svg > path {
-          fill: black;
+          button {
+            @apply w-full flex gap-5 justify-center;
+          }
         }
       }
     }
-    #MoreInfo-Parent {
-      @apply w-full h-full;
 
-      #MoreInfo {
-        @apply flex flex-col justify-center items-center gap-5;
+    #Auth-Local {
+      #Local-Backward {
+        @apply absolute  hover:scale-90;
+      }
 
-        .pfp {
-          @apply w-[12rem] h-[12rem] rounded-full bg-slate-600;
-        }
+      #Local {
+        @apply w-[400px]
+          flex flex-col justify-center items-center gap-5;
 
-        #img-input {
-          @apply w-1 h-1 fixed top-0 -left-0;
-          visibility: hidden;
-        }
+        > #Submit-Button {
+          @apply flex justify-between text-xl;
 
-        #Submit-Button {
-          @apply flex justify-between text-lg;
-
-          svg path {
+          > svg > path {
             fill: black;
           }
         }
@@ -74,7 +69,7 @@
   #search-component {
     @apply bg-white h-[100vh] w-[20rem] border-r-4 border-slate-200;
     form {
-      @apply flex justify-center items-center justify-center pl-[0.5rem] border-y-4 border-slate-200;
+      @apply flex items-center justify-center pl-[0.5rem] border-y-4 border-slate-200;
     }
 
     #search-icon {
@@ -126,9 +121,9 @@
         }
       }
     }
-  }
 
   .chat-menu {
+    @apply bg-white h-[100vh] w-[100%] flex flex-col;
     @apply bg-white h-[100vh] w-[100%] flex flex-col;
 
     .chat-nav {
@@ -151,34 +146,29 @@
       .user-info {
         @apply ml-[0.5rem];
       }
+      @apply ml-[0.4rem] text-lg;
+    }
+
+    .chat-left {
+      @apply w-[50%] h-[100%] bg-white flex items-center;
+
+      .user-info {
+        @apply ml-[0.5rem];
+      }
     }
     .chat-right {
-      @apply w-[50%] h-[100%] flex bg-white flex items-center;
+      @apply w-[50%] h-[100%] bg-white flex items-center;
       justify-content: right;
 
       .user-icon {
         margin-right: 1.5rem;
       }
-    }
-  }
-}
 
-.component-div {
-  @apply w-[100%] h-[92%] bg-black flex;
+      @apply w-[50%] h-[100%] flex bg-white flex items-center;
+      justify-content: right;
 
-  .message-container {
-    display: flex;
-    background-color: purple;
-    height: 8%;
-    width: 100%;
-    .message-form {
-      @apply flex w-[100%] bg-[#D9D9D9] items-center;
-
-      .message-input {
-        @apply font-semibold placeholder-black bg-[#D9D9D9] mr-[2rem] ml-[2rem] w-[100%] h-[3rem] rounded-lg text-xl outline-0;
-      }
-      .msg-icon {
-        @apply h-[2rem] w-[2rem] mr-[1rem];
+      .user-icon {
+        margin-right: 1.5rem;
       }
     }
   }
@@ -256,11 +246,14 @@
     > header > h3 {
       @apply text-3xl;
     }
-    > main > #Login-Component {
-      @apply w-screen p-10;
+
+    #Auth-Local {
+      @apply p-5 justify-center;
+      width: 100vw !important;
+
+      #Local-Backward {
+        left: 5vw;
+      }
     }
   }
-}
-
-@media (orientation: portrait) {
 }

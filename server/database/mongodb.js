@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { mongoDB_url } = require('../store.js');
+const mongoose = require("mongoose");
+const { mongoDB_url } = require("../store.js");
 
 const url = mongoDB_url;
 
@@ -15,10 +15,13 @@ const url = mongoDB_url;
  */
 module.exports = async function connectDatabase() {
   try {
-    await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log('MONGO CONNECTION OPEN!!');
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("mongodb is connected");
   } catch (err) {
-    console.log('ERROR MONGO CONNECTION');
+    console.log("failed to connect to mongodb: ");
     console.log(err);
   }
 };

@@ -1,7 +1,11 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './assets-styles.scss';
-import { faCheckCircle, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { FormEvent, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./assets-styles.scss";
+import {
+  faCheckCircle,
+  faCircleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+import { FormEvent, useState } from "react";
+import { validateInput } from "../modules/methods";
 // import { validateInput } from '../modules/methods';
 
 interface PropInterface {
@@ -16,9 +20,15 @@ interface PropInterface {
  * It receives props for input type, placeholder, name, and a callback function to set the input value.
  * It maintains its own state for the input value and input validity.
  */
-export default function InputGroup({ type, placeholder, name, setValueInput }: PropInterface) {
-  const [value, setValue] = useState('');
+export default function InputGroup({
+  type,
+  placeholder,
+  name,
+  setValueInput,
+}: PropInterface) {
+  const [value, setValue] = useState("");
   const [inputIsValid, setInputIsValid] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
   /**
    * Handle input change event.
@@ -34,17 +44,38 @@ export default function InputGroup({ type, placeholder, name, setValueInput }: P
 
     setValueInput(target.value);
 
-    // const validatedData = validateInput(target.value, type);
-    setInputIsValid(true);
+    const validatedData = validateInput(target.value, type);
+    setInputIsValid(validatedData.isValid);
+    setFeedback(validatedData.feedback);
   }
 
   return (
     <>
       <div className="InputGroup">
-        <input type={type} placeholder={placeholder} value={value} name={name} onInput={handleInput} />
-        <div className="indicator">
-          <FontAwesomeIcon icon={inputIsValid ? faCheckCircle : faCircleExclamation} size="lg" className={`icon-${inputIsValid ? 'success' : 'danger'}`} />
+        <div className="row">
+          <input
+            type={type}
+            placeholder={placeholder}
+            autoComplete="off"
+            value={value}
+            name={name}
+            onInput={handleInput}
+          />
+          <div className="indicator">
+            <FontAwesomeIcon
+              icon={inputIsValid ? faCheckCircle : faCircleExclamation}
+              size="lg"
+              className={`icon-${inputIsValid ? "success" : "danger"}`}
+            />
+          </div>
         </div>
+        <p
+          className={`feedback ${inputIsValid ? "success" : "danger"} ${
+            feedback === "" ? "hidden" : ""
+          }`}
+        >
+          {feedback}
+        </p>
       </div>
     </>
   );

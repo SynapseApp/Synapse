@@ -24,11 +24,9 @@ function App() {
         credentials: "include",
       });
       const data = await response.json();
-      console.log(data);
       setAuthenticated(data.authenticated);
       setAuthChecked(true); // Mark authentication check as complete
     } catch (error) {
-      console.log(error);
       setAuthenticated(false);
       setAuthChecked(true); // Mark authentication check as complete
     }
@@ -44,9 +42,11 @@ function App() {
       <Routes>
         <Route path="/" element={<RootPage />} />
         {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
-        {/* <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} /> */}
 
-        <Route path="home" element={<Home />} />
+        <Route
+          path="/home"
+          element={authenticated ? <Home /> : <Navigate to="/auth" replace />}
+        />
         <Route
           path="/auth"
           element={<AuthPage setAuthenticated={setAuthenticated} />}
