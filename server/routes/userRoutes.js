@@ -16,7 +16,7 @@ userRoutes.get('/:_id', async (req, res) => {
   const user = await findUser({ _id });
   const response = defaultResponse();
 
-  if (user) {
+  if (!user) {
     response.log = 'user not found';
   } else {
     response.success = true;
@@ -53,7 +53,7 @@ userRoutes.patch('/:_id', async (req, res) => {
 userRoutes.delete('/:_id', async (req, res) => {
   // Endpoint to delete a user based on the provided ID
   // Params: _id - User ID
-  // Response: Deletes the user
+  // Response: Deleted user
 
   const _id = req.params._id;
   const response = defaultResponse();

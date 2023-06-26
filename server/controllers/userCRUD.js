@@ -1,5 +1,5 @@
 const User = require('../models/userModel.js');
-
+const Connection = require('../models/connectionModel.js')
 /**
  * Creates a new user in the database.
  *
@@ -97,6 +97,7 @@ exports.searchUsers = async function searchUsers(_id, searchTerm) {
       connections.push(usersFriends[i]);
     }
   }
+
   const usersStrangers = await User.find({ displayName: { $regex: searchTerm, $options: "i" } }).toArray();
 
   const strangers = usersStrangers.filter(x => !connections.includes(x));
