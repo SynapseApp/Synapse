@@ -1,28 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faG } from "@fortawesome/free-solid-svg-icons";
 import InputGroup from "../../assets/InputGroup";
 import { useState } from "react";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-type AuthComponentProps = {
-  setAuthenticated: (value: boolean) => void;
-  setActivePage: any;
-  method: string;
-};
-
-export default function Local({
-  setAuthenticated,
-  setActivePage,
-  method,
-}: AuthComponentProps) {
+export default function AuthComponent({ setAuthenticated }) {
+  const [method, setMethod] = useState("Login"); // State variable for selected authentication method
   const [valueEmail, setValueEmail] = useState(""); // State variable for email input value
   const [valuePassword, setValuePassword] = useState(""); // State variable for password input value
   const [valueUsername, setValueUsername] = useState(""); // State variable for username input value
 
   const navigate = useNavigate(); // Function for programmatic navigation
 
-  let formData: { username: string; password: string; email?: string }; // Form data object
+  let formData; // Form data object
 
   if (method === "Login") {
     // Construct form data for login method
@@ -46,11 +37,12 @@ export default function Local({
     };
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (method === "Login") {
       // Handle login form submission
+      console.log(formData);
 
       const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
@@ -61,6 +53,8 @@ export default function Local({
         credentials: "include", // Include cookies in the request
       });
 
+      console.log(response.status);
+
       if (response.status === 200) {
         // Authentication successful
         setAuthenticated(true);
@@ -70,6 +64,8 @@ export default function Local({
       }
     } else {
       // Handle register form submission
+      console.log(formData);
+
       const response = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         headers: {
@@ -78,6 +74,8 @@ export default function Local({
         body: JSON.stringify(formData),
         credentials: "include", // Include cookies in the request
       });
+
+      console.log(response.status);
 
       if (response.status === 200) {
         // Registration successful
@@ -89,35 +87,33 @@ export default function Local({
     }
   }
 
-  function fade_to_Auth() {
-    document.getElementById("Local")?.classList.add("fade-out-r-l");
-    document.getElementById("Local-Backward")?.classList.add("fade-out-r-l");
-
-    setTimeout(() => {
-      setActivePage(["Auth", ""]);
-      document.getElementById("Local")?.classList.remove("fade-out-r-l");
-      document
-        .getElementById("Local-Backward")
-        ?.classList.remove("fade-out-r-l");
-    }, 475 /*fade-out-r-l*/);
-  }
-
   return (
     <>
-      <button id="Local-Backward" onClick={fade_to_Auth}>
-        <FontAwesomeIcon icon={faArrowLeft} size="xl" />
-      </button>
-      <form id="Local" onSubmit={handleSubmit}>
+      {/* MoreInfo component */}
+      {/* <div id="MoreInfo-Parent" className={takingMoreInfo ? 'flex' : 'hidden'}>
+        <MoreInfo />
+      </div> */}
+      <form id="Login-Component" onSubmit={handleSubmit}>
         <h6>
           {method === "Login"
             ? "Login To Your Account"
             : "Register A New Account"}
         </h6>
 
+        {/* Google authentication button */}
+        <a
+          id="Google-Auth-Button"
+          className="gradient-box glow-effect-border"
+          href="http://localhost:3000/login/federated/google"
+        >
+          <FontAwesomeIcon icon={faG} size="xl" />
+          {method} With Google
+        </a>
+
         {/* Username input (only for register method) */}
         {method !== "Login" && (
           <InputGroup
-            type="username"
+            type="text"
             placeholder="Username"
             name="username"
             setValueInput={setValueUsername}
@@ -126,7 +122,7 @@ export default function Local({
 
         {/* Email or username input */}
         <InputGroup
-          type={method === "Login" ? "email&username" : "email"}
+          type={method === "Login" ? "username" : "email"}
           placeholder={method === "Login" ? "Email or username" : "Email"}
           name={method === "Login" ? "username" : "email"}
           setValueInput={setValueEmail}
@@ -146,14 +142,7 @@ export default function Local({
         )}
 
         {/* Submit button */}
-        <button
-          id="Submit-Button"
-          type="submit"
-          className="gradient-btn glow-effect"
-          onClick={() => {
-            console.log("first");
-          }}
-        >
+        <button id="Submit-Button" className="gradient-btn glow-effect">
           Continue
           <FontAwesomeIcon icon={faArrowRight} size="xl" />
         </button>
@@ -161,8 +150,8 @@ export default function Local({
         {/* Toggle between login and register methods */}
         <p
           onClick={() => {
-            if (method === "Login") setActivePage(["Local", "Sign Up"]);
-            else setActivePage(["Local", "Login"]);
+            if (method === "Login") setMethod("Sign up");
+            else setMethod("Login");
           }}
         >
           {method === "Login"

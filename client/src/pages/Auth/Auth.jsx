@@ -6,16 +6,11 @@ import {
   faGoogle,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { faF, faT, faG } from "@fortawesome/free-solid-svg-icons";
 
-type AuthComponentProps = {
-  setAuthenticated: (value: boolean) => void;
-};
-
-export default function Auth({ setAuthenticated }: AuthComponentProps) {
+export default function Auth({ setAuthenticated }) {
   const [activePage, setActivePage] = useState(["Auth", ""]);
 
-  function fade_to_Local(passed_page: any) {
+  function fade_to_Local(passed_page) {
     document.getElementById("Auth")?.classList.add("fade-out-r-l");
 
     setTimeout(() => {

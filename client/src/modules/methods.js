@@ -1,4 +1,4 @@
-export function validateInput(value: string, type: string) {
+export function validateInput(value, type) {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   const usernameRegex = /^[a-zA-Z0-9_.]{3,20}$/;
