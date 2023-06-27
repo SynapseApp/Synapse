@@ -3,12 +3,12 @@ import AuthPage from './pages/Auth';
 import RootPage from './pages/Root';
 import Home from './pages/Home';
 import { useEffect, useState } from 'react';
-// import UserContext from './Contexts/userContext';
+import UserContext from './Contexts/userContext';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     checkAuth();
@@ -26,7 +26,7 @@ function App() {
         credentials: 'include',
       });
       const data = await response.json();
-      // setUser(data.user);
+      setUser(data.user);
       setAuthenticated(data.authenticated);
       setAuthChecked(true); // Mark authentication check as complete
     } catch (error) {
@@ -42,14 +42,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <UserContext.Provider value={user}> */}
-      <Routes>
-        <Route path="/" element={<RootPage />} />
-        {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
-        <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
-        <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
-      </Routes>
-      {/* </UserContext.Provider> */}
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route path="/" element={<RootPage />} />
+          {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
+          <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
+          <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
+        </Routes>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }
