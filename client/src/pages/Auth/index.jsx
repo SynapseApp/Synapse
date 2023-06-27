@@ -1,11 +1,7 @@
 import "../pages-styles.scss";
 import Auth from "./Auth";
 
-type AuthPageProps = {
-  setAuthenticated: (value: boolean) => void;
-};
-
-export default function AuthPage({ setAuthenticated }: AuthPageProps) {
+export default function AuthPage({ setAuthenticated }) {
   return (
     <section id="Auth-Page">
       <header>
