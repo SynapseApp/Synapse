@@ -7,16 +7,12 @@ const Schema = mongoose.Schema;
 const connectionSchema = new Schema({
   userOne: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   userTwo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
-  relation: {
-    type: String,
-    required: true
-  }
 });
 
 // Create and export the Connection model based on the connection schema

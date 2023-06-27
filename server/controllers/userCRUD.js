@@ -1,5 +1,5 @@
 const User = require('../models/userModel.js');
-const Connection = require('../models/connectionModel.js')
+const Connection = require('../models/connectionModel.js');
 /**
  * Creates a new user in the database.
  *
@@ -88,20 +88,31 @@ exports.deleteUser = async function deleteUser(_id) {
   }
 };
 
+/**
+ * Search for connections and strangers based on the provided user ID and search term.
+ * @param {string} id - User ID
+ * @param {string} searchTerm - Search term
+ * @returns {Array} - Array containing connections and updated strangers
+ */
+exports.searchUsers = async function searchUsers(id, searchTerm) {
+  // Find connections based on the provided user ID
+  const connections = await Connection.find({
+    $and: [
+      {
+        $or: [{ userOne: id }, { userTwo: id }],
+      },
+    ],
+  });
 
-exports.searchUsers = async function searchUsers(_id, searchTerm) {
-  const usersFriends = await Connection.find({ id: _id }).toArray();
-  const connections = [];
-  for (let i = 0; i > usersFriends.length; i++) {
-    if (usersFriends[i].displayName === searchTerm) {
-      connections.push(usersFriends[i]);
-    }
-  }
+  // Find strangers with display names matching the search term
+  const strangers = await User.find({ displayName: { $regex: `^${searchTerm}`, $options: 'i' } });
 
-  const usersStrangers = await User.find({ displayName: { $regex: searchTerm, $options: "i" } }).toArray();
+  // Remove the objects from strangers that have matching IDs with connections
+  const updatedStrangers = strangers.filter((stranger) => {
+    return !connections.some((connection) => {
+      return connection.userOne.toString() === stranger.id.toString() || connection.userTwo.toString() === stranger.id.toString();
+    });
+  });
 
-  const strangers = usersStrangers.filter(x => !connections.includes(x));
-
-  return [connections, strangers];
-
-}
+  return [connections, updatedStrangers];
+};
