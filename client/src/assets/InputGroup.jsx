@@ -8,24 +8,12 @@ import { FormEvent, useState } from "react";
 import { validateInput } from "../modules/methods";
 // import { validateInput } from '../modules/methods';
 
-interface PropInterface {
-  type: string;
-  placeholder: string;
-  name: string;
-  setValueInput: any;
-}
-
 /**
  * InputGroup component renders an input field with an indicator icon based on input validity.
  * It receives props for input type, placeholder, name, and a callback function to set the input value.
  * It maintains its own state for the input value and input validity.
  */
-export default function InputGroup({
-  type,
-  placeholder,
-  name,
-  setValueInput,
-}: PropInterface) {
+export default function InputGroup({ type, placeholder, name, setValueInput }) {
   const [value, setValue] = useState("");
   const [inputIsValid, setInputIsValid] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -37,8 +25,8 @@ export default function InputGroup({
    * Updates the input validity state.
    * @param event - Form input event
    */
-  async function handleInput(event: FormEvent<HTMLInputElement>) {
-    const target = event.target as HTMLInputElement;
+  async function handleInput(event) {
+    const target = event.target;
 
     setValue(target.value);
 
