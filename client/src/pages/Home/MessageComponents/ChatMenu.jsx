@@ -15,20 +15,22 @@ const ChatMenu = () => {
   };
 
   function removeHiddenClass() {
-    const element = document.querySelector < HTMLElement > '.chat-info';
+    const element = document.querySelector('.chat-info');
     if (element) {
       element.classList.remove('hidden');
+      document.querySelector(".chat-menu").style.width = "82%"
     }
   }
   function addHiddenClass() {
-    const element = document.querySelector < HTMLElement > '.chat-info';
+    const element = document.querySelector('.chat-info');
     if (element) {
       element.classList.add('hidden');
+      document.querySelector(".chat-menu").style.width = "100%"      
     }
   }
 
   return (
-    <div className="chat-menu hidden">
+    <div className="chat-menu">
       <div className="chat-nav">
         <div className="chat-left">
           <img className="user-picture" src={userChats.picture}></img>

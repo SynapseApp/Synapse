@@ -137,6 +137,11 @@
     border-radius: 2rem;
   }
 
+  #less-width {
+    width: 10%;
+  }
+  
+
   .chat {
     background-color: #d9d9d9;
     margin-left: 0.5rem;
@@ -173,8 +178,7 @@
 
   .chat-menu {
     @apply bg-white h-[100vh] w-[100%] flex flex-col;
-    @apply bg-white h-[100vh] w-[100%] flex flex-col;
-
+    
     .chat-nav {
       @apply bg-white h-[8%] flex items-center border-b-2 border-l-0 border-r-2 border-t-0 border-slate-200;
       justify-content: left;
@@ -250,15 +254,15 @@
 .chat-info {
   background-color: white;
   display: flex;
-  position: absolute;
   justify-self: end;
   align-self: flex-end;
   flex-direction: column;
   align-items: center;
   z-index: 10000;
   height: 100vh;
-  width: 20rem;
+  width: 18%;
   border: 0.1rem solid #d9d9d9;
+  position: absolute;
 
   .chat-info-pic {
     width: 6rem;
@@ -286,8 +290,10 @@
   }
   input {
     width: 10rem;
+    outline-style: none;
   }
 }
+
 
 @media screen and (max-width: 600px) {
   #Login-Page {
