@@ -1,6 +1,5 @@
 const { Seeder } = require("mongo-seeding");
 const path = require("path");
-const users = require("./seeders/1-users/users");
 const config = {
 	database: {
 		name: "Synapse", // Specify your database name
@@ -16,7 +15,6 @@ const collections = seeder.readCollectionsFromPath(
 	}
 );
 
-console.log(users);
 seeder
 	.import(collections)
 	.then(() => {
