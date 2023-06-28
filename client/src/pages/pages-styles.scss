@@ -178,7 +178,7 @@
 
   .chat-menu {
     @apply bg-white h-[100vh] w-[100%] flex flex-col;
-    
+        
     .chat-nav {
       @apply bg-white h-[8%] flex items-center border-b-2 border-l-0 border-r-2 border-t-0 border-slate-200;
       justify-content: left;
@@ -262,7 +262,6 @@
   height: 100vh;
   width: 18%;
   border: 0.1rem solid #d9d9d9;
-  position: absolute;
 
   .chat-info-pic {
     width: 6rem;
