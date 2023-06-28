@@ -5,7 +5,7 @@ const config = {
 		name: "Synapse", // Specify your database name
 		url: "mongodb://localhost:27017", // Specify your MongoDB connection URL
 	},
-	dropDatabase: true, // Set to true if you want to drop the database before importing data
+	// dropDatabase: true, // Set to true if you want to drop the database before importing data
 };
 const seeder = new Seeder(config);
 const collections = seeder.readCollectionsFromPath(
