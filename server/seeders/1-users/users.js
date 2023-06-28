@@ -1,8 +1,8 @@
 const path = require("path");
 const fs = require("fs");
 
-let users = [];
 async function create_users() {
+	let users = [];
 	const emails = await JSON.parse(
 		fs.readFileSync(path.resolve(__dirname, "../", "emails.json")),
 		{ encoding: "utf8" }
@@ -17,4 +17,8 @@ async function create_users() {
 	}
 	return users;
 }
-module.exports = async () => await create_users();
+
+create_users().then((users) => {
+	console.log(users);
+	module.exports = users;
+});
