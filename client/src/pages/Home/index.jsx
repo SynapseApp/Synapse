@@ -4,7 +4,7 @@ import MessageMenu from './MessageMenu';
 
 const index = () => {
   return (
-    <div id="home">
+    <div id="Home">
       <LeftBar />
       <MessageMenu />
     </div>

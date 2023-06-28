@@ -1,9 +1,9 @@
-import Search from './MessageComponents/Search';
-import ChatMenu from './MessageComponents/ChatMenu';
+import Search from "./MessageComponents/Search";
+import ChatMenu from "./MessageComponents/ChatMenu";
 
 const MessageMenu = () => {
   return (
-    <div id="message-menu">
+    <div id="Message-Menu">
       <Search />
       <ChatMenu />
     </div>

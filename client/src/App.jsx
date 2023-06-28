@@ -3,7 +3,7 @@ import AuthPage from './pages/Auth';
 import RootPage from './pages/Root';
 import Home from './pages/Home';
 import { useEffect, useState } from 'react';
-import UserContext from './Contexts/userContext';
+import UserContext from './contexts/userContext';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
