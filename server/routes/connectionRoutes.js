@@ -45,7 +45,7 @@ connectionRoutes.post('/', async (req, res) => {
 
 // Searching for Connections and Strangers
 
-connectionRoutes.get('/search', async (req, res) => {
+connectionRoutes.post('/search', async (req, res) => {
   // Endpoint to search for connections and strangers
   // Params: id, searchTerm
   // Response: Connections and strangers based on the search term
