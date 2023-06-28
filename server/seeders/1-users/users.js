@@ -3,7 +3,7 @@ const fs = require("fs");
 
 let users = [];
 const emails = JSON.parse(
-	fs.readFileSync(path.resolve(__dirname, "../", "emails.json")),
+	fs.readFileSync(path.resolve(__dirname, "../", "json", "emails.json")),
 	{ encoding: "utf8" }
 );
 for (let i = 0; i < emails.length; i++) {
