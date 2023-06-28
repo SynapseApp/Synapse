@@ -91,13 +91,56 @@
     cursor: pointer;
   }
 
+  .component-div {
+    height: 100%;
+  }
+
   .chat-container {
     display: flex;
     flex-direction: column-reverse;
-    background-color: aqua;
+    background-color: white;
     width: 100%;
     height: 100%;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
+  .message-input {
+    background-color: #d9d9d9;
+    width: 75%;
+    height: 2.8rem;
+    outline-style: none;
+    padding-left: 0.5rem;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    }
+
+    .message-input::placeholder {
+      font-weight: 500;
+      color: #000;
+    }
+
+  .input-icons {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .msg-icon {
+    height: 1.5rem;
+    margin-right: 2rem;
+  }
+  .message-form {
+    display: flex;
+    flex-direction: row;
+    background-color: #d9d9d9;
+    border-radius: 2rem;
+  }
+
+  #less-width {
+    width: 10%;
+  }
+  
 
   .chat {
     background-color: #d9d9d9;
@@ -135,8 +178,7 @@
 
   .chat-menu {
     @apply bg-white h-[100vh] w-[100%] flex flex-col;
-    @apply bg-white h-[100vh] w-[100%] flex flex-col;
-
+        
     .chat-nav {
       @apply bg-white h-[8%] flex items-center border-b-2 border-l-0 border-r-2 border-t-0 border-slate-200;
       justify-content: left;
@@ -212,14 +254,13 @@
 .chat-info {
   background-color: white;
   display: flex;
-  position: absolute;
   justify-self: end;
   align-self: flex-end;
   flex-direction: column;
   align-items: center;
   z-index: 10000;
   height: 100vh;
-  width: 20rem;
+  width: 18%;
   border: 0.1rem solid #d9d9d9;
 
   .chat-info-pic {
@@ -248,8 +289,10 @@
   }
   input {
     width: 10rem;
+    outline-style: none;
   }
 }
+
 
 @media screen and (max-width: 600px) {
   #Login-Page {

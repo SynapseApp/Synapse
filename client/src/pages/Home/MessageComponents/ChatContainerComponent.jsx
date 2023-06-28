@@ -49,9 +49,11 @@ const ChatContainerComponent = () => {
       <div className="message-container">
         <form className="message-form">
           <input className="message-input" placeholder="Type a message..." />
+          <div className='input-icons'>
           <FontAwesomeIcon className="msg-icon" icon={faImage} />
           <FontAwesomeIcon className="msg-icon" icon={faFaceLaugh} />
           <FontAwesomeIcon className="msg-icon" icon={faRightLong} />
+          </div>
         </form>
       </div>
       <div className="chat-content">{printMessages(conversation)}</div>
