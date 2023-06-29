@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createConnection, findConnection, findUserConnections, updateConnection, deleteConnection } = require('../controllers/connectionCRUD.js');
+const { createConnection, findUserConnections, deleteConnection } = require('../controllers/connectionCRUD.js');
 const { searchUsers } = require('../controllers/userCRUD.js');
 const { defaultResponse } = require('../store.js');
 
@@ -45,9 +45,9 @@ connectionRoutes.post('/', async (req, res) => {
 
 // Searching for Connections and Strangers
 
-connectionRoutes.get('/search', async (req, res) => {
+connectionRoutes.post('/search', async (req, res) => {
   // Endpoint to search for connections and strangers
-  // Params: id, searchTerm
+  // Body: id, searchTerm
   // Response: Connections and strangers based on the search term
 
   const id = req.body.id;
@@ -62,35 +62,6 @@ connectionRoutes.get('/search', async (req, res) => {
 
   res.json(data);
 });
-
-// connectionRoutes.patch('/:id', async (req, res) => {
-//   // Endpoint to patch a connection
-//   // Params: id // Id of the connection
-//   // Body: updateKeys // Updated connection data
-//   // Response: Updated connection
-
-//   const id = req.params.id;
-//   const updateKeys = req.body.updateKeys;
-//   const response = defaultResponse();
-
-//   const connection = await findConnection({ id });
-
-//   if (!connection) {
-//     response.log = 'no connection found';
-//   } else {
-//     const updatedConnection = await updateConnection(id, updateKeys);
-
-//     if (!updatedConnection) {
-//       response.log = 'failed to update connection';
-//     } else {
-//       response.success = true;
-//       response.log = 'connection patched';
-//       response.data = updatedConnection;
-//     }
-//   }
-
-//   res.json(response);
-// });
 
 connectionRoutes.delete('/:id', async (req, res) => {
   // Endpoint to delete connection

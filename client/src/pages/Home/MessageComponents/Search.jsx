@@ -1,7 +1,9 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
-import UserContext from '../../../Contexts/userContext';
+import UserContext from '../../../contexts/userContext';
+import SearchedUser from './Connections'
+import Connections from './Connections';
 
 let userChats = [{
   friend: "Aditya", message: "hello",
@@ -30,13 +32,33 @@ function truncateText(text, maxLength) {
 const Search = () => {
   const [placeholderValue, setPlaceholderValue] = useState('Search Here');
   const [inputValue, setInputValue] = useState('');
+  const [searchResult, setSearchResult] = useState({connections: [], strangers: []})
 
   const user = useContext(UserContext);
-  console.log(user);
 
-  function handleChange(event) {
-    const target = event.target;
-    setInputValue(target.value);
+  async function handleChange(event) {
+    const value = event.target.value;
+    setInputValue(value);
+
+    const bodyData = {
+      id: user._id,
+      searchTerm: value
+    }
+    if (value != "") {
+      const response = await fetch('http://localhost:3000/connection/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bodyData),
+        });
+
+      const data = await response.json()
+      setSearchResult(data)
+      console.log(data)
+    } else {
+      setSearchResult({connections: [], strangers: []})
+    }
   }
 
    function truncateText(text, maxLength) {
@@ -96,7 +118,7 @@ const Search = () => {
           placeholder={placeholderValue}
         ></input>
       </form>
-      {/* {renderedChats} */}
+      <Connections searchResult={searchResult} searchTerm={inputValue} />
     </div>
   );
 };
