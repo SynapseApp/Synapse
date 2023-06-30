@@ -23,11 +23,11 @@ const UserProfile = (props) => {
             <img className="user-profile-pic" src={props.picture} alt="User Profile" />
           </div>
           <div className="user-profile-upper-right">
-            <FatButtons text={props.status === 'friend' ? disconnectItem : connectItem} />
+            <FatButtons status={props.status} text={props.status === 'connected' ? disconnectItem : connectItem} _id2={props.userId2} />
           </div>
         </div>
         <h4>{props.user}</h4>
-        <p>{props.connections}</p>
+        <p>{props.displayName}</p>
         <div className="user-profile-description">
           <h5>Description</h5>
           <p>{props.description}</p>
@@ -38,8 +38,9 @@ const UserProfile = (props) => {
 };
 UserProfile.propTypes = {
   picture: PropTypes.string.isRequired,
+  userId2: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired,
-  connections: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };

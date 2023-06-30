@@ -37,7 +37,7 @@ exports.findUser = async function findUser(reference) {
       return user;
     }
   } catch (error) {
-    throw new Error('Failed to get user');
+    throw new Error('Failed to get user', error);
   }
 };
 
@@ -110,7 +110,7 @@ exports.searchUsers = async function searchUsers(id, searchTerm) {
   // Remove the objects from strangers that have matching IDs with connections
   const updatedStrangers = strangers.filter((stranger) => {
     return !connections.some((connection) => {
-      return connection.userOne.toString() === stranger.id.toString() || connection.userTwo.toString() === stranger.id.toString();
+      return connection.userOne.toString() === stranger._id.toString() || connection.userTwo.toString() === stranger._id.toString();
     });
   });
 
