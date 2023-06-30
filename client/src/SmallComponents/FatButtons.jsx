@@ -4,34 +4,63 @@ import UserContext from '../Contexts/userContext';
 
 const FatButtons = (props) => {
   const user = useContext(UserContext);
-  function handleConnect() {
-    const _id = user._id; // Replace with the userOne ID
-    const _id2 = props._id2; // Replace with the userTwo ID
 
-    fetch('http://localhost:3000/connection', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: _id,
-        id2: _id2,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+  async function handleConnect() {
+    try {
+      const _id = user._id; // Replace with the userOne ID
+      const _id2 = props._id2; // Replace with the userTwo ID
+
+      const response = await fetch('http://localhost:3000/connection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: _id,
+          id2: _id2,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
         // Handle the response data here
         console.log(data);
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the request
-        console.error('Error creating connection:', error);
-      });
+      } else {
+        throw new Error('Failed to create connection');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the request
+      console.error('Error creating connection:', error);
+    }
     console.log(user);
   }
+
+  async function handleDisconnect() {
+    try {
+      const _id = user._id; // Replace with the userOne ID
+      const _id2 = props._id2; // Replace with the userTwo ID
+
+      const response = await fetch(`http://localhost:3000/connection/${_id}/${_id2}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle the response data here
+        console.log(data);
+        // Perform any necessary actions after successful disconnection
+      } else {
+        throw new Error('Failed to delete connection');
+      }
+    } catch (error) {
+      // Handle any errors that occur during the request
+      console.error('Error deleting connection:', error);
+    }
+  }
+
   return (
     <div>
-      <button className="fat-btn" onClick={handleConnect}>
+      <button className="fat-btn" onClick={props.status === 'connected' ? handleDisconnect : handleConnect}>
         <b>{props.text}</b>
       </button>
     </div>
@@ -39,6 +68,7 @@ const FatButtons = (props) => {
 };
 
 FatButtons.propTypes = {
+  status: PropTypes.string.isRequired,
   text: PropTypes.object.isRequired,
   _id2: PropTypes.string.isRequired,
 };
