@@ -7,7 +7,8 @@ const SearchedProfile = () => {
   const [showConnectionProfile, setShowConnectionProfile] = useState(false);
   const [showStrangerProfile, setShowStrangerProfile] = useState(false);
   const [selectedChatIndex, setSelectedChatIndex] = useState(null);
-  const [selectedChatSection, setSelectedChatSection] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState(''); // New state variable
+  const [dummyState, setDummyState] = useState(0); // Dummy state variable
 
   const user = useContext(UserContext);
 
@@ -21,8 +22,6 @@ const SearchedProfile = () => {
       setShowStrangerProfile(!showStrangerProfile);
       setShowConnectionProfile(false);
     }
-
-    setSelectedChatSection(section);
   };
 
   const [strangersSearchedResult, setStrangersSearchedResult] = useState([]);
@@ -30,7 +29,7 @@ const SearchedProfile = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); // Reload the component when connection status changes
 
   const fetchData = async () => {
     const response = await fetch('http://localhost:3000/connection/search', {
@@ -97,6 +96,8 @@ const SearchedProfile = () => {
                 picture={pictureUrl}
                 status="disconnected" // Set status as "friend"
                 description="Hardcoded description" // Use a hardcoded value for description
+                setConnectionStatus={setConnectionStatus}
+                setDummyState={setDummyState}
               />
             )}
           </div>
@@ -132,6 +133,8 @@ const SearchedProfile = () => {
                 picture={pictureUrl}
                 status="connected" // Set status as "friend"
                 description="Hardcoded description" // Use a hardcoded value for description
+                setConnectionStatus={setConnectionStatus}
+                setDummyState={setDummyState}
               />
             )}
           </div>
@@ -159,6 +162,11 @@ const SearchedProfile = () => {
       {renderedStrangerChats}
     </div>
   );
+
+  useEffect(() => {
+    // Effect to reload the component when connection status changes
+    fetchData();
+  }, [connectionStatus, dummyState]);
 
   return <div>{renderedChats}</div>;
 };

@@ -22,6 +22,8 @@ const FatButtons = (props) => {
       });
 
       if (response.ok) {
+        props.setConnectionStatus('connected'); // Update the connection status
+        props.setDummyState((prevState) => prevState + 1); // Increment the dummy state variable
         const data = await response.json();
         // Handle the response data here
         console.log(data);
@@ -46,6 +48,8 @@ const FatButtons = (props) => {
 
       if (response.ok) {
         const data = await response.json();
+        props.setConnectionStatus('disconnected'); // Update the connection status
+        props.setDummyState((prevState) => prevState + 1); // Increment the dummy state variable
         // Handle the response data here
         console.log(data);
         // Perform any necessary actions after successful disconnection
@@ -68,6 +72,8 @@ const FatButtons = (props) => {
 };
 
 FatButtons.propTypes = {
+  setDummyState: PropTypes.func.isRequired,
+  setConnectionStatus: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
   text: PropTypes.object.isRequired,
   _id2: PropTypes.string.isRequired,
