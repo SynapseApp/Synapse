@@ -4,14 +4,25 @@ import { useContext } from 'react';
 import UserContext from '../../../Contexts/userContext';
 
 const SearchedProfile = () => {
-  const [showUserProfile, setShowUserProfile] = useState(false);
+  const [showConnectionProfile, setShowConnectionProfile] = useState(false);
+  const [showStrangerProfile, setShowStrangerProfile] = useState(false);
   const [selectedChatIndex, setSelectedChatIndex] = useState(null);
+  const [selectedChatSection, setSelectedChatSection] = useState(null);
 
   const user = useContext(UserContext);
 
-  const handleShowProfile = function (index) {
+  const handleShowProfile = function (index, section) {
     setSelectedChatIndex(index);
-    setShowUserProfile(!showUserProfile);
+
+    if (section === 'connection') {
+      setShowConnectionProfile(!showConnectionProfile);
+      setShowStrangerProfile(false);
+    } else if (section === 'stranger') {
+      setShowStrangerProfile(!showStrangerProfile);
+      setShowConnectionProfile(false);
+    }
+
+    setSelectedChatSection(section);
   };
 
   const [strangersSearchedResult, setStrangersSearchedResult] = useState([]);
@@ -70,14 +81,14 @@ const SearchedProfile = () => {
       renderedChats.push(
         <div key={i}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(i)}>
+            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(i, 'stranger')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
                 <p>@{strangersSearchedResult[i].username}</p>
               </div>
             </div>
-            {showUserProfile && selectedChatIndex === i && (
+            {showStrangerProfile && selectedChatIndex === i && (
               <UserProfile
                 id={`${i}_userStranger`} // Rename the prop to a different name, e.g., 'id' or 'profileKey'
                 userId2={strangersSearchedResult[i]._id}
@@ -105,14 +116,14 @@ const SearchedProfile = () => {
       renderedChats.push(
         <div key={i}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(i)}>
+            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(i, 'connection')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
                 <p>{connectionsSearchedResult[i]?.userData.data.user.username}</p>
               </div>
             </div>
-            {showUserProfile && selectedChatIndex === i && (
+            {showConnectionProfile && selectedChatIndex === i && (
               <UserProfile
                 id={`${i}_userConnection`} // Rename the prop to a different name, e.g., 'id' or 'profileKey'
                 userId2={connectionsSearchedResult[i].userData.data.user._id}
