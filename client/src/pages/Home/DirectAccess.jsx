@@ -1,15 +1,19 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
-import SearchedProfile from './SearchComponents/searchedProfile';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import SearchedProfile from "./SearchComponents/searchedProfile";
+import NormalChats from "./normalChats";
 
 const DirectAccess = () => {
-  const [placeholderValue, setPlaceholderValue] = useState('Search Here');
-  const [inputValue, setInputValue] = useState('');
+  const [placeholderValue, setPlaceholderValue] = useState("Search Here");
+  const [isSearching, setIsSearching] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   function handleChange(event) {
-    const target = event.target;
-    setInputValue(target.value);
+    const value = event.target.value;
+    setInputValue(value);
+
+    setIsSearching(value !== "");
   }
 
   return (
@@ -20,19 +24,19 @@ const DirectAccess = () => {
       <form>
         <FontAwesomeIcon id="search-icon" icon={faMagnifyingGlass} size="xl" />
         <input
-          className={inputValue !== '' ? 'input-text-left' : ''}
+          className={inputValue !== "" ? "input-text-left" : ""}
           id="query"
           type="text"
           onChange={handleChange}
           value={inputValue}
           onFocus={() => {
-            setPlaceholderValue('');
+            setPlaceholderValue("");
           }}
-          onBlur={() => setPlaceholderValue('Search Here')}
+          onBlur={() => setPlaceholderValue("Search Here")}
           placeholder={placeholderValue}
         ></input>
       </form>
-      <SearchedProfile />
+      {isSearching ? <SearchedProfile /> : <NormalChats />}
     </div>
   );
 };
