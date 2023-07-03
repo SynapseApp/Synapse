@@ -37,7 +37,7 @@ function App() {
 
   // Render a loading state until authentication check is complete
   if (!authChecked) {
-    return <div>Loading...</div>;
+          return <div>Loading...</div>;
   }
 
   return (

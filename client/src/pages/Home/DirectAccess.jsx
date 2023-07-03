@@ -36,7 +36,7 @@ const DirectAccess = () => {
           placeholder={placeholderValue}
         ></input>
       </form>
-      {isSearching ? <SearchedProfile /> : <NormalChats />}
+      {isSearching ? <SearchedProfile searchTerm={inputValue} /> : <NormalChats />}
     </div>
   );
 };
