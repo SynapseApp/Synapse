@@ -27,7 +27,7 @@ const DirectAccess = () => {
         <h3>Synapse</h3>
       </div>
       <form onSubmit={handleSubmit}>
-        <FontAwesomeIcon id="search-icon" icon={faMagnifyingGlass} size="xl" />
+        <FontAwesomeIcon id="search-icon" icon={faMagnifyingGlass} size="xl" onClick={handleSubmit} />
         <input
           className={inputValue !== '' ? 'input-text-left' : ''}
           id="query"
