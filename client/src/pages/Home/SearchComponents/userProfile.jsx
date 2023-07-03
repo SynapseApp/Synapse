@@ -1,20 +1,18 @@
 import FatButtons from '../../../SmallComponents/FatButtons';
-import { faBan, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
-const disconnectItem = (
-  <span>
-    <FontAwesomeIcon icon={faBan} /> Disconnect
-  </span>
-);
-const connectItem = (
-  <span>
-    <FontAwesomeIcon icon={faNetworkWired} /> Connect
-  </span>
-);
-
 const UserProfile = (props) => {
+  const connectButtonText = (
+    <span>
+      <span className="material-symbols-outlined">conversion_path</span> Connect
+    </span>
+  );
+  const disconnectButtonText = (
+    <span>
+      <span className="material-symbols-outlined">conversion_path_off</span> <b>Disonnect</b>
+    </span>
+  );
+
   return (
     <>
       <div id="user-profile">
@@ -23,7 +21,7 @@ const UserProfile = (props) => {
             <img className="user-profile-pic" src={props.picture} alt="User Profile" />
           </div>
           <div className="user-profile-upper-right">
-            <FatButtons status={props.status} text={props.status === 'connected' ? disconnectItem : connectItem} _id2={props.userId2} setConnectionStatus={props.setConnectionStatus} setDummyState={props.setDummyState} />
+            <FatButtons status={props.status} text={props.status === 'connected' ? disconnectButtonText : connectButtonText} _id2={props.userId2} setConnectionStatus={props.setConnectionStatus} setDummyState={props.setDummyState} />
           </div>
         </div>
         <h4>{props.user}</h4>
