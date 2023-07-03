@@ -7,14 +7,15 @@ import PropTypes from 'prop-types';
 const SearchedProfile = (props) => {
   const [showConnectionProfile, setShowConnectionProfile] = useState(false);
   const [showStrangerProfile, setShowStrangerProfile] = useState(false);
-  const [selectedChatIndex, setSelectedChatIndex] = useState(null);
+  const [SelectedUserProfileShowKey, setSelectedUserProfileShowKey] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState(''); // New state variable
   const [dummyState, setDummyState] = useState(0); // Dummy state variable
 
   const user = useContext(UserContext);
 
-  const handleShowProfile = function (index, section) {
-    setSelectedChatIndex(index);
+  const handleShowProfile = function (chatKey, section) {
+    // Pass the chatKey to handleShowProfile
+    setSelectedUserProfileShowKey(chatKey);
 
     if (section === 'connection') {
       setShowConnectionProfile(!showConnectionProfile);
@@ -60,28 +61,31 @@ const SearchedProfile = (props) => {
     const renderedChats = [];
 
     for (let i = 0; i < strangersSearchedResult.length; i++) {
-      const truncatedDisplayName = truncateText(strangersSearchedResult[i].displayName, 18) || '';
-      const pictureUrl = 'https://example.com/random-image.png'; // Use a random image URL
+      const stranger = strangersSearchedResult[i];
+      const truncatedDisplayName = truncateText(stranger.displayName, 18) || '';
+      const pictureUrl = 'https://example.com/random-image.png';
+      const chatKey = `stranger_${stranger._id}`;
 
       renderedChats.push(
-        <div key={i}>
+        <div key={chatKey}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(i, 'stranger')}>
+            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(chatKey, 'stranger')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
-                <p>@{strangersSearchedResult[i].username}</p>
+                <p>@{stranger.username}</p>
               </div>
             </div>
-            {showStrangerProfile && selectedChatIndex === i && (
+            {showStrangerProfile && SelectedUserProfileShowKey === chatKey && (
               <UserProfile
-                id={`${i}_userStranger`} // Rename the prop to a different name, e.g., 'id' or 'profileKey'
-                userId2={strangersSearchedResult[i]._id}
+                key={`${chatKey}_profile`}
+                id={`${i}_userStranger`}
+                userId2={stranger._id}
                 displayName={truncatedDisplayName}
-                user={strangersSearchedResult[i].username}
+                user={stranger.username}
                 picture={pictureUrl}
-                status="disconnected" // Set status as "friend"
-                description="Hardcoded description" // Use a hardcoded value for description
+                status="disconnected"
+                description="Hardcoded description"
                 setConnectionStatus={setConnectionStatus}
                 setDummyState={setDummyState}
               />
@@ -99,23 +103,35 @@ const SearchedProfile = (props) => {
 
     for (let i = 0; i < connectionsSearchedResult.length; i++) {
       const connection = connectionsSearchedResult[i].userData;
-      if (!connection) continue; // Skip if connection is null or undefined
+      if (!connection) continue;
 
       const truncatedDisplayName = truncateText(connection.displayName, 18) || '';
       const pictureUrl = 'https://example.com/random-image.png';
+      const chatKey = `connection_${connection._id}`;
 
       renderedChats.push(
-        <div key={i}>
+        <div key={chatKey}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(i, 'connection')}>
+            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(chatKey, 'connection')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
                 <p>{connection.username}</p>
               </div>
             </div>
-            {showConnectionProfile && selectedChatIndex === i && (
-              <UserProfile id={`${i}_userConnection`} userId2={connection._id} displayName={truncatedDisplayName} user={connection.username} picture={pictureUrl} status="connected" description="Hardcoded description" setConnectionStatus={setConnectionStatus} setDummyState={setDummyState} />
+            {showConnectionProfile && SelectedUserProfileShowKey === chatKey && (
+              <UserProfile
+                key={`${chatKey}_profile`}
+                id={`${i}_userConnection`}
+                userId2={connection._id}
+                displayName={truncatedDisplayName}
+                user={connection.username}
+                picture={pictureUrl}
+                status="connected"
+                description="Hardcoded description"
+                setConnectionStatus={setConnectionStatus}
+                setDummyState={setDummyState}
+              />
             )}
           </div>
         </div>
