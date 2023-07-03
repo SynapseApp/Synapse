@@ -3,12 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import SearchedProfile from './SearchComponents/searchedProfile';
 import NormalChats from './normalChats';
+import { useContext } from 'react';
+import IsSearchingContext from '../../Contexts/IsSearchingContext';
 
 const DirectAccess = () => {
   const [placeholderValue, setPlaceholderValue] = useState('Search Here');
-  const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [searchKey, setSearchKey] = useState(0); // Key to force remount of SearchedProfile component
+
+  const { isSearching, setIsSearching } = useContext(IsSearchingContext);
 
   function handleChange(event) {
     const value = event.target.value;
