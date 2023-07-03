@@ -17,8 +17,8 @@ const DirectAccess = () => {
   }
 
   return (
-    <div id="search-component">
-      <div id="synapse-header">
+    <div id="Search-Component">
+      <div id="Synapse-Header">
         <h3>Synapse</h3>
       </div>
       <form>
