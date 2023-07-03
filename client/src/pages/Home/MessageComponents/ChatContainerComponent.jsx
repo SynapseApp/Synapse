@@ -1,41 +1,36 @@
-import {
-  faFaceLaugh,
-  faImage,
-  faRightLong,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFaceLaugh, faImage, faRightLong } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ChatContainerComponent = () => {
   let conversation = [
     {
-      msgSender: "You",
-      msgText: "Adi bumbum",
+      msgSender: 'You',
+      msgText: 'Adi bumbum',
       date: new Date(),
     },
     {
-      msgSender: "Adi",
-      msgText: "my bumbum",
+      msgSender: 'Adi',
+      msgText: 'my bumbum',
     },
     {
-      msgSender: "Adi",
-      msgText: "I had biryani benchod",
+      msgSender: 'Adi',
+      msgText: 'sad',
     },
     {
-      msgSender: "You",
-      msgText: "noice",
+      msgSender: 'You',
+      msgText: 'noice',
     },
     {
-      msgSender: "Adi",
-      msgText: "hello",
+      msgSender: 'Adi',
+      msgText: 'hello',
     },
   ];
 
-  const printMessages = function(conversation) {
+  const printMessages = function (conversation) {
     const renderedMessages = [];
 
     for (let i = 0; i < conversation.length; i++) {
-      const messageClassName =
-        conversation[i].msgSender === "You" ? "my-msg" : "receiving-msg";
+      const messageClassName = conversation[i].msgSender === 'You' ? 'my-msg' : 'receiving-msg';
       const renderedMessage = (
         <div className={messageClassName} key={i}>
           <div className="msg-div">
