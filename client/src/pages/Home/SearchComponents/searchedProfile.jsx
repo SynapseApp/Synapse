@@ -39,7 +39,7 @@ const SearchedProfile = () => {
       },
       body: JSON.stringify({
         id: user._id,
-        searchTerm: 'Richard',
+        searchTerm: 'Owen',
       }),
     });
     const data = await response.json();

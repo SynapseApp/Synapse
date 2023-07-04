@@ -63,7 +63,7 @@ const FatButtons = (props) => {
   }
 
   return (
-    <div>
+    <div className='fat-btn-div'>
       <button className="fat-btn" onClick={props.status === 'connected' ? handleDisconnect : handleConnect}>
         <b>{props.text}</b>
       </button>
