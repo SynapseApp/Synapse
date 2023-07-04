@@ -59,7 +59,6 @@ connectionRoutes.post('/search', async (req, res) => {
     connections: strangerAndConnectionsArr[0],
     strangers: strangerAndConnectionsArr[1],
   };
-
   res.json(data);
 });
 
