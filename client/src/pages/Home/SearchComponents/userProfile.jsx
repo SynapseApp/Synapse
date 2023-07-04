@@ -18,7 +18,7 @@ const UserProfile = (props) => {
       <div id="user-profile">
         <div className="user-profile-upper">
           <div className="user-profile-upper-left">
-            <img className="user-profile-pic" src={props.picture} alt="User Profile" />
+            <img className="user-profile-pic" src={props.picture} alt='profile picture' />
           </div>
           <div className="user-profile-upper-right">
             <FatButtons status={props.status} text={props.status === 'connected' ? disconnectButtonText : connectButtonText} _id2={props.userId2} setConnectionStatus={props.setConnectionStatus} setDummyState={props.setDummyState} />
