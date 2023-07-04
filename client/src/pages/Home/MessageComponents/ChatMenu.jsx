@@ -42,9 +42,9 @@ const ChatMenu = () => {
           </div>
         </div>
         <div className="chat-right">
-          <FontAwesomeIcon className="user-icon" size="2xl" icon={faPhone} />
-          <FontAwesomeIcon className="user-icon" size="2xl" icon={faVideo} />
-          <FontAwesomeIcon className="user-icon info-icon" size="2xl" icon={faCircleInfo} onClick={removeHiddenClass} />
+          <FontAwesomeIcon className="user-icon" size="lg" icon={faPhone} />
+          <FontAwesomeIcon className="user-icon" size="lg" icon={faVideo} />
+          <FontAwesomeIcon className="user-icon info-icon" size="lg" icon={faCircleInfo} onClick={removeHiddenClass} />
         </div>
       </div>
       <div className="component-div">

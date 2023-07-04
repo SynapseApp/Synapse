@@ -36,7 +36,7 @@ const store = new MongoDBStore({
 });
 
 // Handle errors from the session store
-store.on(`error`, function (error) {});
+store.on(`error`, function(error) { });
 
 // Configure session middleware
 const sessionConfig = {
@@ -71,7 +71,7 @@ app.use(passport.session());
 app.get(
   "http://localhost:8000/home",
   passport.authenticate("local"),
-  (req, res) => {}
+  (req, res) => { }
 );
 
 // Route handlers for user-related functionality

@@ -37,7 +37,7 @@ exports.findUser = async function findUser(reference) {
       return user;
     }
   } catch (error) {
-    throw new Error('Failed to get user');
+    throw new Error('Failed to get user', error);
   }
 };
 
@@ -97,11 +97,7 @@ exports.deleteUser = async function deleteUser(_id) {
 exports.searchUsers = async function searchUsers(id, searchTerm) {
   // Find connections based on the provided user ID
   const connections = await Connection.find({
-    $and: [
-      {
-        $or: [{ userOne: id }, { userTwo: id }],
-      },
-    ],
+    $or: [{ userOne: id }, { userTwo: id }],
   });
 
   // Find strangers with display names matching the search term
@@ -110,9 +106,26 @@ exports.searchUsers = async function searchUsers(id, searchTerm) {
   // Remove the objects from strangers that have matching IDs with connections
   const updatedStrangers = strangers.filter((stranger) => {
     return !connections.some((connection) => {
-      return connection.userOne.toString() === stranger.id.toString() || connection.userTwo.toString() === stranger.id.toString();
+      return connection.userOne.toString() === stranger._id.toString() || connection.userTwo.toString() === stranger._id.toString();
     });
   });
 
-  return [connections, updatedStrangers];
+  // Fetch additional user data for connections
+  const connectionDataPromises = connections.map(async (connection) => {
+    const otherUserId = (connection.userOne.toString() === id ? connection.userTwo : connection.userOne).toString();
+    const userData = await User.findById(otherUserId);
+    return {
+      userData,
+    };
+  });
+
+  const connectionUserData = await Promise.all(connectionDataPromises);
+
+  const connectionsWithUserData = connectionUserData.map(({ userData }) => ({
+    userData,
+  }));
+  // Filter connectionsWithUserData based on the search term
+  const filteredConnectionUserData = connectionsWithUserData.filter(({ userData }) => userData.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  return [filteredConnectionUserData, updatedStrangers];
 };

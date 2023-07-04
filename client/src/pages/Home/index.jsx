@@ -1,12 +1,15 @@
 import LeftBar from './LeftBar';
 import '../pages-styles.scss';
 import MessageMenu from './MessageMenu';
+import { IsSearchingProvider } from '../../Contexts/IsSearchingContext';
 
 const index = () => {
   return (
-    <div id="home">
-      <LeftBar />
-      <MessageMenu />
+    <div id="Home">
+      <IsSearchingProvider>
+        <LeftBar />
+        <MessageMenu />
+      </IsSearchingProvider>
     </div>
   );
 };

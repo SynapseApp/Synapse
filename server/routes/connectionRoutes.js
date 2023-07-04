@@ -45,7 +45,7 @@ connectionRoutes.post('/', async (req, res) => {
 
 // Searching for Connections and Strangers
 
-connectionRoutes.get('/search', async (req, res) => {
+connectionRoutes.post('/search', async (req, res) => {
   // Endpoint to search for connections and strangers
   // Params: id, searchTerm
   // Response: Connections and strangers based on the search term
@@ -59,7 +59,6 @@ connectionRoutes.get('/search', async (req, res) => {
     connections: strangerAndConnectionsArr[0],
     strangers: strangerAndConnectionsArr[1],
   };
-
   res.json(data);
 });
 
@@ -92,30 +91,16 @@ connectionRoutes.get('/search', async (req, res) => {
 //   res.json(response);
 // });
 
-connectionRoutes.delete('/:id', async (req, res) => {
-  // Endpoint to delete connection
-  // Params: id // Id of the connection
-  // Response: Deleted connection
-  const id = req.params.id;
-  const response = defaultResponse();
+connectionRoutes.delete('/:userOne/:userTwo', async (req, res) => {
+  const { userOne, userTwo } = req.params;
 
-  const connection = await findUserConnections({ id });
-
-  if (!connection) {
-    response.log = 'connection not found';
-  } else {
-    const deletedConnection = await deleteConnection(id);
-
-    if (!deletedConnection) {
-      response.log = 'failed to delete connection';
-    } else {
-      response.success = true;
-      response.log = 'connection deleted';
-      response.data = deletedConnection;
-    }
+  try {
+    const result = await deleteConnection(userOne, userTwo);
+    console.log(result);
+    res.status(200).json({ message: 'Connection deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete connection' });
   }
-
-  res.json(response);
 });
 
 // Export the connectionRoutes for use in other parts of the application
