@@ -1,4 +1,4 @@
-@import "../index.scss";
+@import '../index.scss';
 
 #Auth-Page {
   @apply w-screen h-screen text-center p-5
@@ -190,7 +190,6 @@
   padding-right: 2rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
-
 }
 
 .user-profile-upper {
@@ -206,30 +205,30 @@
   .user-profile-upper-right {
     width: 50%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 5%;
   }
-
-
 
   .user-profile-pic {
     height: 6rem;
     width: 6rem;
     border-radius: 3rem;
   }
-
 }
 
 .user-profile-description {
-  background-color: #D28080;
+  background-color: #d28080;
   margin-top: 1rem;
   padding-left: 0.5rem;
   height: 60%;
 }
 
 .fat-btn {
-  background-color: #D28080;
+  background-color: #d28080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 120%;
   padding-left: 0.2rem;
   padding-right: 0.2rem;

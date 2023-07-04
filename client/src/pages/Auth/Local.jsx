@@ -3,6 +3,7 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from '../../assets/InputGroup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function Local({ setAuthenticated, setActivePage, method }) {
   const [valueEmail, setValueEmail] = useState(''); // State variable for email input value
@@ -118,7 +119,7 @@ export default function Local({ setAuthenticated, setActivePage, method }) {
             console.log('first');
           }}
         >
-          Continue
+          {method}
           <FontAwesomeIcon icon={faArrowRight} size="xl" />
         </button>
 
@@ -136,3 +137,8 @@ export default function Local({ setAuthenticated, setActivePage, method }) {
     </>
   );
 }
+Local.propTypes = {
+  setAuthenticated: PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired,
+  method: PropTypes.string.isRequired,
+};

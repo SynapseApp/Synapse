@@ -116,7 +116,7 @@ const SearchedProfile = (props) => {
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
-                <p>{connection.username}</p>
+                <p>@{connection.username}</p>
               </div>
             </div>
             {showConnectionProfile && SelectedUserProfileShowKey === chatKey && (
