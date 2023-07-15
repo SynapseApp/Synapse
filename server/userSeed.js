@@ -21,7 +21,7 @@ async function seed() {
     await User.deleteMany({});
     console.log("The users collection has been cleared.");
 
-    const totalUsers = 49; // Change this value to the desired number of total users
+    const totalUsers = 10; // Change this value to the desired number of total users
     const batchSize = Math.ceil((totalUsers / 100) * 1); // Batch size as 1% of total users
     let insertedUsers = 0; // Counter for inserted users
     let lastLoggedProgress = 0; // Variable to keep track of the last logged progress
