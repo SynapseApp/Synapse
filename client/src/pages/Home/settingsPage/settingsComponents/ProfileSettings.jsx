@@ -15,6 +15,8 @@ const ProfileSettings = () => {
         <div className='profile-settings-right'>
             <h3>Display Name</h3>
             <p className='profile-text'>{hardcodedData.displayName}</p>
+            <p className='profile-mail'>{hardcodedData.userMail}</p>
+            <a className='profile-link'>Change Password</a>
         </div>
     </div>
   )

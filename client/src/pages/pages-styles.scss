@@ -355,7 +355,7 @@
 }
 
 .settings-div {
-  background-color: rgba(84, 50, 50, 0.646);
+  background-color: white;
   width: 100%;
   height: 100vh;
 }
@@ -376,7 +376,6 @@
 }
 
 .profile-settings-left {
-  background-color: gray;
   width: 20%;
 }
 
@@ -384,7 +383,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background-color: #D28080;
   width: 80%;
 }
 
@@ -392,7 +390,7 @@
   margin-top: 1.5rem;
   width: 15rem;
   height: 15rem;
-  border-radius: 10rem;
+  border-radius: 15rem;
 }
 
 .profile-settings-img:hover {
@@ -400,9 +398,37 @@
 }
 
 .profile-text {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.2rem;
   padding-top: 0.1rem;
+}
+
+.profile-mail {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.settings-appearance {
+  background-color: white;
+  width: 100%;
+  height: 20rem;
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+.toggle-dark-mode-div {
+  display: flex;
+  width: 15rem;
+  height: 10rem;
+  margin-top: 1rem;
+}
+
+.appearance-icon {
+  height: 1.7rem;
+  display: flex;
+  justify-self: flex-end;
+  margin-left: auto;
 }
 
 @media screen and (max-width: 600px) {
