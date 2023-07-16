@@ -4,6 +4,7 @@ import RootPage from './pages/Root';
 import Home from './pages/Home';
 import { useEffect, useState } from 'react';
 import UserContext from './Contexts/userContext';
+import Settings from './pages/Home/settingsPage/settings';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -48,6 +49,7 @@ function App() {
           {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
           <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
           <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
+          <Route path="/settings" element={<Settings/>}/>
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

@@ -354,6 +354,56 @@
   border-radius: 1rem;
 }
 
+.settings-div {
+  background-color: rgba(84, 50, 50, 0.646);
+  width: 100%;
+  height: 100vh;
+}
+
+.settings-header {
+  padding-left: 2rem;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.profile-settings {
+  background-color: white;
+  width: 100%;
+  height: 20rem;
+  padding-left: 2rem;
+  padding-top: 0.5rem;
+  display: flex; 
+}
+
+.profile-settings-left {
+  background-color: gray;
+  width: 20%;
+}
+
+.profile-settings-right {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #D28080;
+  width: 80%;
+}
+
+.profile-settings-img {
+  margin-top: 1.5rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 10rem;
+}
+
+.profile-settings-img:hover {
+  opacity: 75%;
+}
+
+.profile-text {
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding-top: 0.1rem;
+}
 
 @media screen and (max-width: 600px) {
   #Login-Page {
