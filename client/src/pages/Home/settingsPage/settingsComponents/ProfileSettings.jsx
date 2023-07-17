@@ -9,14 +9,14 @@ const ProfileSettings = () => {
   return (
     <div className='profile-settings'>
         <div className='profile-settings-left'>
-            <h3 className='profile-h3'>Profile</h3>
             <img className='profile-settings-img' src={hardcodedData.profilepicture} />
         </div>
         <div className='profile-settings-right'>
             <h3>Display Name</h3>
             <p className='profile-text'>{hardcodedData.displayName}</p>
             <p className='profile-mail'>{hardcodedData.userMail}</p>
-            <a className='profile-link'>Change Password</a>
+            <a href='#' className='profile-link'>Change Email</a>
+            <a href='#' className='profile-link'>Change Password</a>
         </div>
     </div>
   )
