@@ -83,11 +83,26 @@
   height: 50%;
 }
 .modal-pfp-input {
+  display: none;
   width: 20%;
   height: 80%;
   border-radius: 100%;
   background-color: aqua;
 }
+
+.modal-pfp-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 80%;
+  border-radius: 100%;
+  background-color: aqua;
+  color: #000;
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
 
 .hidden {
   display: none;
@@ -121,7 +136,7 @@
 }
 
 #modal-submit {
-  width: 35%;
+  width: 25%;
   height: 4rem;
   margin-top: 5rem;
   display: flex;
@@ -136,6 +151,7 @@
   display: flex;
   align-self: end;
   margin-left: auto;
+  color: #000 !important;
 }
 
 .username-input::placeholder {
