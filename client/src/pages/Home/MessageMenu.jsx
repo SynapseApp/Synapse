@@ -3,7 +3,7 @@ import ChatMenu from './MessageComponents/ChatMenu';
 
 const MessageMenu = () => {
   return (
-    <div id="message-menu">
+    <div id="Message-Menu">
       <DirectAccess />
       <ChatMenu />
     </div>

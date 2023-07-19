@@ -14,7 +14,7 @@ const ChatContainerComponent = () => {
     },
     {
       msgSender: 'Adi',
-      msgText: 'I had biryani benchod',
+      msgText: 'sad',
     },
     {
       msgSender: 'You',
@@ -46,17 +46,15 @@ const ChatContainerComponent = () => {
 
   return (
     <div className="chat-container">
-      <div className="message-container">
-        <form className="message-form">
-          <input className="message-input" placeholder="Type a message..." />
-          <div className='input-icons'>
+      <div className="chat-content">{printMessages(conversation)}</div>
+      <form className="message-form">
+        <input className="message-input" placeholder="Type a message..." />
+        <div className="input-icons">
           <FontAwesomeIcon className="msg-icon" icon={faImage} />
           <FontAwesomeIcon className="msg-icon" icon={faFaceLaugh} />
           <FontAwesomeIcon className="msg-icon" icon={faRightLong} />
-          </div>
-        </form>
-      </div>
-      <div className="chat-content">{printMessages(conversation)}</div>
+        </div>
+      </form>
     </div>
   );
 };
