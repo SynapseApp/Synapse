@@ -16,7 +16,7 @@ const LeftBar = () => {
                 <FontAwesomeIcon id='icon' icon={faMessage} size='2xl' />
                 <FontAwesomeIcon id='icon' icon={faBell} size='2xl' />
                 <FontAwesomeIcon id="icon" icon={faBars} size='2xl' />
-                <FontAwesomeIcon id='icon' icon={faGear} size='2xl' onClick={changeRoute("settings")}/>
+                <FontAwesomeIcon id='icon' icon={faGear} size='2xl' />
             </div>
         </>
     )

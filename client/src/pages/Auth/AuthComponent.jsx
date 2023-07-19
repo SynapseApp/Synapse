@@ -116,7 +116,7 @@ export default function AuthComponent({ setAuthenticated }) {
         {/* Submit button */}
         <button id="Submit-Button" className="gradient-btn glow-effect">
           Continue
-          <FontAwesomeIcon className='submit-icon' icon={faArrowRight} size="xl" />
+          <FontAwesomeIcon icon={faArrowRight} size="xl" />
         </button>
 
         {/* Toggle between login and register methods */}
