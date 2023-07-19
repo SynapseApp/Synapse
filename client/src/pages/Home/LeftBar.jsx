@@ -1,7 +1,18 @@
+
+import { faBars, faBell, faGear, faMessage, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useContext } from 'react';
+import IsSearchingContext from '../../Contexts/IsSearchingContext';
+=======
 import { faBars, faBell, faGear, faMessage, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 import IsSearchingContext from '../../Contexts/IsSearchingContext';
+
+
+const changeRoute = function(finalPath) {
+    Navigate(finalPath)
+}
 
 const LeftBar = () => {
   const { setIsSearching } = useContext(IsSearchingContext);
