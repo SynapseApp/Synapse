@@ -2,18 +2,20 @@ import UserProfile from './userProfile';
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import UserContext from '../../../Contexts/userContext';
+import PropTypes from 'prop-types';
 
-const SearchedProfile = () => {
+const SearchedProfile = (props) => {
   const [showConnectionProfile, setShowConnectionProfile] = useState(false);
   const [showStrangerProfile, setShowStrangerProfile] = useState(false);
-  const [selectedChatIndex, setSelectedChatIndex] = useState(null);
+  const [SelectedUserProfileShowKey, setSelectedUserProfileShowKey] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState(''); // New state variable
   const [dummyState, setDummyState] = useState(0); // Dummy state variable
 
   const user = useContext(UserContext);
 
-  const handleShowProfile = function (index, section) {
-    setSelectedChatIndex(index);
+  const handleShowProfile = function (chatKey, section) {
+    // Pass the chatKey to handleShowProfile
+    setSelectedUserProfileShowKey(chatKey);
 
     if (section === 'connection') {
       setShowConnectionProfile(!showConnectionProfile);
@@ -39,27 +41,12 @@ const SearchedProfile = () => {
       },
       body: JSON.stringify({
         id: user._id,
-        searchTerm: 'Owen',
+        searchTerm: props.searchTerm,
       }),
     });
     const data = await response.json();
 
-    const connectionDataPromises = data.connections.map(async (connection) => {
-      const otherUserId = connection.userOne === user._id ? connection.userTwo : connection.userOne;
-      const userResponse = await fetch(`http://localhost:3000/user/${otherUserId}`);
-      const userData = await userResponse.json();
-      return {
-        userData,
-      };
-    });
-
-    const connectionUserData = await Promise.all(connectionDataPromises);
-
-    const connectionsWithUserData = connectionUserData.map(({ userData }) => ({
-      userData,
-    }));
-
-    setConnectionsSearchedResult(connectionsWithUserData);
+    setConnectionsSearchedResult(data.connections);
     setStrangersSearchedResult(data.strangers);
   };
 
@@ -74,28 +61,31 @@ const SearchedProfile = () => {
     const renderedChats = [];
 
     for (let i = 0; i < strangersSearchedResult.length; i++) {
-      const truncatedDisplayName = truncateText(strangersSearchedResult[i].displayName, 18) || '';
-      const pictureUrl = 'https://example.com/random-image.png'; // Use a random image URL
+      const stranger = strangersSearchedResult[i];
+      const truncatedDisplayName = truncateText(stranger.displayName, 18) || '';
+      const pictureUrl = 'https://example.com/random-image.png';
+      const chatKey = `stranger_${stranger._id}`;
 
       renderedChats.push(
-        <div key={i}>
+        <div key={chatKey}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(i, 'stranger')}>
+            <div className="chat" id={`${i}_chatStranger`} onClick={() => handleShowProfile(chatKey, 'stranger')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
-                <p>@{strangersSearchedResult[i].username}</p>
+                <p>@{stranger.username}</p>
               </div>
             </div>
-            {showStrangerProfile && selectedChatIndex === i && (
+            {showStrangerProfile && SelectedUserProfileShowKey === chatKey && (
               <UserProfile
-                id={`${i}_userStranger`} // Rename the prop to a different name, e.g., 'id' or 'profileKey'
-                userId2={strangersSearchedResult[i]._id}
+                key={`${chatKey}_profile`}
+                id={`${i}_userStranger`}
+                userId2={stranger._id}
                 displayName={truncatedDisplayName}
-                user={strangersSearchedResult[i].username}
+                user={stranger.username}
                 picture={pictureUrl}
-                status="disconnected" // Set status as "friend"
-                description="Hardcoded description" // Use a hardcoded value for description
+                status="disconnected"
+                description="Hardcoded description"
                 setConnectionStatus={setConnectionStatus}
                 setDummyState={setDummyState}
               />
@@ -110,29 +100,35 @@ const SearchedProfile = () => {
 
   const printConnectionChats = function () {
     const renderedChats = [];
+
     for (let i = 0; i < connectionsSearchedResult.length; i++) {
-      const truncatedDisplayName = truncateText(connectionsSearchedResult[i].userData.data.user.displayName, 18) || '';
-      const pictureUrl = 'https://example.com/random-image.png'; // Use a random image URL
+      const connection = connectionsSearchedResult[i].userData;
+      if (!connection) continue;
+
+      const truncatedDisplayName = truncateText(connection.displayName, 18) || '';
+      const pictureUrl = 'https://example.com/random-image.png';
+      const chatKey = `connection_${connection._id}`;
 
       renderedChats.push(
-        <div key={i}>
+        <div key={chatKey}>
           <div className="render-chat">
-            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(i, 'connection')}>
+            <div className="chat" id={`${i}_chatConnection`} onClick={() => handleShowProfile(chatKey, 'connection')}>
               <img src={pictureUrl} alt="Profile" />
               <div className="chat-text" onClick={removeHiddenChatMenu}>
                 <p className="contact-name">{truncatedDisplayName}</p>
-                <p>{connectionsSearchedResult[i]?.userData.data.user.username}</p>
+                <p>@{connection.username}</p>
               </div>
             </div>
-            {showConnectionProfile && selectedChatIndex === i && (
+            {showConnectionProfile && SelectedUserProfileShowKey === chatKey && (
               <UserProfile
-                id={`${i}_userConnection`} // Rename the prop to a different name, e.g., 'id' or 'profileKey'
-                userId2={connectionsSearchedResult[i].userData.data.user._id}
+                key={`${chatKey}_profile`}
+                id={`${i}_userConnection`}
+                userId2={connection._id}
                 displayName={truncatedDisplayName}
-                user={connectionsSearchedResult[i].userData.data.user.username}
+                user={connection.username}
                 picture={pictureUrl}
-                status="connected" // Set status as "friend"
-                description="Hardcoded description" // Use a hardcoded value for description
+                status="connected"
+                description="Hardcoded description"
                 setConnectionStatus={setConnectionStatus}
                 setDummyState={setDummyState}
               />
@@ -169,6 +165,10 @@ const SearchedProfile = () => {
   }, [connectionStatus, dummyState]);
 
   return <div>{renderedChats}</div>;
+};
+
+SearchedProfile.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
 };
 
 export default SearchedProfile;
