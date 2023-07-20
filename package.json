@@ -16,9 +16,5 @@
     "url": "https://github.com/Anky-y/Synapse/issues"
   },
   "homepage": "https://github.com/Anky-y/Synapse#readme",
-  "keywords": [],
-  "dependencies": {
-    "react-dropdown": "^1.11.0",
-    "react-router-dom": "^6.14.1"
-  }
+  "keywords": []
 }
