@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createConnection, findConnection, findUserConnections, updateConnection, deleteConnection } = require('../controllers/connectionCRUD.js');
+const { createConnection, findUserConnections, deleteConnection } = require('../controllers/connectionCRUD.js');
 const { searchUsers } = require('../controllers/userCRUD.js');
 const { defaultResponse } = require('../store.js');
 
@@ -60,6 +60,16 @@ connectionRoutes.post('/search', async (req, res) => {
     strangers: strangerAndConnectionsArr[1],
   };
   res.json(data);
+});
+
+connectionRoutes.post('/searchConnections', async (req, res) => {
+  // Endpoint to search for connections and strangers
+  // Params: id, searchTerm
+  // Response: Connections and strangers based on the search term
+
+  const id = req.body.id;
+  const connectionsArr = await findUserConnections(id);
+  res.json(connectionsArr);
 });
 
 // connectionRoutes.patch('/:id', async (req, res) => {
