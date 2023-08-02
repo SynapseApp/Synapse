@@ -44,9 +44,6 @@ exports.findUserConnections = async function findUserConnections(_id) {
       .populate('userOne')
       .populate('userTwo')
       .exec();
-
-    console.log(connections);
-
     return connections;
   } catch (error) {
     // Handle the error appropriately

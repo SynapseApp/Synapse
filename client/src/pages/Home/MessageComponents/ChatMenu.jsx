@@ -28,8 +28,8 @@ const ChatMenu = ({ userObject }) => {
           <div className="chat-left">
             <img className="user-picture" src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623"></img>
             <div className="user-info">
-              <h6 className="user-username">{userObject.user === undefined ? 'undefined' : userObject.user.displayName}</h6>
-              <p className="user-status">{userObject.user === undefined ? 'undefined' : userObject.user.id}</p>
+              <h6 className="user-username">{userObject === undefined ? 'undefined' : userObject.displayName}</h6>
+              <p className="user-status">{userObject === undefined ? 'undefined' : userObject.id}</p>
             </div>
           </div>
           <div className="chat-right">
@@ -39,13 +39,13 @@ const ChatMenu = ({ userObject }) => {
           </div>
         </div>
         <div className="component-div">
-          <ChatContainerComponent />
+          <ChatContainerComponent userObject={userObject} />
         </div>
       </div>
       <div className="chat-info hidden">
         <FontAwesomeIcon className="x-icon" icon={faX} onClick={addHiddenClass} />
         <img className="chat-info-pic" src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" />
-        <h2 className="chat-info-header">{userObject.user === undefined ? 'undefined' : userObject.user.displayName}</h2>
+        <h2 className="chat-info-header">{userObject === undefined ? 'undefined' : userObject.displayName}</h2>
         <ChatInfoButtons />
       </div>
     </>
@@ -53,7 +53,7 @@ const ChatMenu = ({ userObject }) => {
 };
 
 ChatMenu.propTypes = {
-  userObject: PropTypes.object.isRequired,
+  userObject: PropTypes.object,
 };
 
 export default ChatMenu;

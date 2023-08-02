@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Create a new Mongoose schema
 const Schema = mongoose.Schema;
 
-// Define the connections schema
+// Define the message schema
 const messageSchema = new Schema({
   userOne: {
     type: mongoose.Schema.Types.ObjectId,
@@ -13,11 +13,15 @@ const messageSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   messageContent: {
     type: mongoose.Schema.Types.String,
     require: true,
   },
 });
 
-// Create and export the Connection model based on the connection schema
-module.exports = mongoose.model('messagee', messageSchema);
+// Create and export the Message model based on the message schema
+module.exports = mongoose.model('Message', messageSchema);

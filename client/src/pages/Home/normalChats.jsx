@@ -33,6 +33,7 @@ const NormalChats = ({ setUserObject }) => {
     }
     setConnectionsArr(tmpArr);
   };
+
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -50,8 +51,6 @@ const NormalChats = ({ setUserObject }) => {
         </div>
       );
     }
-
-    console.log(connectionsArr);
 
     for (let i = 0; i < connectionsArr.length; i++) {
       renderedChats.push(
