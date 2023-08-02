@@ -14,13 +14,6 @@ const DirectAccess = ({ setUserObject }) => {
 
   const { isSearching, setIsSearching } = useContext(IsSearchingContext);
 
-  // Define a function to receive data from the ChatMenu component
-  const handleDataFromNormalChats = function (data) {
-    // Update the state with the received data
-    setUserObject(data);
-    console.log('clicked on user:', data.user.displayName);
-  };
-
   function handleChange(event) {
     const value = event.target.value;
     setInputValue(value);
@@ -52,7 +45,7 @@ const DirectAccess = ({ setUserObject }) => {
           placeholder={placeholderValue}
         />
       </form>
-      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats sendDataToParent={handleDataFromNormalChats} />}
+      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats setUserObject={setUserObject} />}
     </div>
   );
 };
