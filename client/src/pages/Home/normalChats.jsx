@@ -25,27 +25,14 @@ const NormalChats = ({ setUserObject }) => {
       }),
     });
     const data = await response.json();
-    const connectionsId = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].userOne === user._id) {
-        connectionsId.push(data[i].userTwo);
-      } else if (data[i].userTwo === user._id) {
-        connectionsId.push(data[i].userOne);
-      }
-    }
 
     const tmpArr = [];
 
-    for (let i = 0; i < connectionsId.length; i++) {
-      const response = await fetch(`http://localhost:3000/user/${connectionsId[i]}`);
-      const userData = await response.json();
-      tmpArr.push(userData);
+    for (let i = 0; i < data.length; i++) {
+      tmpArr.push(data[i].userTwo);
     }
     setConnectionsArr(tmpArr);
   };
-
-  console.log(connectionsArr);
-
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -64,18 +51,20 @@ const NormalChats = ({ setUserObject }) => {
       );
     }
 
+    console.log(connectionsArr);
+
     for (let i = 0; i < connectionsArr.length; i++) {
       renderedChats.push(
         <div
           className="chat"
           onClick={() => {
-            setUserObject(connectionsArr[i].data);
+            setUserObject(connectionsArr[i]);
           }}
           key={i}
         >
           <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
           <div className="chat-text" onClick={removeHiddenChatMenu}>
-            <p className="contact-name">{truncateText(connectionsArr[i].data.user.displayName, 18)}</p>
+            <p className="contact-name">{truncateText(connectionsArr[i].displayName, 18)}</p>
             <p>default text</p>
           </div>
         </div>
