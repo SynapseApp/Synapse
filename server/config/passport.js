@@ -1,7 +1,7 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oidc');
-const User = require('../models/userModel');
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oidc");
+const User = require("../models/userModel");
 // Configure Passport
 
 /**
@@ -14,10 +14,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.use(
   new GoogleStrategy(
     {
-      clientID: '441670067708-535huo2c4b5l3u05ntqf59dlsqteipm9.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: '/oauth2/redirect/google',
-      scope: ['profile', 'email'],
+      clientID:
+        "441670067708-535huo2c4b5l3u05ntqf59dlsqteipm9.apps.googleusercontent.com",
+      clientSecret: "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",
+      callbackURL: "/oauth2/redirect/google",
+      scope: ["profile", "email"],
     },
     async function verify(issuer, profile, cb) {
       const param = await User.findOne({ googleId: profile.id });
@@ -34,8 +35,8 @@ passport.use(
       } else {
         return cb(null, param);
       }
-    }
-  )
+    },
+  ),
 );
 
 passport.serializeUser(function (user, cb) {

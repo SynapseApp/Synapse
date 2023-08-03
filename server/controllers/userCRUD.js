@@ -1,5 +1,5 @@
-const User = require('../models/userModel.js');
-const Connection = require('../models/connectionModel.js');
+const User = require("../models/userModel.js");
+const Connection = require("../models/connectionModel.js");
 /**
  * Creates a new user in the database.
  *
@@ -16,7 +16,7 @@ exports.createUser = async function createUser(userDetails) {
     user = newUser;
     return user;
   } catch (error) {
-    throw new Error('Failed to create user');
+    throw new Error("Failed to create user");
   }
 };
 
@@ -37,7 +37,7 @@ exports.findUser = async function findUser(reference) {
       return user;
     }
   } catch (error) {
-    throw new Error('Failed to get user', error);
+    throw new Error("Failed to get user", error);
   }
 };
 
@@ -57,12 +57,12 @@ exports.updateUser = async function updateUser(_id, updateKeys) {
       new: true,
     });
     if (!updatedUser) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
     user = updatedUser;
     return user;
   } catch (error) {
-    throw new Error('Failed to update user');
+    throw new Error("Failed to update user");
   }
 };
 
@@ -80,11 +80,11 @@ exports.deleteUser = async function deleteUser(_id) {
 
   try {
     await User.findByIdAndDelete(_id);
-    if (!deleteUser) throw new Error('User not found');
+    if (!deleteUser) throw new Error("User not found");
     deleteSuccessful = true;
     return user;
   } catch (error) {
-    throw new Error('Failed to delete user');
+    throw new Error("Failed to delete user");
   }
 };
 
@@ -101,18 +101,27 @@ exports.searchUsers = async function searchUsers(id, searchTerm) {
   });
 
   // Find strangers with display names matching the search term
-  const strangers = await User.find({ displayName: { $regex: `^${searchTerm}`, $options: 'i' } });
+  const strangers = await User.find({
+    displayName: { $regex: `^${searchTerm}`, $options: "i" },
+  });
 
   // Remove the objects from strangers that have matching IDs with connections
   const updatedStrangers = strangers.filter((stranger) => {
     return !connections.some((connection) => {
-      return connection.userOne.toString() === stranger._id.toString() || connection.userTwo.toString() === stranger._id.toString();
+      return (
+        connection.userOne.toString() === stranger._id.toString() ||
+        connection.userTwo.toString() === stranger._id.toString()
+      );
     });
   });
 
   // Fetch additional user data for connections
   const connectionDataPromises = connections.map(async (connection) => {
-    const otherUserId = (connection.userOne.toString() === id ? connection.userTwo : connection.userOne).toString();
+    const otherUserId = (
+      connection.userOne.toString() === id
+        ? connection.userTwo
+        : connection.userOne
+    ).toString();
     const userData = await User.findById(otherUserId);
     return {
       userData,
@@ -125,7 +134,10 @@ exports.searchUsers = async function searchUsers(id, searchTerm) {
     userData,
   }));
   // Filter connectionsWithUserData based on the search term
-  const filteredConnectionUserData = connectionsWithUserData.filter(({ userData }) => userData.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredConnectionUserData = connectionsWithUserData.filter(
+    ({ userData }) =>
+      userData.displayName.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   return [filteredConnectionUserData, updatedStrangers];
 };

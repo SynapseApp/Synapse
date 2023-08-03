@@ -1,28 +1,33 @@
-import { faMagnifyingGlass, faPhone, faUser, faVideo } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import {
+  faMagnifyingGlass,
+  faPhone,
+  faUser,
+  faVideo,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
 
 const ChatInfoButtons = () => {
-    return (
-        <>
-            <div className='chat-info-functions'>
-                <FontAwesomeIcon className='chat-info-icon' icon={faUser} />
-                <p className='chat-info-btn-text'>Profile</p>
-            </div>
-            <div className='chat-info-functions'>
-                <FontAwesomeIcon className='chat-info-icon' icon={faPhone} />
-                <p className='chat-info-btn-text'>Voice Call</p>
-            </div>
-            <div className='chat-info-functions'>
-                <FontAwesomeIcon className='chat-info-icon' icon={faVideo} />
-                <p className='chat-info-btn-text'>Video Call</p>
-            </div>
-            <div className='chat-info-functions'>
-                <FontAwesomeIcon className='chat-info-icon' icon={faMagnifyingGlass} />
-                <input placeholder='Search in Chat'></input>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="chat-info-functions">
+        <FontAwesomeIcon className="chat-info-icon" icon={faUser} />
+        <p className="chat-info-btn-text">Profile</p>
+      </div>
+      <div className="chat-info-functions">
+        <FontAwesomeIcon className="chat-info-icon" icon={faPhone} />
+        <p className="chat-info-btn-text">Voice Call</p>
+      </div>
+      <div className="chat-info-functions">
+        <FontAwesomeIcon className="chat-info-icon" icon={faVideo} />
+        <p className="chat-info-btn-text">Video Call</p>
+      </div>
+      <div className="chat-info-functions">
+        <FontAwesomeIcon className="chat-info-icon" icon={faMagnifyingGlass} />
+        <input placeholder="Search in Chat"></input>
+      </div>
+    </>
+  );
+};
 
-export default ChatInfoButtons
+export default ChatInfoButtons;

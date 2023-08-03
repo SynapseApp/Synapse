@@ -1,14 +1,14 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
-import SearchedProfile from './SearchComponents/searchedProfile';
-import NormalChats from './normalChats';
-import { useContext } from 'react';
-import IsSearchingContext from '../../Contexts/IsSearchingContext';
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import SearchedProfile from "./SearchComponents/searchedProfile";
+import NormalChats from "./normalChats";
+import { useContext } from "react";
+import IsSearchingContext from "../../Contexts/IsSearchingContext";
 
 const DirectAccess = () => {
-  const [placeholderValue, setPlaceholderValue] = useState('Search Here');
-  const [inputValue, setInputValue] = useState('');
+  const [placeholderValue, setPlaceholderValue] = useState("Search Here");
+  const [inputValue, setInputValue] = useState("");
   const [searchKey, setSearchKey] = useState(0); // Key to force remount of SearchedProfile component
 
   const { isSearching, setIsSearching } = useContext(IsSearchingContext);
@@ -30,21 +30,30 @@ const DirectAccess = () => {
         <h3>Synapse</h3>
       </div>
       <form onSubmit={handleSubmit}>
-        <FontAwesomeIcon id="search-icon" icon={faMagnifyingGlass} size="xl" onClick={handleSubmit} />
+        <FontAwesomeIcon
+          id="search-icon"
+          icon={faMagnifyingGlass}
+          size="xl"
+          onClick={handleSubmit}
+        />
         <input
-          className={inputValue !== '' ? 'input-text-left' : ''}
+          className={inputValue !== "" ? "input-text-left" : ""}
           id="query"
           type="text"
           onChange={handleChange}
           value={inputValue}
           onFocus={() => {
-            setPlaceholderValue('');
+            setPlaceholderValue("");
           }}
-          onBlur={() => setPlaceholderValue('Search Here')}
+          onBlur={() => setPlaceholderValue("Search Here")}
           placeholder={placeholderValue}
         />
       </form>
-      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats />}
+      {isSearching ? (
+        <SearchedProfile searchTerm={inputValue} key={searchKey} />
+      ) : (
+        <NormalChats />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import DirectAccess from './DirectAccess';
-import ChatMenu from './MessageComponents/ChatMenu';
+import DirectAccess from "./DirectAccess";
+import ChatMenu from "./MessageComponents/ChatMenu";
 
 const MessageMenu = () => {
   return (

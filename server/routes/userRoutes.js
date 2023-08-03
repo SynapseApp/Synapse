@@ -1,13 +1,17 @@
-const { Router } = require('express');
-const { deleteUser, findUser, updateUser } = require('../controllers/userCRUD.js');
-const { defaultResponse } = require('../store.js');
+const { Router } = require("express");
+const {
+  deleteUser,
+  findUser,
+  updateUser,
+} = require("../controllers/userCRUD.js");
+const { defaultResponse } = require("../store.js");
 
 // Create a new Router instance
 const userRoutes = Router();
 
 // RESTful API routes for user operations
 
-userRoutes.get('/:_id', async (req, res) => {
+userRoutes.get("/:_id", async (req, res) => {
   // Endpoint to get user details based on the provided ID
   // Params: _id - User ID
   // Response: User details from the provided ID
@@ -17,17 +21,17 @@ userRoutes.get('/:_id', async (req, res) => {
   const response = defaultResponse();
 
   if (!user) {
-    response.log = 'user not found';
+    response.log = "user not found";
   } else {
     response.success = true;
-    response.log = 'user found';
+    response.log = "user found";
     response.data = { user };
   }
 
   res.json(response);
 });
 
-userRoutes.patch('/:_id', async (req, res) => {
+userRoutes.patch("/:_id", async (req, res) => {
   // Endpoint to update user details based on the provided ID
   // Params: _id - User ID
   // Body: updateKeys - Updated user data
@@ -40,17 +44,17 @@ userRoutes.patch('/:_id', async (req, res) => {
   const user = await updateUser(_id, updateKeys);
 
   if (user) {
-    response.log = 'user not found';
+    response.log = "user not found";
   } else {
     response.success = true;
-    response.log = 'user updated';
+    response.log = "user updated";
     response.data = { user };
   }
 
   res.json(response);
 });
 
-userRoutes.delete('/:_id', async (req, res) => {
+userRoutes.delete("/:_id", async (req, res) => {
   // Endpoint to delete a user based on the provided ID
   // Params: _id - User ID
   // Response: Deleted user
@@ -60,10 +64,10 @@ userRoutes.delete('/:_id', async (req, res) => {
   const userDeleted = await deleteUser(_id);
 
   if (!userDeleted) {
-    response.log = 'failed to delete user';
+    response.log = "failed to delete user";
   } else {
     response.success = true;
-    response.log = 'user deleted';
+    response.log = "user deleted";
     response.data = { user: userDeleted };
   }
 

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Create a new Mongoose schema
 const Schema = mongoose.Schema;
@@ -7,13 +7,13 @@ const Schema = mongoose.Schema;
 const connectionSchema = new Schema({
   userOne: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   userTwo: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
 });
 
 // Create and export the Connection model based on the connection schema
-module.exports = mongoose.model('Connection', connectionSchema);
+module.exports = mongoose.model("Connection", connectionSchema);
