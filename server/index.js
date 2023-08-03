@@ -16,6 +16,8 @@ const googleRoutes = require('./routes/googleAuth.js');
 
 const Message = require('./models/messageModel.js');
 
+// const { findUserMessages } = require('../controllers/messageCRUD');
+
 // Connect to the MongoDB database
 connectDatabase();
 
@@ -106,8 +108,9 @@ io.on('connection', (socket) => {
   console.log(socket.id);
   socket.on('private_message', async (data) => {
     const newMessage = new Message(data);
-    const response = await newMessage.save();
-
+    await newMessage.save();
+    socket.join(data.sender);
+    socket.join(data.receiver);
     io.to(data.receiver).emit('new_message', newMessage);
   });
 

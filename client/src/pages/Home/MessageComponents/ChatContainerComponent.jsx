@@ -3,28 +3,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../Contexts/userContext';
-import socket from '../../../socket';
 
-const ChatContainerComponent = ({ selectedUser }) => {
+const ChatContainerComponent = ({ selectedUser, socket }) => {
   const [messages, setMessages] = useState([]);
-  // const [messageToSend, setMessageToSend] = useState('');
   const [textInputValue, setTextInputValue] = useState('');
 
   const currentUser = useContext(UserContext);
 
   useEffect(() => {
-    searchMessages();
-  }, [selectedUser, messages]);
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      socket.emit('join', currentUser._id); // Join a room with the current user ID
-    });
-
     socket.on('new_message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
-  }, [currentUser._id]);
+
+    return () => {
+      socket.off('new_message');
+    };
+  }, [socket, selectedUser]);
+
+  useEffect(() => {
+    // no-op if the socket is already connected
+    socket.connect();
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    searchMessages();
+    console.log('yo');
+  }, [socket, selectedUser]);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -89,6 +97,7 @@ const ChatContainerComponent = ({ selectedUser }) => {
 };
 
 ChatContainerComponent.propTypes = {
+  socket: PropTypes.object.isRequired,
   selectedUser: PropTypes.object.isRequired,
 };
 

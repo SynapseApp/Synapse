@@ -22,12 +22,11 @@ async function generateRandomMessages(userOne, userTwo, numMessages) {
     });
   }
 
-  await Message.deleteMany({});
-
   return Message.insertMany(messages);
 }
 
 async function seedDatabase() {
+  await Message.deleteMany({});
   const users = await User.find().select('_id');
 
   const numCombinations = 3; // Number of combinations to generate random messages for

@@ -32,7 +32,11 @@ const NormalChats = ({ setSelectedUser }) => {
     const tmpArr = [];
 
     for (let i = 0; i < data.length; i++) {
-      tmpArr.push(data[i].userTwo);
+      if (user._id === data[i].userOne._id) {
+        tmpArr.push(data[i].userTwo);
+      } else if (user._id === data[i].userTwo._id) {
+        tmpArr.push(data[i].userOne);
+      }
     }
     setConnectionsArr(tmpArr);
   };

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChatContainerComponent from './ChatContainerComponent';
 import ChatInfoButtons from './ChatInfoButtons';
 import PropTypes from 'prop-types';
+import socket from '../../../socket';
 
 const ChatMenu = ({ selectedUser }) => {
   function removeHiddenClass() {
@@ -39,7 +40,7 @@ const ChatMenu = ({ selectedUser }) => {
           </div>
         </div>
         <div className="component-div">
-          <ChatContainerComponent selectedUser={selectedUser} />
+          <ChatContainerComponent selectedUser={selectedUser} socket={socket} />
         </div>
       </div>
       <div className="chat-info hidden">
