@@ -5,9 +5,12 @@ import UserContext from '../../Contexts/userContext';
 
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import socket from '../../socket';
 
-const NormalChats = ({ setUserObject }) => {
+const NormalChats = ({ setSelectedUser }) => {
   const [connectionsArr, setConnectionsArr] = useState([]);
+  // const [userSelected, setUserSelected] = useState(false);
+
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -40,6 +43,24 @@ const NormalChats = ({ setUserObject }) => {
     }
     return text;
   }
+  const handleClick = function (clickedOnUser) {
+    // setUserSelected(true);
+    setSelectedUser(clickedOnUser);
+    socket.auth = { clickedOnUser };
+    console.log(clickedOnUser);
+    socket.connect();
+  };
+
+  useEffect(() => {
+    socket.on('connect_error', (err) => {
+      if (err.message === 'User Does Not Exist') {
+        console.log(err);
+      }
+    });
+
+    // Remove event listener on component unmount
+    return () => socket.off('connect_error');
+  }, [socket]);
 
   const printChats = function () {
     const renderedChats = [];
@@ -57,7 +78,7 @@ const NormalChats = ({ setUserObject }) => {
         <div
           className="chat"
           onClick={() => {
-            setUserObject(connectionsArr[i]);
+            handleClick(connectionsArr[i]);
           }}
           key={i}
         >
@@ -86,7 +107,7 @@ const NormalChats = ({ setUserObject }) => {
 };
 
 NormalChats.propTypes = {
-  setUserObject: PropTypes.func.isRequired,
+  setSelectedUser: PropTypes.func.isRequired,
 };
 
 export default NormalChats;

@@ -5,15 +5,11 @@ const Schema = mongoose.Schema;
 
 // Define the message schema
 const messageSchema = new Schema({
-  userOne: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  userTwo: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
   sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  receiver: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },

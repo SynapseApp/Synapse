@@ -14,11 +14,19 @@ const authRoutes = require('./routes/authRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
 const googleRoutes = require('./routes/googleAuth.js');
 
+const Message = require('./models/messageModel.js');
+
 // Connect to the MongoDB database
 connectDatabase();
 
 // Create an instance of the Express application
 const app = express();
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer, {
+  cors: {
+    origin: 'http://localhost:8000',
+  },
+});
 
 // Configure Cross-Origin Resource Sharing (CORS) options
 const corsOptions = {
@@ -85,7 +93,30 @@ app.use('/message', messageRoutes);
 // Route handlers for google authentication related functionality
 app.use('/', googleRoutes);
 
+io.use((socket, next) => {
+  const { clickedOnUser } = socket.handshake.auth;
+  if (!clickedOnUser) {
+    return next(new Error('User Does Not Exist'));
+  }
+  socket.selectedUser = clickedOnUser;
+  next();
+});
+
+io.on('connection', (socket) => {
+  console.log(socket.id);
+  socket.on('private_message', async (data) => {
+    const newMessage = new Message(data);
+    const response = await newMessage.save();
+
+    io.to(data.receiver).emit('new_message', newMessage);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User has disconnected');
+  });
+});
+
 // Start the server and listen for incoming requests
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server is up and running at ${port}`);
 });

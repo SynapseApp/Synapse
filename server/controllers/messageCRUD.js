@@ -4,8 +4,8 @@ exports.findUserMessages = async function findUserConnections(_id, _id2) {
   try {
     const messages = await Message.find({
       $or: [
-        { userOne: _id, userTwo: _id2 },
-        { userOne: _id2, userTwo: _id },
+        { sender: _id, receiver: _id2 },
+        { sender: _id2, receiver: _id },
       ],
     }).exec();
     return messages;

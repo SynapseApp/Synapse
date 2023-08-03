@@ -1,5 +1,5 @@
 const express = require('express');
-const { findUserMessages } = require('../controllers/chatCRUD');
+const { findUserMessages } = require('../controllers/messageCRUD');
 
 // Create a new Router instance
 const messageRouter = express.Router();

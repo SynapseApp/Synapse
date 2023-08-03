@@ -4,28 +4,26 @@ const { faker } = require('@faker-js/faker');
 const User = require('./models/userModel');
 const Message = require('./models/messageModel');
 
-Message.deleteMany({});
-
 // Function to generate random messages for a combination of two users
 async function generateRandomMessages(userOne, userTwo, numMessages) {
   const messages = [];
 
-  const randomMessageOne = faker.lorem.sentence();
-  const randomMessageTwo = faker.lorem.sentence();
+  for (let i = 0; i < numMessages; i++) {
+    const randomMessage = faker.lorem.sentence();
 
-  messages.push({
-    userOne: userOne._id,
-    userTwo: userTwo._id,
-    sender: Math.random() < 0.5 ? userOne._id : userTwo._id,
-    messageContent: randomMessageOne,
-  });
+    // Determine the sender and receiver
+    const sender = Math.random() < 0.5 ? userOne._id : userTwo._id;
+    const receiver = sender === userOne._id ? userTwo._id : userOne._id;
 
-  messages.push({
-    userOne: userTwo._id,
-    userTwo: userOne._id,
-    sender: Math.random() < 0.5 ? userTwo._id : userOne._id,
-    messageContent: randomMessageTwo,
-  });
+    messages.push({
+      sender,
+      receiver,
+      messageContent: randomMessage,
+    });
+  }
+
+  await Message.deleteMany({});
+
   return Message.insertMany(messages);
 }
 
