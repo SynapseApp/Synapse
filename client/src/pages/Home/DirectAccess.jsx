@@ -1,17 +1,25 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import SearchedProfile from "./SearchComponents/searchedProfile";
-import NormalChats from "./normalChats";
-import { useContext } from "react";
-import IsSearchingContext from "../../Contexts/IsSearchingContext";
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import SearchedProfile from './SearchComponents/searchedProfile';
+import NormalChats from './normalChats';
+import { useContext } from 'react';
+import IsSearchingContext from '../../Contexts/IsSearchingContext';
+import PropTypes from 'prop-types';
 
-const DirectAccess = () => {
-  const [placeholderValue, setPlaceholderValue] = useState("Search Here");
-  const [inputValue, setInputValue] = useState("");
+const DirectAccess = ({ setUserObject }) => {
+  const [placeholderValue, setPlaceholderValue] = useState('Search Here');
+  const [inputValue, setInputValue] = useState('');
   const [searchKey, setSearchKey] = useState(0); // Key to force remount of SearchedProfile component
 
   const { isSearching, setIsSearching } = useContext(IsSearchingContext);
+
+  // Define a function to receive data from the ChatMenu component
+  const handleDataFromNormalChats = function(data) {
+    // Update the state with the received data
+    setUserObject(data);
+    console.log('clicked on user:', data.user.displayName);
+  };
 
   function handleChange(event) {
     const value = event.target.value;
@@ -49,13 +57,13 @@ const DirectAccess = () => {
           placeholder={placeholderValue}
         />
       </form>
-      {isSearching ? (
-        <SearchedProfile searchTerm={inputValue} key={searchKey} />
-      ) : (
-        <NormalChats />
-      )}
+      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats sendDataToParent={handleDataFromNormalChats} />}
     </div>
   );
+};
+
+DirectAccess.propTypes = {
+  setUserObject: PropTypes.func.isRequired,
 };
 
 export default DirectAccess;

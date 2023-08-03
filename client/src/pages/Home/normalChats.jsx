@@ -5,7 +5,7 @@ import UserContext from "../../Contexts/userContext";
 
 import { useEffect } from "react";
 
-const NormalChats = () => {
+const NormalChats = ({ sendDataToParent }) => {
   const [connectionsArr, setConnectionsArr] = useState([]);
   const user = useContext(UserContext);
 
@@ -13,7 +13,8 @@ const NormalChats = () => {
     searchConnections();
   }, []);
 
-  const searchConnections = async function () {
+
+  const searchConnections = async function() {
     const response = await fetch(
       "http://localhost:3000/connection/searchConnections",
       {
@@ -57,7 +58,7 @@ const NormalChats = () => {
     return text;
   }
 
-  const printChats = function () {
+  const printChats = function() {
     const renderedChats = [];
 
     if (!connectionsArr) {
@@ -70,11 +71,8 @@ const NormalChats = () => {
 
     for (let i = 0; i < connectionsArr.length; i++) {
       renderedChats.push(
-        <div className="chat" key={i}>
-          <img
-            src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623"
-            alt="Profile"
-          />
+        <div className="chat" onClick={() => { sendDataToParent(connectionsArr[i].data) }} key={i}>
+          <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
           <div className="chat-text" onClick={removeHiddenChatMenu}>
             <p className="contact-name">
               {truncateText(connectionsArr[i].data.user.displayName, 18)}
