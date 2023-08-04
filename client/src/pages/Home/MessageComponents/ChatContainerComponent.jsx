@@ -11,23 +11,25 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
   const currentUser = useContext(UserContext);
 
   useEffect(() => {
+    // Attach the 'new_message' event listener when the component mounts
     socket.on('new_message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
+      // Clean up by removing the 'new_message' event listener when the component unmounts
       socket.off('new_message');
     };
-  }, [socket, selectedUser]);
-
-  useEffect(() => {
-    // no-op if the socket is already connected
-    socket.connect();
-
-    return () => {
-      socket.disconnect();
-    };
   }, [socket]);
+
+  // useEffect(() => {
+  //   // no-op if the socket is already connected
+  //   socket.connect();
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [socket]);
 
   useEffect(() => {
     searchMessages();

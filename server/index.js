@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
     await newMessage.save();
     socket.join(data.sender);
     socket.join(data.receiver);
-    io.to(data.receiver).emit('new_message', newMessage);
+    io.in(data.receiver).emit('new_message', newMessage);
   });
 
   socket.on('disconnect', () => {
