@@ -14,3 +14,18 @@ exports.findUserMessages = async function findUserConnections(_id, _id2) {
     throw error;
   }
 };
+exports.addMessage = async function findUserConnections(data) {
+  try {
+    data = {
+      sender: data.sender,
+      receiver: data.receiver,
+      messageContent: data.messageContent,
+    };
+    const newMessage = new Message(data);
+    await newMessage.save();
+    return newMessage;
+  } catch (error) {
+    // Handle the error appropriately
+    throw error;
+  }
+};

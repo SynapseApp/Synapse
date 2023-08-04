@@ -1,5 +1,5 @@
 const express = require('express');
-const { findUserMessages } = require('../controllers/messageCRUD');
+const { findUserMessages, addMessage } = require('../controllers/messageCRUD');
 
 // Create a new Router instance
 const messageRouter = express.Router();
@@ -11,6 +11,13 @@ messageRouter.post('/getMessages', async (req, res) => {
   const id2 = req.body.id2;
 
   const messages = await findUserMessages(id, id2);
+  res.json(messages);
+});
+messageRouter.post('/', async (req, res) => {
+  // Endpoint to search for messages
+
+  const messages = await addMessage(req.body);
+  console.log(messages);
   res.json(messages);
 });
 

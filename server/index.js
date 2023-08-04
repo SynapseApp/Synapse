@@ -95,23 +95,22 @@ app.use('/message', messageRoutes);
 // Route handlers for google authentication related functionality
 app.use('/', googleRoutes);
 
+/* The code `io.use((socket, next) => { ... })` is a middleware function that is used by Socket.IO to
+handle authentication and authorization for socket connections. */
 io.use((socket, next) => {
-  const { clickedOnUser } = socket.handshake.auth;
+  const { connection, clickedOnUser } = socket.handshake.auth;
   if (!clickedOnUser) {
     return next(new Error('User Does Not Exist'));
   }
-  socket.selectedUser = clickedOnUser;
+  socket.connection = connection;
   next();
 });
 
 io.on('connection', (socket) => {
   console.log(socket.id);
+  socket.join(socket.connection._id);
   socket.on('private_message', async (data) => {
-    const newMessage = new Message(data);
-    await newMessage.save();
-    socket.join(data.sender);
-    socket.join(data.receiver);
-    io.in(data.receiver).emit('new_message', newMessage);
+    io.to(socket.connection._id).emit('new_message', data);
   });
 
   socket.on('disconnect', () => {

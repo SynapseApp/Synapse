@@ -22,28 +22,34 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   // no-op if the socket is already connected
-  //   socket.connect();
+  useEffect(() => {
+    // no-op if the socket is already connected
+    socket.connect();
 
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [socket]);
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   useEffect(() => {
     searchMessages();
-    console.log('yo');
   }, [socket, selectedUser]);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
     if (textInputValue !== '' && selectedUser) {
-      const data = {
-        sender: currentUser._id,
-        receiver: selectedUser._id,
-        messageContent: textInputValue,
-      };
+      const response = await fetch('http://localhost:3000/message/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sender: currentUser._id,
+          receiver: selectedUser._id,
+          messageContent: textInputValue,
+        }),
+      });
+      const data = await response.json();
       socket.emit('private_message', data);
       setTextInputValue('');
     }
