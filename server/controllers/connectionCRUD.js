@@ -40,8 +40,10 @@ exports.findUserConnections = async function findUserConnections(_id) {
   try {
     const connections = await Connection.find({
       $or: [{ userOne: _id }, { userTwo: _id }],
-    }).exec();
-
+    })
+      .populate('userOne')
+      .populate('userTwo')
+      .exec();
     return connections;
   } catch (error) {
     // Handle the error appropriately

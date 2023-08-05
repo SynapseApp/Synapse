@@ -1,19 +1,34 @@
-// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import UserContext from '../../Contexts/userContext';
 
-import { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import socket from '../../socket';
 
-const NormalChats = ({sendDataToParent}) => {
+const NormalChats = ({ setSelectedUser }) => {
+  // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
+
+  // Access the user data from the UserContext
   const user = useContext(UserContext);
 
+  // Fetch the user's chat connections when the component mounts
   useEffect(() => {
     searchConnections();
   }, []);
 
+  // Listen for connection errors and handle them
+  useEffect(() => {
+    socket.on('connect_error', (err) => {
+      if (err.message === 'User Does Not Exist') {
+        console.log(err);
+      }
+    });
 
+    // Remove the event listener on component unmount
+    return () => socket.off('connect_error');
+  }, []);
+
+  // Function to fetch the user's chat connections from the server
   const searchConnections = async function () {
     const response = await fetch('http://localhost:3000/connection/searchConnections', {
       method: 'POST',
@@ -25,27 +40,10 @@ const NormalChats = ({sendDataToParent}) => {
       }),
     });
     const data = await response.json();
-    const connectionsId = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].userOne === user._id) {
-        connectionsId.push(data[i].userTwo);
-      } else if (data[i].userTwo === user._id) {
-        connectionsId.push(data[i].userOne);
-      }
-    }
-
-    const tmpArr = [];
-
-    for (let i = 0; i < connectionsId.length; i++) {
-      const response = await fetch(`http://localhost:3000/user/${connectionsId[i]}`);
-      const userData = await response.json();
-      tmpArr.push(userData);
-    }
-    setConnectionsArr(tmpArr);
+    setConnectionsArr(data);
   };
 
-  console.log(connectionsArr);
-
+  // Function to truncate text if it exceeds a certain length
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
@@ -53,10 +51,31 @@ const NormalChats = ({sendDataToParent}) => {
     return text;
   }
 
+  // Function to handle a click on a chat connection
+  const handleClick = function ({ clickedOnUser, connection }) {
+    // Disconnect the socket before updating authentication data
+    socket.disconnect();
+    socket.auth = { connection, clickedOnUser };
+    // Reconnect the socket with updated authentication data
+    socket.connect();
+    // Update the selected user in the parent component
+    setSelectedUser(clickedOnUser);
+  };
+
+  // Function to remove the 'hidden' class from a chat menu (not shown in this snippet)
+  function removeHiddenChatMenu() {
+    const element = document.querySelector('.chat-menu');
+    if (element) {
+      element.classList.remove('hidden');
+    }
+  }
+
+  // Function to render the chat connections
   const printChats = function () {
     const renderedChats = [];
 
-    if (!connectionsArr) {
+    // Check if there are no connections found
+    if (!connectionsArr || connectionsArr.length === 0) {
       return (
         <div>
           <p>No connections found</p>
@@ -64,12 +83,31 @@ const NormalChats = ({sendDataToParent}) => {
       );
     }
 
+    // Iterate through the chat connections and create chat elements
     for (let i = 0; i < connectionsArr.length; i++) {
+      const tmpArr = [];
+
+      // Determine the connected user based on the current user
+      for (let i = 0; i < connectionsArr.length; i++) {
+        if (user._id === connectionsArr[i].userOne._id) {
+          tmpArr.push(connectionsArr[i].userTwo);
+        } else if (user._id === connectionsArr[i].userTwo._id) {
+          tmpArr.push(connectionsArr[i].userOne);
+        }
+      }
+
+      // Create a chat element with the user information and click event
       renderedChats.push(
-        <div className="chat" onClick={() => {sendDataToParent(connectionsArr[i].data)}} key={i}>
+        <div
+          className="chat"
+          onClick={() => {
+            handleClick({ clickedOnUser: tmpArr[i], connection: connectionsArr[i] });
+          }}
+          key={i}
+        >
           <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
           <div className="chat-text" onClick={removeHiddenChatMenu}>
-            <p className="contact-name">{truncateText(connectionsArr[i].data.user.displayName, 18)}</p>
+            <p className="contact-name">{truncateText(tmpArr[i].displayName, 18)}</p>
             <p>default text</p>
           </div>
         </div>
@@ -79,16 +117,16 @@ const NormalChats = ({sendDataToParent}) => {
     return renderedChats;
   };
 
-  function removeHiddenChatMenu() {
-    const element = document.querySelector < HTMLElement > '.chat-menu';
-    if (element) {
-      element.classList.remove('hidden');
-    }
-  }
-
+  // Call the function to render the chat connections
   const renderedChats = printChats();
 
+  // Render the chat connections
   return <div>{renderedChats}</div>;
+};
+
+// Define the PropTypes for the component
+NormalChats.propTypes = {
+  setSelectedUser: PropTypes.func.isRequired,
 };
 
 export default NormalChats;
