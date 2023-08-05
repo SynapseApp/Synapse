@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
-const User = require('./models/userModel.js');
+const User = require('../models/userModel.js');
 
 // Connect to your MongoDB database
 mongoose.connect('mongodb://127.0.0.1/Synapse', {

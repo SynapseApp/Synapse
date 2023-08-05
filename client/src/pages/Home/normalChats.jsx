@@ -1,22 +1,22 @@
-// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import UserContext from '../../Contexts/userContext';
 
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import socket from '../../socket';
 
 const NormalChats = ({ setSelectedUser }) => {
+  // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
-  // const [userSelected, setUserSelected] = useState(false);
 
+  // Access the user data from the UserContext
   const user = useContext(UserContext);
 
+  // Fetch the user's chat connections when the component mounts
   useEffect(() => {
     searchConnections();
   }, []);
 
+  // Listen for connection errors and handle them
   useEffect(() => {
     socket.on('connect_error', (err) => {
       if (err.message === 'User Does Not Exist') {
@@ -24,10 +24,11 @@ const NormalChats = ({ setSelectedUser }) => {
       }
     });
 
-    // Remove event listener on component unmount
+    // Remove the event listener on component unmount
     return () => socket.off('connect_error');
-  }, [socket]);
+  }, []);
 
+  // Function to fetch the user's chat connections from the server
   const searchConnections = async function () {
     const response = await fetch('http://localhost:3000/connection/searchConnections', {
       method: 'POST',
@@ -42,25 +43,39 @@ const NormalChats = ({ setSelectedUser }) => {
     setConnectionsArr(data);
   };
 
+  // Function to truncate text if it exceeds a certain length
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + '...';
     }
     return text;
   }
+
+  // Function to handle a click on a chat connection
   const handleClick = function ({ clickedOnUser, connection }) {
+    // Disconnect the socket before updating authentication data
     socket.disconnect();
     socket.auth = { connection, clickedOnUser };
-    // socket.selectedConnection = { clickedOnUser };
+    // Reconnect the socket with updated authentication data
     socket.connect();
-    // setUserSelected(true);
+    // Update the selected user in the parent component
     setSelectedUser(clickedOnUser);
   };
 
+  // Function to remove the 'hidden' class from a chat menu (not shown in this snippet)
+  function removeHiddenChatMenu() {
+    const element = document.querySelector('.chat-menu');
+    if (element) {
+      element.classList.remove('hidden');
+    }
+  }
+
+  // Function to render the chat connections
   const printChats = function () {
     const renderedChats = [];
 
-    if (!connectionsArr) {
+    // Check if there are no connections found
+    if (!connectionsArr || connectionsArr.length === 0) {
       return (
         <div>
           <p>No connections found</p>
@@ -68,9 +83,11 @@ const NormalChats = ({ setSelectedUser }) => {
       );
     }
 
+    // Iterate through the chat connections and create chat elements
     for (let i = 0; i < connectionsArr.length; i++) {
       const tmpArr = [];
 
+      // Determine the connected user based on the current user
       for (let i = 0; i < connectionsArr.length; i++) {
         if (user._id === connectionsArr[i].userOne._id) {
           tmpArr.push(connectionsArr[i].userTwo);
@@ -78,6 +95,8 @@ const NormalChats = ({ setSelectedUser }) => {
           tmpArr.push(connectionsArr[i].userOne);
         }
       }
+
+      // Create a chat element with the user information and click event
       renderedChats.push(
         <div
           className="chat"
@@ -98,18 +117,14 @@ const NormalChats = ({ setSelectedUser }) => {
     return renderedChats;
   };
 
-  function removeHiddenChatMenu() {
-    const element = document.querySelector < HTMLElement > '.chat-menu';
-    if (element) {
-      element.classList.remove('hidden');
-    }
-  }
-
+  // Call the function to render the chat connections
   const renderedChats = printChats();
 
+  // Render the chat connections
   return <div>{renderedChats}</div>;
 };
 
+// Define the PropTypes for the component
 NormalChats.propTypes = {
   setSelectedUser: PropTypes.func.isRequired,
 };

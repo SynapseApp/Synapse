@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 
-const User = require('./models/userModel');
-const Message = require('./models/messageModel');
+const User = require('../models/userModel');
+const Message = require('../models/messageModel');
 
 // Function to generate random messages for a combination of two users
 async function generateRandomMessages(userOne, userTwo, numMessages) {
