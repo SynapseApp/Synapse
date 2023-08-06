@@ -9,8 +9,8 @@ exports.port = port;
 exports.url = `http://localhost:${port}`;
 
 // MongoDB connection URL
-// exports.mongoDB_url = 'mongodb://127.0.0.1/Synapse';
-exports.mongoDB_url = process.env.CLUSTER0;
+exports.mongoDB_url = "mongodb://127.0.0.1/Synapse";
+// exports.mongoDB_url = process.env.CLUSTER0;
 
 // Default response structure
 exports.defaultResponse = function () {

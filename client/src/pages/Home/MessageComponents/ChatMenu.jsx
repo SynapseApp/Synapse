@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ChatContainerComponent from './ChatContainerComponent';
 import ChatInfoButtons from './ChatInfoButtons';
 import PropTypes from 'prop-types';
+import socket from '../../../socket';
 
-const ChatMenu = ({ userObject }) => {
+const ChatMenu = ({ selectedUser }) => {
   function removeHiddenClass() {
     const element = document.querySelector(".chat-info");
     if (element) {
@@ -33,8 +34,8 @@ const ChatMenu = ({ userObject }) => {
           <div className="chat-left">
             <img className="user-picture" src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623"></img>
             <div className="user-info">
-              <h6 className="user-username">{userObject.user === undefined ? 'undefined' : userObject.user.displayName}</h6>
-              <p className="user-status">{userObject.user === undefined ? 'undefined' : userObject.user.id}</p>
+              <h6 className="user-username">{selectedUser === undefined ? 'undefined' : selectedUser.displayName}</h6>
+              <p className="user-status">{selectedUser === undefined ? 'undefined' : selectedUser.id}</p>
             </div>
           </div>
           <div className="chat-right">
@@ -44,13 +45,13 @@ const ChatMenu = ({ userObject }) => {
           </div>
         </div>
         <div className="component-div">
-          <ChatContainerComponent />
+          <ChatContainerComponent selectedUser={selectedUser} socket={socket} />
         </div>
       </div>
       <div className="chat-info hidden">
         <FontAwesomeIcon className="x-icon" icon={faX} onClick={addHiddenClass} />
         <img className="chat-info-pic" src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" />
-        <h2 className="chat-info-header">{userObject.user === undefined ? 'undefined' : userObject.user.displayName}</h2>
+        <h2 className="chat-info-header">{selectedUser === undefined ? 'undefined' : selectedUser.displayName}</h2>
         <ChatInfoButtons />
       </div>
     </>
@@ -58,7 +59,7 @@ const ChatMenu = ({ userObject }) => {
 };
 
 ChatMenu.propTypes = {
-  userObject: PropTypes.object.isRequired,
+  selectedUser: PropTypes.object,
 };
 
 export default ChatMenu;

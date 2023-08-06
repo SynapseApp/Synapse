@@ -11,6 +11,7 @@ const passport = require("./config/passport.js");
 const userRoutes = require("./routes/userRoutes.js");
 const connectionRoutes = require("./routes/connectionRoutes.js");
 const authRoutes = require("./routes/authRoutes.js");
+const messageRoutes = require("./routes/messageRoutes.js");
 const googleRoutes = require("./routes/googleAuth.js");
 
 // Connect to the MongoDB database
@@ -18,6 +19,12 @@ connectDatabase();
 
 // Create an instance of the Express application
 const app = express();
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "http://localhost:8000",
+  },
+});
 
 // Configure Cross-Origin Resource Sharing (CORS) options
 const corsOptions = {
@@ -71,7 +78,7 @@ app.use(passport.session());
 app.get(
   "http://localhost:8000/home",
   passport.authenticate("local"),
-  (req, res) => {},
+  (req, res) => {}
 );
 
 // Route handlers for user-related functionality
@@ -82,11 +89,49 @@ app.use("/auth", authRoutes);
 
 // Route handlers for connection-related functionality
 app.use("/connection", connectionRoutes);
+// Route handlers for message-related functionality
+app.use("/message", messageRoutes);
 
 // Route handlers for google authentication related functionality
 app.use("/", googleRoutes);
 
+// Socket.IO middleware function for authentication and authorization.
+io.use((socket, next) => {
+  // Extract authentication data from the handshake object sent by the client.
+  const { connection, clickedOnUser } = socket.handshake.auth;
+
+  // Check if the 'clickedOnUser' flag exists in the authentication data.
+  if (!clickedOnUser) {
+    // If the flag is missing, send an error to the client and abort the connection.
+    return next(new Error("User Does Not Exist"));
+  }
+
+  // If the user is authenticated, attach the 'connection' data to the socket for later use.
+  socket.connection = connection;
+  next();
+});
+
+// Event listener for a new socket connection.
+io.on("connection", (socket) => {
+  // Log the ID of the connected socket.
+  console.log(socket.id);
+
+  // Join a specific room based on the 'connection._id'.
+  socket.join(socket.connection._id);
+
+  // Event listener for 'private_message' events from the client.
+  socket.on("private_message", async (data) => {
+    // Emit the 'new_message' event to all sockets in the same room.
+    io.to(socket.connection._id).emit("new_message", data);
+  });
+
+  // Event listener for 'disconnect' events from the client.
+  socket.on("disconnect", () => {
+    // Log a message when a user disconnects.
+    console.log("User has disconnected");
+  });
+});
 // Start the server and listen for incoming requests
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server is up and running at ${port}`);
 });

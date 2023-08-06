@@ -30,6 +30,7 @@
     "passport": "^0.6.0",
     "passport-google-oidc": "^0.1.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^8.0.0"
+    "passport-local-mongoose": "^8.0.0",
+    "socket.io": "^4.7.2"
   }
 }

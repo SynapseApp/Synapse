@@ -1,6 +1,12 @@
+<<<<<<< HEAD:server/userSeed.js
 const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
 const User = require("./models/userModel.js");
+=======
+const mongoose = require('mongoose');
+const { faker } = require('@faker-js/faker');
+const User = require('../models/userModel.js');
+>>>>>>> main:server/seeders/userSeed.js
 
 // Connect to your MongoDB database
 mongoose.connect("mongodb://127.0.0.1/Synapse", {
@@ -21,7 +27,7 @@ async function seed() {
     await User.deleteMany({});
     console.log("The users collection has been cleared.");
 
-    const totalUsers = 10000; // Change this value to the desired number of total users
+    const totalUsers = 10; // Change this value to the desired number of total users
     const batchSize = Math.ceil((totalUsers / 100) * 1); // Batch size as 1% of total users
     let insertedUsers = 0; // Counter for inserted users
     let lastLoggedProgress = 0; // Variable to keep track of the last logged progress
