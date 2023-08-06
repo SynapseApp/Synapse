@@ -8,9 +8,6 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
   // State to store the messages in the chat
   const [messages, setMessages] = useState([]);
 
-  // State to store the input value of the text message
-  const [textInputValue, setTextInputValue] = useState('');
-
   // Get the current user data from the UserContext
   const currentUser = useContext(UserContext);
 
@@ -45,7 +42,8 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
   // Function to send a message
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (textInputValue !== '' && selectedUser) {
+    const message = document.getElementsByClassName("message-input")[0].value;
+    if ( message !== '' && selectedUser) {
       // Send the message to the server and update the messages state
       const response = await fetch('http://localhost:3000/message/', {
         method: 'POST',
@@ -55,12 +53,12 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
         body: JSON.stringify({
           sender: currentUser._id,
           receiver: selectedUser._id,
-          messageContent: textInputValue,
+          messageContent: message,
         }),
       });
       const data = await response.json();
       socket.emit('private_message', data);
-      setTextInputValue('');
+      document.getElementsByClassName("message-input")[0].value = "";
     }
   };
 
@@ -108,7 +106,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     <div className="chat-container">
       <div className="chat-content">{printMessages()}</div>
       <form className="message-form" onSubmit={sendMessage}>
-        <input className="message-input" placeholder="Type a message..." value={textInputValue} onChange={(e) => setTextInputValue(e.target.value)} />
+        <input className="message-input" placeholder="Type a mesage..." />
         <div className="input-icons">
           <FontAwesomeIcon className="msg-icon" icon={faImage} />
           <FontAwesomeIcon className="msg-icon" icon={faFaceLaugh} />
