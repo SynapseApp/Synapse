@@ -1,5 +1,5 @@
 // Collection CRUD here
-const Connection = require('../models/connectionModel.js');
+const Connection = require("../models/connectionModel.js");
 
 exports.createConnection = async function createConnection(_id, _id2) {
   try {
@@ -26,7 +26,7 @@ exports.deleteConnection = async function deleteConnection(userOne, userTwo) {
     }).exec();
 
     if (!deletedConnection) {
-      throw new Error('Connection not found');
+      throw new Error("Connection not found");
     }
 
     return deletedConnection;

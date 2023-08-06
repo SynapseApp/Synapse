@@ -1,9 +1,15 @@
+<<<<<<< HEAD:server/userSeed.js
+const mongoose = require("mongoose");
+const { faker } = require("@faker-js/faker");
+const User = require("./models/userModel.js");
+=======
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 const User = require('../models/userModel.js');
+>>>>>>> main:server/seeders/userSeed.js
 
 // Connect to your MongoDB database
-mongoose.connect('mongodb://127.0.0.1/Synapse', {
+mongoose.connect("mongodb://127.0.0.1/Synapse", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -13,13 +19,13 @@ const generatedUsername = new Set();
 //Clears existing data and inserts new records into the User collection.
 async function seed() {
   try {
-    console.log('Initializing data seeding...');
+    console.log("Initializing data seeding...");
     const startTime = new Date().getTime();
 
     // Clear the User collection
-    console.log('Clearing the users collection...');
+    console.log("Clearing the users collection...");
     await User.deleteMany({});
-    console.log('The users collection has been cleared.');
+    console.log("The users collection has been cleared.");
 
     const totalUsers = 10; // Change this value to the desired number of total users
     const batchSize = Math.ceil((totalUsers / 100) * 1); // Batch size as 1% of total users
@@ -66,14 +72,14 @@ async function seed() {
 
     const insertTime = (userInsertEnd - userInsertStart) / 1000; // in seconds
 
-    console.log('Seeding finished.');
+    console.log("Seeding finished.");
     console.log(`Total Users: ${totalUsers}`);
     console.log(`Data insertion time: ${insertTime.toFixed(2)} seconds`);
     console.log(`Total Time Taken: ${totalTime.toFixed(2)} seconds`);
     console.log(`Inserted Users: ${insertedUsers}`);
     console.log(`Progress: 100%`);
   } catch (error) {
-    console.error('Error seeding data:', error.message);
+    console.error("Error seeding data:", error.message);
   } finally {
     mongoose.disconnect();
   }

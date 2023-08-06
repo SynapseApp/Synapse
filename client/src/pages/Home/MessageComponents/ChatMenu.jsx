@@ -1,5 +1,10 @@
-import { faCircleInfo, faPhone, faVideo, faX } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleInfo,
+  faPhone,
+  faVideo,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Chat from "./Chat";
 // import React from "react";
 import ChatContainerComponent from './ChatContainerComponent';
@@ -9,17 +14,17 @@ import socket from '../../../socket';
 
 const ChatMenu = ({ selectedUser }) => {
   function removeHiddenClass() {
-    const element = document.querySelector('.chat-info');
+    const element = document.querySelector(".chat-info");
     if (element) {
-      element.classList.remove('hidden');
-      document.querySelector('.chat-menu').style.width = '82%';
+      element.classList.remove("hidden");
+      document.querySelector(".chat-menu").style.width = "82%";
     }
   }
   function addHiddenClass() {
-    const element = document.querySelector('.chat-info');
+    const element = document.querySelector(".chat-info");
     if (element) {
-      element.classList.add('hidden');
-      document.querySelector('.chat-menu').style.width = '100%';
+      element.classList.add("hidden");
+      document.querySelector(".chat-menu").style.width = "100%";
     }
   }
   return (

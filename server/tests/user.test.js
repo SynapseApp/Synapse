@@ -27,7 +27,7 @@ describe("perform CRUD on user", () => {
   it("authenticates user using email and passowrd", async () => {
     const response = await authenticateUser(
       userDetails.email,
-      userDetails.password
+      userDetails.password,
     );
 
     expect(response.log).toBe("user authenticated");
@@ -38,7 +38,7 @@ describe("perform CRUD on user", () => {
   it("tries to authenticates user using wrong email but right passowrd", async () => {
     const response = await authenticateUser(
       userDetails.email + "xxx",
-      userDetails.password
+      userDetails.password,
     );
 
     expect(response.log).toBe("user not found");
@@ -49,7 +49,7 @@ describe("perform CRUD on user", () => {
   it("tries to authenticates user using right email but wrong passowrd", async () => {
     const response = await authenticateUser(
       userDetails.email,
-      userDetails.password + "xxx"
+      userDetails.password + "xxx",
     );
 
     expect(response.log).toBe("wrong password or username");
@@ -60,7 +60,7 @@ describe("perform CRUD on user", () => {
   it("tries to authenticates user using wrong email and passowrd", async () => {
     const response = await authenticateUser(
       userDetails.email + "xxx",
-      userDetails.password + "xxx"
+      userDetails.password + "xxx",
     );
 
     expect(response.log).toBe("user not found");

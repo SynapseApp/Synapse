@@ -1,9 +1,9 @@
-import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
-import AuthPage from './pages/Auth';
-import RootPage from './pages/Root';
-import Home from './pages/Home';
-import { useEffect, useState } from 'react';
-import UserContext from './Contexts/userContext';
+import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
+import AuthPage from "./pages/Auth";
+import RootPage from "./pages/Root";
+import Home from "./pages/Home";
+import { useEffect, useState } from "react";
+import UserContext from "./Contexts/userContext";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -22,8 +22,8 @@ function App() {
    */
   const checkAuth = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auth/check', {
-        credentials: 'include',
+      const response = await fetch("http://localhost:3000/auth/check", {
+        credentials: "include",
       });
       const data = await response.json();
       setUser(data.user);
@@ -37,7 +37,7 @@ function App() {
 
   // Render a loading state until authentication check is complete
   if (!authChecked) {
-          return <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -46,8 +46,14 @@ function App() {
         <Routes>
           <Route path="/" element={<RootPage />} />
           {/* Protected route: If authenticated, render the Home component. Otherwise, navigate to the Auth page */}
-          <Route path="/home" element={authenticated ? <Home /> : <Navigate to="/auth" replace />} />
-          <Route path="/auth" element={<AuthPage setAuthenticated={setAuthenticated} />} />
+          <Route
+            path="/home"
+            element={authenticated ? <Home /> : <Navigate to="/auth" replace />}
+          />
+          <Route
+            path="/auth"
+            element={<AuthPage setAuthenticated={setAuthenticated} />}
+          />
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

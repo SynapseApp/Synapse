@@ -9,13 +9,15 @@ exports.port = port;
 exports.url = `http://localhost:${port}`;
 
 // MongoDB connection URL
-exports.mongoDB_url = 'mongodb://127.0.0.1/Synapse';
+exports.mongoDB_url = "mongodb://127.0.0.1/Synapse";
+// exports.mongoDB_url = process.env.CLUSTER0;
+
 // Default response structure
 exports.defaultResponse = function () {
   // Create a default response object
   const response = {
     success: false, // Indicates if the request was successful or not
-    log: 'default response', // Log message for debugging or informational purposes
+    log: "default response", // Log message for debugging or informational purposes
     data: undefined, // Data to be sent as a response (if any)
   };
 

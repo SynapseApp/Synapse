@@ -1,7 +1,11 @@
-const { Router } = require('express');
-const { createConnection, findUserConnections, deleteConnection } = require('../controllers/connectionCRUD.js');
-const { searchUsers } = require('../controllers/userCRUD.js');
-const { defaultResponse } = require('../store.js');
+const { Router } = require("express");
+const {
+  createConnection,
+  findUserConnections,
+  deleteConnection,
+} = require("../controllers/connectionCRUD.js");
+const { searchUsers } = require("../controllers/userCRUD.js");
+const { defaultResponse } = require("../store.js");
 
 // Create a new Router instance
 const connectionRoutes = Router();
@@ -10,7 +14,7 @@ const connectionRoutes = Router();
 
 // Creating a New Connection
 
-connectionRoutes.post('/', async (req, res) => {
+connectionRoutes.post("/", async (req, res) => {
   // Endpoint to create new connection
   // Params: userOne id
   // Body: userTwo id
@@ -23,19 +27,23 @@ connectionRoutes.post('/', async (req, res) => {
 
   let connectionAlreadyExists = false;
   connections.forEach((connection) => {
-    if ((connection.userOne._id === _id && connection.userTwo.id === _id2) || (connection.userOne._id === _id2 && connection.userTwo._id === _id)) connectionAlreadyExists = true;
+    if (
+      (connection.userOne._id === _id && connection.userTwo.id === _id2) ||
+      (connection.userOne._id === _id2 && connection.userTwo._id === _id)
+    )
+      connectionAlreadyExists = true;
   });
 
   if (connectionAlreadyExists) {
-    response.log = 'connection already exists';
+    response.log = "connection already exists";
   } else {
     const newConnection = await createConnection(_id, _id2);
 
     if (!newConnection) {
-      response.log = 'failed to create new connection';
+      response.log = "failed to create new connection";
     } else {
       response.success = true;
-      response.log = 'new connection created';
+      response.log = "new connection created";
       response.data = { newConnection };
     }
   }
@@ -45,7 +53,7 @@ connectionRoutes.post('/', async (req, res) => {
 
 // Searching for Connections and Strangers
 
-connectionRoutes.post('/search', async (req, res) => {
+connectionRoutes.post("/search", async (req, res) => {
   // Endpoint to search for connections and strangers
   // Params: id, searchTerm
   // Response: Connections and strangers based on the search term
@@ -62,7 +70,7 @@ connectionRoutes.post('/search', async (req, res) => {
   res.json(data);
 });
 
-connectionRoutes.post('/searchConnections', async (req, res) => {
+connectionRoutes.post("/searchConnections", async (req, res) => {
   // Endpoint to search for connections and strangers
   // Params: id, searchTerm
   // Response: Connections and strangers based on the search term
@@ -101,15 +109,15 @@ connectionRoutes.post('/searchConnections', async (req, res) => {
 //   res.json(response);
 // });
 
-connectionRoutes.delete('/:userOne/:userTwo', async (req, res) => {
+connectionRoutes.delete("/:userOne/:userTwo", async (req, res) => {
   const { userOne, userTwo } = req.params;
 
   try {
     const result = await deleteConnection(userOne, userTwo);
     console.log(result);
-    res.status(200).json({ message: 'Connection deleted successfully' });
+    res.status(200).json({ message: "Connection deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete connection' });
+    res.status(500).json({ error: "Failed to delete connection" });
   }
 });
 

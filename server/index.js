@@ -1,34 +1,34 @@
-const express = require('express');
-const cors = require('cors');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongo')(session);
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongo")(session);
+require("dotenv").config();
 
-const { mongoDB_url, port } = require('./store.js');
-const connectDatabase = require('./database/mongodb.js');
-const passport = require('./config/passport.js');
+const { mongoDB_url, port } = require("./store.js");
+const connectDatabase = require("./database/mongodb.js");
+const passport = require("./config/passport.js");
 
-const userRoutes = require('./routes/userRoutes.js');
-const connectionRoutes = require('./routes/connectionRoutes.js');
-const authRoutes = require('./routes/authRoutes.js');
-const messageRoutes = require('./routes/messageRoutes.js');
-const googleRoutes = require('./routes/googleAuth.js');
+const userRoutes = require("./routes/userRoutes.js");
+const connectionRoutes = require("./routes/connectionRoutes.js");
+const authRoutes = require("./routes/authRoutes.js");
+const messageRoutes = require("./routes/messageRoutes.js");
+const googleRoutes = require("./routes/googleAuth.js");
 
 // Connect to the MongoDB database
 connectDatabase();
 
 // Create an instance of the Express application
 const app = express();
-const httpServer = require('http').createServer(app);
-const io = require('socket.io')(httpServer, {
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer, {
   cors: {
-    origin: 'http://localhost:8000',
+    origin: "http://localhost:8000",
   },
 });
 
 // Configure Cross-Origin Resource Sharing (CORS) options
 const corsOptions = {
-  origin: 'http://localhost:8000', // Allow requests from this origin
+  origin: "http://localhost:8000", // Allow requests from this origin
   credentials: true, // Enable sending cookies in cross-origin requests
 };
 
@@ -75,21 +75,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Endpoint to handle HTTP GET request to '/home'
-app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {});
+app.get(
+  "http://localhost:8000/home",
+  passport.authenticate("local"),
+  (req, res) => {}
+);
 
 // Route handlers for user-related functionality
-app.use('/user', userRoutes);
+app.use("/user", userRoutes);
 
 // Route handlers for authentication-related functionality
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
 
 // Route handlers for connection-related functionality
-app.use('/connection', connectionRoutes);
+app.use("/connection", connectionRoutes);
 // Route handlers for message-related functionality
-app.use('/message', messageRoutes);
+app.use("/message", messageRoutes);
 
 // Route handlers for google authentication related functionality
-app.use('/', googleRoutes);
+app.use("/", googleRoutes);
 
 // Socket.IO middleware function for authentication and authorization.
 io.use((socket, next) => {
@@ -99,7 +103,7 @@ io.use((socket, next) => {
   // Check if the 'clickedOnUser' flag exists in the authentication data.
   if (!clickedOnUser) {
     // If the flag is missing, send an error to the client and abort the connection.
-    return next(new Error('User Does Not Exist'));
+    return next(new Error("User Does Not Exist"));
   }
 
   // If the user is authenticated, attach the 'connection' data to the socket for later use.
@@ -108,7 +112,7 @@ io.use((socket, next) => {
 });
 
 // Event listener for a new socket connection.
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
 
@@ -116,15 +120,15 @@ io.on('connection', (socket) => {
   socket.join(socket.connection._id);
 
   // Event listener for 'private_message' events from the client.
-  socket.on('private_message', async (data) => {
+  socket.on("private_message", async (data) => {
     // Emit the 'new_message' event to all sockets in the same room.
-    io.to(socket.connection._id).emit('new_message', data);
+    io.to(socket.connection._id).emit("new_message", data);
   });
 
   // Event listener for 'disconnect' events from the client.
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     // Log a message when a user disconnects.
-    console.log('User has disconnected');
+    console.log("User has disconnected");
   });
 });
 // Start the server and listen for incoming requests

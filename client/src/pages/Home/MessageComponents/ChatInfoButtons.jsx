@@ -1,5 +1,10 @@
-import { faMagnifyingGlass, faPhone, faUser, faVideo } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMagnifyingGlass,
+  faPhone,
+  faUser,
+  faVideo,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ChatInfoButtons = () => {
   return (

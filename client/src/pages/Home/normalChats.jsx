@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
-import UserContext from '../../Contexts/userContext';
+import { useContext, useState, useEffect } from "react";
+import UserContext from "../../Contexts/userContext";
 
-import PropTypes from 'prop-types';
-import socket from '../../socket';
+import PropTypes from "prop-types";
+import socket from "../../socket";
 
 const NormalChats = ({ setSelectedUser }) => {
   // State to store the chat connections
@@ -18,27 +18,27 @@ const NormalChats = ({ setSelectedUser }) => {
 
   // Listen for connection errors and handle them
   useEffect(() => {
-    socket.on('connect_error', (err) => {
-      if (err.message === 'User Does Not Exist') {
+    socket.on("connect_error", (err) => {
+      if (err.message === "User Does Not Exist") {
         console.log(err);
       }
     });
 
     // Remove the event listener on component unmount
-    return () => socket.off('connect_error');
+    return () => socket.off("connect_error");
   }, []);
 
   // Function to fetch the user's chat connections from the server
   const searchConnections = async function () {
-    const response = await fetch('http://localhost:3000/connection/searchConnections', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: user._id,
-      }),
-    });
+    const response = await fetch(
+      "http://localhost:3000/connection/searchConnections",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     setConnectionsArr(data);
   };
@@ -46,7 +46,7 @@ const NormalChats = ({ setSelectedUser }) => {
   // Function to truncate text if it exceeds a certain length
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...';
+      return text.substring(0, maxLength) + "...";
     }
     return text;
   }
@@ -64,9 +64,9 @@ const NormalChats = ({ setSelectedUser }) => {
 
   // Function to remove the 'hidden' class from a chat menu (not shown in this snippet)
   function removeHiddenChatMenu() {
-    const element = document.querySelector('.chat-menu');
+    const element = document.querySelector(".chat-menu");
     if (element) {
-      element.classList.remove('hidden');
+      element.classList.remove("hidden");
     }
   }
 
@@ -101,13 +101,21 @@ const NormalChats = ({ setSelectedUser }) => {
         <div
           className="chat"
           onClick={() => {
-            handleClick({ clickedOnUser: tmpArr[i], connection: connectionsArr[i] });
+            handleClick({
+              clickedOnUser: tmpArr[i],
+              connection: connectionsArr[i],
+            });
           }}
           key={i}
         >
-          <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
+          <img
+            src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623"
+            alt="Profile"
+          />
           <div className="chat-text" onClick={removeHiddenChatMenu}>
-            <p className="contact-name">{truncateText(tmpArr[i].displayName, 18)}</p>
+            <p className="contact-name">
+              {truncateText(tmpArr[i].displayName, 18)}
+            </p>
             <p>default text</p>
           </div>
         </div>

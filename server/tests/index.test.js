@@ -17,7 +17,7 @@ describe("testing for index.ts", () => {
         // gets text from html file
         const htmlText = fs.readFileSync(
           path.join(__dirname, "../index.html"),
-          "utf8"
+          "utf8",
         );
 
         // since our root route serves a html file
