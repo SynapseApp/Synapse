@@ -101,12 +101,19 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     return renderedMessages;
   };
 
+  const typingIndicator = function (e) {
+    e.preventDefault();
+    console.log("it werks");
+    socket.emit("typing", "hola");
+    console.log("it werked");
+  }
+
   // Render the chat container with the messages and message input
   return (
     <div className="chat-container">
       <div className="chat-content">{printMessages()}</div>
       <form className="message-form" onSubmit={sendMessage}>
-        <input className="message-input" placeholder="Type a mesage..." />
+        <input className="message-input" onChange={typingIndicator} placeholder="Type a mesage..." />
         <div className="input-icons">
           <FontAwesomeIcon className="msg-icon" icon={faImage} />
           <FontAwesomeIcon className="msg-icon" icon={faFaceLaugh} />

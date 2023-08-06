@@ -120,6 +120,10 @@ io.on('connection', (socket) => {
     // Emit the 'new_message' event to all sockets in the same room.
     io.to(socket.connection._id).emit('new_message', data);
   });
+  
+  socket.on('typing', async (data) => {
+    console.log("werked ig");
+  })
 
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {
