@@ -25,6 +25,9 @@ exports.addMessage = async function findUserConnections(data) {
       sender: data.sender,
       receiver: data.receiver,
       messageContent: data.messageContent,
+
+      // if message reaches backend the status changes to sent
+      status: "sent"
     };
 
     // Create a new Message instance using the extracted data.
@@ -40,3 +43,13 @@ exports.addMessage = async function findUserConnections(data) {
     throw error;
   }
 };
+
+exports.updateMessage = async function updateMessage(data) {
+  try {
+    const message = await Message.findByIdAndUpdate(data._id, data)
+    return message
+  } catch {
+    // Handle the error appropriately
+    throw error
+  }
+}

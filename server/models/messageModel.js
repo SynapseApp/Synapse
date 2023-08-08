@@ -17,6 +17,12 @@ const messageSchema = new Schema({
     type: mongoose.Schema.Types.String,
     require: true,
   },
+  
+  // sending, sent, received, seen kinda thing
+  status: {
+    type: String,
+    require: true,
+  }
 });
 
 // Create and export the Message model based on the message schema

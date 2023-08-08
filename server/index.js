@@ -121,6 +121,12 @@ io.on('connection', (socket) => {
     io.to(socket.connection._id).emit('new_message', data);
   });
 
+  // Event listener for 'message_update_to_server' events from the client.
+  socket.on('message_update_to_server', async (data) => {
+    // Emit the 'message_update' event to all sockets in the same room.
+    io.to(socket.connection._id).emit('message_update', data);
+  });
+
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {
     // Log a message when a user disconnects.

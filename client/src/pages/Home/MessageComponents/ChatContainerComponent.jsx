@@ -20,9 +20,14 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
+    socket.on('message_update', (messages) => {
+      setMessages(messages)
+    })
+
     // Clean up by removing the 'new_message' event listener when the component unmounts
     return () => {
       socket.off('new_message');
+      socket.off('message_update')
     };
   }, [socket]);
 
@@ -56,6 +61,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
           sender: currentUser._id,
           receiver: selectedUser._id,
           messageContent: textInputValue,
+          status: "sending"
         }),
       });
       const data = await response.json();
@@ -88,11 +94,29 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
       // Determine the class for each message based on the sender
       const messageClassName = messages[i].sender === currentUser._id ? 'my-msg' : 'receiving-msg';
 
+      // changing msg status to seen
+      if (messageClassName === 'receiving-msg' && messages[i].status !== "seen") {
+        messages[i].status = "seen"
+        fetch('http://localhost:3000/message/',  {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: messages[i]
+          }),
+        }).then((res) => res.json()).then((body) => {
+          socket.emit("message_update_to_server", messages)
+        })
+      }
+
       // Create a message element with the message content
       const renderedMessage = (
         <div className={messageClassName} key={i}>
           <div className="msg-div">
             <p>{messages[i].messageContent}</p>
+            
+            {messageClassName == "my-msg" && <p className='text-[0.7rem]'>--{messages[i].status}</p>}
           </div>
         </div>
       );
