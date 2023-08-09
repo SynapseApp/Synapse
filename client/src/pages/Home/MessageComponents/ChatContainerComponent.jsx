@@ -17,6 +17,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
   // Attach 'new_message' event listener when the component mounts
   useEffect(() => {
     socket.on('new_message', (message) => {
+      console.log('message received');
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 

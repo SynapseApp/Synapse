@@ -31,6 +31,7 @@ const ChatMenu = ({ selectedUser }) => {
             <div className="user-info">
               <h6 className="user-username">{selectedUser === undefined ? 'undefined' : selectedUser.displayName}</h6>
               <p className="user-status">{selectedUser === undefined ? 'undefined' : selectedUser.id}</p>
+              <p>{selectedUser?.isOnline ? 'Online' : 'Offline'}</p>
             </div>
           </div>
           <div className="chat-right">

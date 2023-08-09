@@ -50,8 +50,6 @@ exports.findUser = async function findUser(reference) {
  * @throws {Error} - If failed to update user.
  */
 exports.updateUser = async function updateUser(_id, updateKeys) {
-  let user = await findUser({ _id });
-
   try {
     const updatedUser = await User.findByIdAndUpdate(_id, updateKeys, {
       new: true,
@@ -59,8 +57,7 @@ exports.updateUser = async function updateUser(_id, updateKeys) {
     if (!updatedUser) {
       throw new Error('User not found');
     }
-    user = updatedUser;
-    return user;
+    return updatedUser;
   } catch (error) {
     throw new Error('Failed to update user');
   }

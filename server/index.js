@@ -14,6 +14,8 @@ const authRoutes = require('./routes/authRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
 const googleRoutes = require('./routes/googleAuth.js');
 
+const { updateUser } = require('./controllers/userCRUD.js');
+
 // Connect to the MongoDB database
 connectDatabase();
 
@@ -94,35 +96,46 @@ app.use('/', googleRoutes);
 // Socket.IO middleware function for authentication and authorization.
 io.use((socket, next) => {
   // Extract authentication data from the handshake object sent by the client.
-  const { connection, clickedOnUser } = socket.handshake.auth;
+  const { selectedUser, user, selectedConnection } = socket.handshake.auth;
 
-  // Check if the 'clickedOnUser' flag exists in the authentication data.
-  if (!clickedOnUser) {
+  // Check if the 'selectedUser' flag exists in the authentication data.
+  if (!selectedUser) {
     // If the flag is missing, send an error to the client and abort the connection.
     return next(new Error('User Does Not Exist'));
   }
 
   // If the user is authenticated, attach the 'connection' data to the socket for later use.
-  socket.connection = connection;
+  socket.curUser = user;
+  socket.selectedConnection = selectedConnection;
   next();
 });
 
 // Event listener for a new socket connection.
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
+  console.log(socket.curUser);
+
+  const updatedUser = await updateUser(socket.curUser._id, { isOnline: true });
+  console.log(updatedUser);
 
   // Join a specific room based on the 'connection._id'.
-  socket.join(socket.connection._id);
+
+  socket.join(socket.selectedConnection?._id);
 
   // Event listener for 'private_message' events from the client.
   socket.on('private_message', async (data) => {
+    console.log('message sent');
     // Emit the 'new_message' event to all sockets in the same room.
-    io.to(socket.connection._id).emit('new_message', data);
+    io.to(socket.selectedConnection._id).emit('new_message', data);
+  });
+  socket.on('user_connected', async (data) => {
+    io.emit('user_connected');
   });
 
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {
+    updateUser(socket.curUser._id, { isOnline: false });
     // Log a message when a user disconnects.
     console.log('User has disconnected');
   });

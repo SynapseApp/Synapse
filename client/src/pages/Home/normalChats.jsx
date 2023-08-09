@@ -4,9 +4,11 @@ import UserContext from '../../Contexts/userContext';
 import PropTypes from 'prop-types';
 import socket from '../../socket';
 
-const NormalChats = ({ setSelectedUser }) => {
+const NormalChats = ({ setSelectedUser, selectedUser }) => {
   // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
+  const [selectedConnection, setSelectedConnection] = useState({});
+  // const [friendOnlineRerenderTriggeer, setFriendOnlineRerenderTriggeer] = useState(false);
 
   // Access the user data from the UserContext
   const user = useContext(UserContext);
@@ -51,14 +53,24 @@ const NormalChats = ({ setSelectedUser }) => {
     return text;
   }
 
+  useEffect(() => {
+    socket.connect();
+    socket.emit('user_connected');
+    // setFriendOnlineRerenderTriggeer(!friendOnlineRerenderTriggeer);
+    socket.auth = { selectedUser, user, selectedConnection };
+    // Remove the event listener on component unmount
+    return () => socket.disconnect();
+  });
+  // useEffect(() => {
+  //   socket.emit('user_connected');
+  //   // Remove the event listener on component unmount
+  //   return () => socket.off('user_connected');
+  // }, [friendOnlineRerenderTriggeer]);
+
   // Function to handle a click on a chat connection
   const handleClick = function ({ clickedOnUser, connection }) {
-    // Disconnect the socket before updating authentication data
-    socket.disconnect();
-    socket.auth = { connection, clickedOnUser };
-    // Reconnect the socket with updated authentication data
-    socket.connect();
     // Update the selected user in the parent component
+    setSelectedConnection(connection);
     setSelectedUser(clickedOnUser);
   };
 
@@ -108,7 +120,7 @@ const NormalChats = ({ setSelectedUser }) => {
           <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
           <div className="chat-text" onClick={removeHiddenChatMenu}>
             <p className="contact-name">{truncateText(tmpArr[i].displayName, 18)}</p>
-            <p>default text</p>
+            <p>{tmpArr[i].isOnline ? 'Online' : 'Offline'}</p>
           </div>
         </div>
       );
@@ -127,6 +139,7 @@ const NormalChats = ({ setSelectedUser }) => {
 // Define the PropTypes for the component
 NormalChats.propTypes = {
   setSelectedUser: PropTypes.func.isRequired,
+  selectedUser: PropTypes.object,
 };
 
 export default NormalChats;

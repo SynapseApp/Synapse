@@ -10,7 +10,8 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, // User's email field
   displayName: { type: String, sparse: true },
   googleId: { type: String, required: false, unique: true },
-  provider: { type: String, required: false }
+  provider: { type: String, required: false },
+  isOnline: { type: Boolean, required: true },
   // imageUrl: String, // Uncomment this line to include an imageUrl field
 });
 

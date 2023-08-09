@@ -17,7 +17,6 @@ messageRouter.post('/', async (req, res) => {
   // Endpoint to search for messages
 
   const messages = await addMessage(req.body);
-  console.log(messages);
   res.json(messages);
 });
 
