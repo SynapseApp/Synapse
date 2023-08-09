@@ -7,6 +7,7 @@ import UserContext from '../../../Contexts/userContext';
 const ChatContainerComponent = ({ selectedUser, socket }) => {
   // State to store the messages in the chat
   const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState("");
 
   // Get the current user data from the UserContext
   const currentUser = useContext(UserContext);
@@ -20,6 +21,17 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     // Clean up by removing the 'new_message' event listener when the component unmounts
     return () => {
       socket.off('new_message');
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("typing", (user) => {
+      setUser(user);
+      console.log(user);
+    });
+
+    return () => {
+      socket.off("typing");
     };
   }, [socket]);
 
@@ -43,7 +55,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
   const sendMessage = async (e) => {
     e.preventDefault();
     const message = document.getElementsByClassName("message-input")[0].value;
-    if ( message !== '' && selectedUser) {
+    if (message !== '' && selectedUser) {
       // Send the message to the server and update the messages state
       const response = await fetch('http://localhost:3000/message/', {
         method: 'POST',
@@ -103,9 +115,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
 
   const typingIndicator = function (e) {
     e.preventDefault();
-    console.log("it werks");
     socket.emit("typing", "hola");
-    console.log("it werked");
   }
 
   // Render the chat container with the messages and message input
@@ -113,6 +123,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     <div className="chat-container">
       <div className="chat-content">{printMessages()}</div>
       <form className="message-form" onSubmit={sendMessage}>
+        <h1>{user}</h1>
         <input className="message-input" onChange={typingIndicator} placeholder="Type a mesage..." />
         <div className="input-icons">
           <FontAwesomeIcon className="msg-icon" icon={faImage} />

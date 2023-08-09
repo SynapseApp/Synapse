@@ -122,7 +122,7 @@ io.on('connection', (socket) => {
   });
   
   socket.on('typing', () => {
-    io.to(socket.connection.userOne._id).emit(socket.connection.userOne.displayName);
+    io.to(socket.connection.userOne._id).emit("test", "funciona roberto");
   })
 
   // Event listener for 'disconnect' events from the client.
