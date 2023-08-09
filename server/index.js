@@ -121,8 +121,8 @@ io.on('connection', (socket) => {
     io.to(socket.connection._id).emit('new_message', data);
   });
   
-  socket.on('typing', async (data) => {
-    console.log("werked ig");
+  socket.on('typing', () => {
+    io.to(socket.connection.userOne._id).emit(socket.connection.userOne.displayName);
   })
 
   // Event listener for 'disconnect' events from the client.
