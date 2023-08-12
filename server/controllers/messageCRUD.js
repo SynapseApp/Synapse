@@ -40,3 +40,27 @@ exports.addMessage = async function findUserConnections(data) {
     throw error;
   }
 };
+
+exports.updateMessage = async function updateMessage(data) {
+  try {
+    // Find and Update the messages by ID in the DB
+    const updatedMessage = await Message.findByIdAndUpdate(data.Message._id, {updatedMessage: data.messageToUpdate});
+    return updatedMessage;
+  }
+
+  catch (error) {
+    // Handle the error appropriately
+    console.log(error)
+  }
+}
+
+exports.deleteMessage = async function deleteMessage(data) {
+  try {
+    const messageToDelete = await Message.findByIdAndDelete(data.Message._id)
+    console.log("Deleted Message", messageToDelete)
+  }
+  catch (error) {
+    // Handle the error appropriately
+    console.log(error)
+  }
+}
