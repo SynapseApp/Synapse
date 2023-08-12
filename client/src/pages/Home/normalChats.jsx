@@ -8,7 +8,6 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
   // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
   const [selectedConnection, setSelectedConnection] = useState({});
-  // const [friendOnlineRerenderTriggeer, setFriendOnlineRerenderTriggeer] = useState(false);
 
   // Access the user data from the UserContext
   const user = useContext(UserContext);
@@ -56,7 +55,6 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
   useEffect(() => {
     socket.connect();
     socket.emit('user_connected');
-    // setFriendOnlineRerenderTriggeer(!friendOnlineRerenderTriggeer);
     socket.auth = { selectedUser, user, selectedConnection };
     // Remove the event listener on component unmount
     return () => socket.disconnect();
