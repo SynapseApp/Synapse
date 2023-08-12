@@ -54,17 +54,10 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
 
   useEffect(() => {
     socket.connect();
-    socket.emit('user_connected');
     socket.auth = { selectedUser, user, selectedConnection };
     // Remove the event listener on component unmount
     return () => socket.disconnect();
   });
-  // useEffect(() => {
-  //   socket.emit('user_connected');
-  //   // Remove the event listener on component unmount
-  //   return () => socket.off('user_connected');
-  // }, [friendOnlineRerenderTriggeer]);
-
   // Function to handle a click on a chat connection
   const handleClick = function ({ clickedOnUser, connection }) {
     // Update the selected user in the parent component

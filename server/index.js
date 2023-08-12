@@ -114,10 +114,8 @@ io.use((socket, next) => {
 io.on('connection', async (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
-  console.log(socket.curUser);
 
-  const updatedUser = await updateUser(socket.curUser._id, { isOnline: true });
-  console.log(updatedUser);
+  await updateUser(socket.curUser._id, { isOnline: true });
 
   // Join a specific room based on the 'connection._id'.
 
@@ -128,9 +126,6 @@ io.on('connection', async (socket) => {
     console.log('message sent');
     // Emit the 'new_message' event to all sockets in the same room.
     io.to(socket.selectedConnection._id).emit('new_message', data);
-  });
-  socket.on('user_connected', async (data) => {
-    io.emit('user_connected');
   });
 
   // Event listener for 'disconnect' events from the client.
