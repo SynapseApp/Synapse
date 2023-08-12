@@ -43,7 +43,7 @@ const store = new MongoDBStore({
 });
 
 // Handle errors from the session store
-store.on(`error`, function (error) {});
+store.on(`error`, function (error) { });
 
 // Configure session middleware
 const sessionConfig = {
@@ -75,7 +75,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Endpoint to handle HTTP GET request to '/home'
-app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => {});
+app.get('http://localhost:8000/home', passport.authenticate('local'), (req, res) => { });
 
 // Route handlers for user-related functionality
 app.use('/user', userRoutes);
@@ -120,10 +120,12 @@ io.on('connection', (socket) => {
     // Emit the 'new_message' event to all sockets in the same room.
     io.to(socket.connection._id).emit('new_message', data);
   });
-  
-  socket.on('typing', () => {
-    io.to(socket.connection.userOne._id).emit("test", "funciona roberto");
-  })
+
+  // Event listener for typing indicator
+  socket.on('typing', async () => {
+    // emit typing event to users (this just for testing later i'll change to only other user)
+    io.to(socket.connection._id).emit('typing', "test");
+  });
 
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {

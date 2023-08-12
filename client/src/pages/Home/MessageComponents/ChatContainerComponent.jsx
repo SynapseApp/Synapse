@@ -24,16 +24,9 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     };
   }, [socket]);
 
-  useEffect(() => {
-    socket.on("typing", (user) => {
-      setUser(user);
-      console.log(user);
-    });
-
-    return () => {
-      socket.off("typing");
-    };
-  }, [socket]);
+  socket.on('typing', () => {
+    console.log("event works")
+  });
 
   // Connect or disconnect the socket based on selectedUser changes
   useEffect(() => {
@@ -115,7 +108,8 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
 
   const typingIndicator = function (e) {
     e.preventDefault();
-    socket.emit("typing", "hola");
+    socket.emit('typing', "dummy data");
+    console.log("emitted");
   }
 
   // Render the chat container with the messages and message input
