@@ -109,25 +109,36 @@ io.on('connection', async (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
 
-  await updateUser(socket.curUser._id, { isOnline: true });
+  await updateUser(socket.curUser._id, { isOnline: true, lastOnlineTimestamp: Date.now() });
 
   socket.broadcast.emit('user_status_changed', { userId: socket.curUser._id, isOnline: true });
+
+  // Function to leave the previous room and join a new one
+  const updateConnectionRoom = (newConnectionId) => {
+    const oldConnectionId = activeConnections[socket.id];
+    if (oldConnectionId !== newConnectionId) {
+      if (oldConnectionId) {
+        socket.leave(oldConnectionId);
+        // console.log(`Socket ${socket.id} left room ${oldConnectionId}`);
+      }
+      socket.join(newConnectionId);
+      activeConnections[socket.id] = newConnectionId;
+      // console.log(`Socket ${socket.id} joined room ${newConnectionId}`);
+    }
+  };
 
   // Join a specific room based on the 'connection._id'.
 
   socket.on('connection_selected', (data) => {
-    activeConnections[socket.id] = data.connection._id;
-    socket.join(data.connection._id);
+    updateConnectionRoom(data.connection._id); // Join the new room
   });
 
+  // Event listener for 'private_message' events from the client.
   socket.on('private_message', async ({ data, selectedConnection }) => {
     console.log('message sent');
     // Emit the 'new_message' event to all sockets in the same room.
     io.to(selectedConnection._id).emit('new_message', data);
   });
-
-  // Event listener for 'private_message' events from the client.
-
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {
     const connectionId = activeConnections[socket.id];
@@ -137,7 +148,7 @@ io.on('connection', async (socket) => {
         delete activeConnections[socket.id];
       }
     }
-    updateUser(socket.curUser._id, { isOnline: false });
+    updateUser(socket.curUser._id, { isOnline: false, lastOnlineTimestamp: Date.now() });
     socket.broadcast.emit('user_status_changed', { userId: socket.curUser._id, isOnline: false });
     // Log a message when a user disconnects.
     console.log('User has disconnected');

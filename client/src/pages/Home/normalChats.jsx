@@ -63,7 +63,6 @@ const NormalChats = ({ setSelectedUser, setSelectedConnection }) => {
   const handleClick = function ({ clickedOnUser, connection }) {
     // Update the selected user in the parent component
     setSelectedConnection(connection);
-    console.log(connection);
     socket.emit('connection_selected', { connection });
     setSelectedUser(clickedOnUser);
   };
