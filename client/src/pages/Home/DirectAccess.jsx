@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import IsSearchingContext from '../../Contexts/IsSearchingContext';
 import PropTypes from 'prop-types';
 
-const DirectAccess = ({ setSelectedUser, selectedUser }) => {
+const DirectAccess = ({ setSelectedUser, selectedUser, setSelectedConnection }) => {
   const [placeholderValue, setPlaceholderValue] = useState('Search Here');
   const [inputValue, setInputValue] = useState('');
   const [searchKey, setSearchKey] = useState(0); // Key to force remount of SearchedProfile component
@@ -45,7 +45,7 @@ const DirectAccess = ({ setSelectedUser, selectedUser }) => {
           placeholder={placeholderValue}
         />
       </form>
-      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats setSelectedUser={setSelectedUser} selectedUser={selectedUser} />}
+      {isSearching ? <SearchedProfile searchTerm={inputValue} key={searchKey} /> : <NormalChats setSelectedUser={setSelectedUser} selectedUser={selectedUser} setSelectedConnection={setSelectedConnection} />}
     </div>
   );
 };
@@ -53,6 +53,7 @@ const DirectAccess = ({ setSelectedUser, selectedUser }) => {
 DirectAccess.propTypes = {
   setSelectedUser: PropTypes.func.isRequired,
   selectedUser: PropTypes.object,
+  setSelectedConnection: PropTypes.func,
 };
 
 export default DirectAccess;

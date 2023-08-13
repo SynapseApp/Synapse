@@ -4,10 +4,9 @@ import UserContext from '../../Contexts/userContext';
 import PropTypes from 'prop-types';
 import socket from '../../socket';
 
-const NormalChats = ({ setSelectedUser, selectedUser }) => {
+const NormalChats = ({ setSelectedUser, setSelectedConnection }) => {
   // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
-  const [selectedConnection, setSelectedConnection] = useState({});
 
   // Access the user data from the UserContext
   const user = useContext(UserContext);
@@ -27,6 +26,15 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
 
     // Remove the event listener on component unmount
     return () => socket.off('connect_error');
+  }, []);
+
+  useEffect(() => {
+    socket.on('user_status_changed', ({ userId, isOnline }) => {
+      // Update the user status in your connectionsArr state
+      setConnectionsArr((prevConnectionsArr) => prevConnectionsArr.map((connection) => (connection.userOne._id === userId || connection.userTwo._id === userId ? { ...connection, userOne: { ...connection.userOne, isOnline }, userTwo: { ...connection.userTwo, isOnline } } : connection)));
+    });
+    // Remove the event listener on component unmount
+    return () => socket.off('user_status_changed');
   }, []);
 
   // Function to fetch the user's chat connections from the server
@@ -51,17 +59,12 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
     }
     return text;
   }
-
-  useEffect(() => {
-    socket.connect();
-    socket.auth = { selectedUser, user, selectedConnection };
-    // Remove the event listener on component unmount
-    return () => socket.disconnect();
-  });
   // Function to handle a click on a chat connection
   const handleClick = function ({ clickedOnUser, connection }) {
     // Update the selected user in the parent component
     setSelectedConnection(connection);
+    console.log(connection);
+    socket.emit('connection_selected', { connection });
     setSelectedUser(clickedOnUser);
   };
 
@@ -131,6 +134,7 @@ const NormalChats = ({ setSelectedUser, selectedUser }) => {
 NormalChats.propTypes = {
   setSelectedUser: PropTypes.func.isRequired,
   selectedUser: PropTypes.object,
+  setSelectedConnection: PropTypes.func,
 };
 
 export default NormalChats;

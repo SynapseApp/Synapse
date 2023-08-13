@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../Contexts/userContext';
 
-const ChatContainerComponent = ({ selectedUser, socket }) => {
+const ChatContainerComponent = ({ selectedUser, socket, selectedConnection }) => {
   // State to store the messages in the chat
   const [messages, setMessages] = useState([]);
 
@@ -27,21 +27,10 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
     };
   }, [socket]);
 
-  // Connect or disconnect the socket based on selectedUser changes
-  useEffect(() => {
-    // Connect the socket if not already connected
-    socket.connect();
-
-    // Disconnect the socket when the component unmounts
-    return () => {
-      socket.disconnect();
-    };
-  }, [socket]);
-
   // Fetch messages when the selected user changes or the socket changes
   useEffect(() => {
     searchMessages();
-  }, [socket, selectedUser]);
+  }, [socket, selectedUser, selectedConnection]);
 
   // Function to send a message
   const sendMessage = async (e) => {
@@ -60,7 +49,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
         }),
       });
       const data = await response.json();
-      socket.emit('private_message', data);
+      socket.emit('private_message', { data, selectedConnection });
       setTextInputValue('');
     }
   };
@@ -126,6 +115,7 @@ const ChatContainerComponent = ({ selectedUser, socket }) => {
 ChatContainerComponent.propTypes = {
   socket: PropTypes.object.isRequired,
   selectedUser: PropTypes.object.isRequired,
+  selectedConnection: PropTypes.object,
 };
 
 export default ChatContainerComponent;

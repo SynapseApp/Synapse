@@ -6,8 +6,9 @@ import ChatContainerComponent from './ChatContainerComponent';
 import ChatInfoButtons from './ChatInfoButtons';
 import PropTypes from 'prop-types';
 import socket from '../../../socket';
+import { useEffect } from 'react';
 
-const ChatMenu = ({ selectedUser }) => {
+const ChatMenu = ({ selectedUser, setSelectedUser, selectedConnection }) => {
   function removeHiddenClass() {
     const element = document.querySelector('.chat-info');
     if (element) {
@@ -22,6 +23,17 @@ const ChatMenu = ({ selectedUser }) => {
       document.querySelector('.chat-menu').style.width = '100%';
     }
   }
+  useEffect(() => {
+    socket.on('user_status_changed', ({ isOnline }) => {
+      setSelectedUser((prevUser) => ({
+        ...prevUser, // Copy all existing properties
+        isOnline: isOnline, // Update isOnline property
+      }));
+      // Update the user status in your connectionsArr state
+    });
+    // Remove the event listener on component unmount
+    return () => socket.off('user_status_changed');
+  }, []);
   return (
     <>
       <div className="chat-menu">
@@ -41,7 +53,7 @@ const ChatMenu = ({ selectedUser }) => {
           </div>
         </div>
         <div className="component-div">
-          <ChatContainerComponent selectedUser={selectedUser} socket={socket} />
+          <ChatContainerComponent selectedUser={selectedUser} socket={socket} selectedConnection={selectedConnection} />
         </div>
       </div>
       <div className="chat-info hidden">
@@ -56,6 +68,8 @@ const ChatMenu = ({ selectedUser }) => {
 
 ChatMenu.propTypes = {
   selectedUser: PropTypes.object,
+  setSelectedUser: PropTypes.func,
+  selectedConnection: PropTypes.object,
 };
 
 export default ChatMenu;
