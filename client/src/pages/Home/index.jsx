@@ -1,7 +1,7 @@
-import LeftBar from './LeftBar';
-import '../pages-styles.scss';
-import MessageMenu from './MessageMenu';
-import { IsSearchingProvider } from '../../Contexts/IsSearchingContext';
+import LeftBar from "./LeftBar";
+import "./home.scss";
+import MessageMenu from "./MessageMenu";
+import { IsSearchingProvider } from "../../Contexts/IsSearchingContext";
 
 const index = () => {
   return (

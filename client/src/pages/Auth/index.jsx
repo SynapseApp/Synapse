@@ -1,4 +1,4 @@
-import "../pages-styles.scss";
+import "./auth.scss";
 import Auth from "./Auth";
 
 export default function AuthPage({ setAuthenticated }) {
