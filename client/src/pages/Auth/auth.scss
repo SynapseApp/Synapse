@@ -1,0 +1,61 @@
+@import "../../index.scss";
+
+#Auth-Page {
+  @apply w-screen h-screen text-center p-5
+        flex flex-col justify-between items-center;
+
+  > main {
+    #Auth {
+      @apply w-screen;
+      .row {
+        @apply w-full flex justify-between p-10;
+
+        .Local-Auths,
+        .Provided-Auths {
+          @apply flex flex-col w-[600px] gap-5 justify-center items-center p-10
+            text-xl;
+
+          button {
+            @apply w-full flex gap-5 justify-center;
+          }
+        }
+      }
+    }
+
+    #Auth-Local {
+      #Local-Backward {
+        @apply absolute  hover:scale-90;
+      }
+
+      #Local {
+        @apply w-[400px]
+          flex flex-col justify-center items-center gap-5;
+
+        > #Submit-Button {
+          @apply flex justify-between text-xl;
+
+          > svg > path {
+            fill: black;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #Login-Page {
+    > header > h3 {
+      @apply text-3xl;
+    }
+
+    #Auth-Local {
+      @apply p-5 justify-center;
+      width: 100vw !important;
+
+      #Local-Backward {
+        left: 5vw;
+      }
+    }
+  }
+}
