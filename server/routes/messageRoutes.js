@@ -1,5 +1,5 @@
 const express = require('express');
-const { findUserMessages, addMessage } = require('../controllers/messageCRUD');
+const { findUserMessages, addMessage, deleteMessage, updateMessage } = require('../controllers/messageCRUD');
 
 // Create a new Router instance
 const messageRouter = express.Router();
@@ -20,5 +20,22 @@ messageRouter.post('/', async (req, res) => {
   console.log(messages);
   res.json(messages);
 });
+
+messageRouter.post("/updateMessage", async (req, res) => {
+  // The Body should specify a property named .Message that contains the ID of the message to be Updated
+  const updatedMessage = await updateMessage(req.body);
+  
+  console.log("Updated: ", updatedMessage);
+  res.json(updatedMessage)  
+})
+
+messageRouter.post("/deleteMessage", async (req, res) => {
+  // The Body should specify a property named .Message that contains the ID of the message to be Deleted
+  const messageToDelete = await deleteMessage(req.body)
+  
+  console.log("Deleted Message: ", messageToDelete);
+  res.json(messageToDelete)  
+})
+
 
 module.exports = messageRouter;
