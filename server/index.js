@@ -14,6 +14,8 @@ const authRoutes = require('./routes/authRoutes.js');
 const messageRoutes = require('./routes/messageRoutes.js');
 const googleRoutes = require('./routes/googleAuth.js');
 
+const { updateUser } = require('./controllers/userCRUD.js');
+
 // Connect to the MongoDB database
 connectDatabase();
 
@@ -94,35 +96,62 @@ app.use('/', googleRoutes);
 // Socket.IO middleware function for authentication and authorization.
 io.use((socket, next) => {
   // Extract authentication data from the handshake object sent by the client.
-  const { connection, clickedOnUser } = socket.handshake.auth;
-
-  // Check if the 'clickedOnUser' flag exists in the authentication data.
-  if (!clickedOnUser) {
-    // If the flag is missing, send an error to the client and abort the connection.
-    return next(new Error('User Does Not Exist'));
-  }
+  const { user } = socket.handshake.auth;
 
   // If the user is authenticated, attach the 'connection' data to the socket for later use.
-  socket.connection = connection;
+  socket.curUser = user;
   next();
 });
 
+const activeConnections = {};
 // Event listener for a new socket connection.
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
 
-  // Join a specific room based on the 'connection._id'.
-  socket.join(socket.connection._id);
+  await updateUser(socket.curUser._id, { isOnline: true });
 
-  // Event listener for 'private_message' events from the client.
-  socket.on('private_message', async (data) => {
-    // Emit the 'new_message' event to all sockets in the same room.
-    io.to(socket.connection._id).emit('new_message', data);
+  socket.broadcast.emit('user_status_changed_chat_menu', { userId: socket.curUser._id, isOnline: true });
+  socket.broadcast.emit('user_status_changed_normal_chats', { userId: socket.curUser._id, isOnline: true });
+
+  // Function to leave the previous room and join a new one
+  const updateConnectionRoom = (newConnectionId) => {
+    const oldConnectionId = activeConnections[socket.id];
+    if (oldConnectionId !== newConnectionId) {
+      if (oldConnectionId) {
+        socket.leave(oldConnectionId);
+        // console.log(`Socket ${socket.id} left room ${oldConnectionId}`);
+      }
+      socket.join(newConnectionId);
+      activeConnections[socket.id] = newConnectionId;
+      // console.log(`Socket ${socket.id} joined room ${newConnectionId}`);
+    }
+  };
+
+  // Join a specific room based on the 'connection._id'.
+
+  socket.on('connection_selected', (data) => {
+    updateConnectionRoom(data.connection._id); // Join the new room
   });
 
+  // Event listener for 'private_message' events from the client.
+  socket.on('private_message', async ({ data, selectedConnection }) => {
+    console.log('message sent');
+    // Emit the 'new_message' event to all sockets in the same room.
+    io.to(selectedConnection._id).emit('new_message', data);
+  });
   // Event listener for 'disconnect' events from the client.
   socket.on('disconnect', () => {
+    const connectionId = activeConnections[socket.id];
+    if (connectionId) {
+      if (connectionId) {
+        socket.leave(connectionId);
+        delete activeConnections[socket.id];
+      }
+    }
+    updateUser(socket.curUser._id, { isOnline: false });
+    socket.broadcast.emit('user_status_changed_chat_menu', { userId: socket.curUser._id, isOnline: false });
+    socket.broadcast.emit('user_status_changed_normal_chats', { userId: socket.curUser._id, isOnline: false });
     // Log a message when a user disconnects.
     console.log('User has disconnected');
   });

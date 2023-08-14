@@ -4,7 +4,7 @@ import UserContext from '../../Contexts/userContext';
 import PropTypes from 'prop-types';
 import socket from '../../socket';
 
-const NormalChats = ({ setSelectedUser }) => {
+const NormalChats = ({ setSelectedUser, setSelectedConnection }) => {
   // State to store the chat connections
   const [connectionsArr, setConnectionsArr] = useState([]);
 
@@ -26,6 +26,15 @@ const NormalChats = ({ setSelectedUser }) => {
 
     // Remove the event listener on component unmount
     return () => socket.off('connect_error');
+  }, []);
+
+  useEffect(() => {
+    socket.on('user_status_changed_normal_chats', ({ userId, isOnline }) => {
+      // Update the user status in your connectionsArr state
+      setConnectionsArr((prevConnectionsArr) => prevConnectionsArr.map((connection) => (connection.userOne._id === userId || connection.userTwo._id === userId ? { ...connection, userOne: { ...connection.userOne, isOnline }, userTwo: { ...connection.userTwo, isOnline } } : connection)));
+    });
+    // Remove the event listener on component unmount
+    return () => socket.off('user_status_changed_normal_chats');
   }, []);
 
   // Function to fetch the user's chat connections from the server
@@ -50,15 +59,11 @@ const NormalChats = ({ setSelectedUser }) => {
     }
     return text;
   }
-
   // Function to handle a click on a chat connection
   const handleClick = function ({ clickedOnUser, connection }) {
-    // Disconnect the socket before updating authentication data
-    socket.disconnect();
-    socket.auth = { connection, clickedOnUser };
-    // Reconnect the socket with updated authentication data
-    socket.connect();
     // Update the selected user in the parent component
+    setSelectedConnection(connection);
+    socket.emit('connection_selected', { connection });
     setSelectedUser(clickedOnUser);
   };
 
@@ -105,10 +110,14 @@ const NormalChats = ({ setSelectedUser }) => {
           }}
           key={i}
         >
-          <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
+          <div className="image_container">
+            <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
+            <div id={tmpArr[i].isOnline ? 'status_online' : `status_offline`}></div>
+          </div>
+
           <div className="chat-text" onClick={removeHiddenChatMenu}>
             <p className="contact-name">{truncateText(tmpArr[i].displayName, 18)}</p>
-            <p>default text</p>
+            <p>Default Placeholder</p>
           </div>
         </div>
       );
@@ -127,6 +136,8 @@ const NormalChats = ({ setSelectedUser }) => {
 // Define the PropTypes for the component
 NormalChats.propTypes = {
   setSelectedUser: PropTypes.func.isRequired,
+  selectedUser: PropTypes.object,
+  setSelectedConnection: PropTypes.func,
 };
 
 export default NormalChats;

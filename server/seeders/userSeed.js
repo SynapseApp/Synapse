@@ -37,6 +37,7 @@ async function seed() {
         username,
         email,
         displayName,
+        isOnline: false,
       };
 
       users.push(newUser);

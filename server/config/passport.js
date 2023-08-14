@@ -27,6 +27,7 @@ passport.use(
           displayName: profile.displayName,
           googleId: profile.id,
           provider: issuer,
+          isOnline: false,
         });
         userCreate.save();
 

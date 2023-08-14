@@ -96,9 +96,38 @@
 
       .chat {
         @apply flex p-3 gap-3 border-y-2 border-slate-300 max-h-[5rem] items-center;
-      
+
         img {
           @apply w-[3rem] h-[3rem] rounded-full;
+        }
+
+        .image_container {
+          position: relative;
+        }
+        .user-picture {
+          @apply w-[2.25rem] h-[2.25rem] rounded-full;
+        }
+        #status_offline {
+          position: absolute;
+          top: 2.1rem;
+          left: 2rem;
+          background-color: #828282;
+          height: 0.8rem;
+          width: 0.8rem;
+          border-radius: 50%;
+          // border-color: #000;
+          // border-width: 0.15rem;
+        }
+        #status_online {
+          position: absolute;
+          top: 2.1rem;
+          left: 2rem;
+          background-color: #5dfcc3;
+          height: 0.8rem;
+          width: 0.8rem;
+          border-radius: 50%;
+          // border-color: #000;
+          // border-width: 0.15rem;
         }
         .contact-name {
           @apply text-base font-semibold;
@@ -115,9 +144,35 @@
         .chat-left {
           @apply w-[50%] h-[100%] flex items-center px-5;
 
+          .image_container {
+            position: relative;
+          }
           .user-picture {
             @apply w-[2.25rem] h-[2.25rem] rounded-full;
           }
+          #status_offline {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background-color: #828282;
+            height: 0.7rem;
+            width: 0.7rem;
+            border-radius: 50%;
+            // border-color: #000;
+            // border-width: 0.15rem;
+          }
+          #status_online {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background-color: #5dfcc3;
+            height: 0.7rem;
+            width: 0.7rem;
+            border-radius: 50%;
+            // border-color: #000;
+            // border-width: 0.15rem;
+          }
+
           .user-info {
             @apply px-3;
 
