@@ -109,9 +109,10 @@ io.on('connection', async (socket) => {
   // Log the ID of the connected socket.
   console.log(socket.id);
 
-  await updateUser(socket.curUser._id, { isOnline: true, lastOnlineTimestamp: Date.now() });
+  await updateUser(socket.curUser._id, { isOnline: true });
 
-  socket.broadcast.emit('user_status_changed', { userId: socket.curUser._id, isOnline: true });
+  socket.broadcast.emit('user_status_changed_chat_menu', { userId: socket.curUser._id, isOnline: true });
+  socket.broadcast.emit('user_status_changed_normal_chats', { userId: socket.curUser._id, isOnline: true });
 
   // Function to leave the previous room and join a new one
   const updateConnectionRoom = (newConnectionId) => {
@@ -148,8 +149,9 @@ io.on('connection', async (socket) => {
         delete activeConnections[socket.id];
       }
     }
-    updateUser(socket.curUser._id, { isOnline: false, lastOnlineTimestamp: Date.now() });
-    socket.broadcast.emit('user_status_changed', { userId: socket.curUser._id, isOnline: false });
+    updateUser(socket.curUser._id, { isOnline: false });
+    socket.broadcast.emit('user_status_changed_chat_menu', { userId: socket.curUser._id, isOnline: false });
+    socket.broadcast.emit('user_status_changed_normal_chats', { userId: socket.curUser._id, isOnline: false });
     // Log a message when a user disconnects.
     console.log('User has disconnected');
   });

@@ -12,7 +12,6 @@ const userSchema = new Schema({
   googleId: { type: String, required: false, unique: true },
   provider: { type: String, required: false },
   isOnline: { type: Boolean, required: true },
-  lastOnlineTimestamp: { type: Date },
   // imageUrl: String, // Uncomment this line to include an imageUrl field
 });
 

@@ -29,12 +29,12 @@ const NormalChats = ({ setSelectedUser, setSelectedConnection }) => {
   }, []);
 
   useEffect(() => {
-    socket.on('user_status_changed', ({ userId, isOnline }) => {
+    socket.on('user_status_changed_normal_chats', ({ userId, isOnline }) => {
       // Update the user status in your connectionsArr state
       setConnectionsArr((prevConnectionsArr) => prevConnectionsArr.map((connection) => (connection.userOne._id === userId || connection.userTwo._id === userId ? { ...connection, userOne: { ...connection.userOne, isOnline }, userTwo: { ...connection.userTwo, isOnline } } : connection)));
     });
     // Remove the event listener on component unmount
-    return () => socket.off('user_status_changed');
+    return () => socket.off('user_status_changed_normal_chats');
   }, []);
 
   // Function to fetch the user's chat connections from the server
@@ -110,10 +110,14 @@ const NormalChats = ({ setSelectedUser, setSelectedConnection }) => {
           }}
           key={i}
         >
-          <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
+          <div className="image_container">
+            <img src="https://media.discordapp.net/attachments/1111323966691352629/1133682113699381288/20230726_141636.jpg?width=295&height=623" alt="Profile" />
+            <div id={tmpArr[i].isOnline ? 'status_online' : `status_offline`}></div>
+          </div>
+
           <div className="chat-text" onClick={removeHiddenChatMenu}>
             <p className="contact-name">{truncateText(tmpArr[i].displayName, 18)}</p>
-            <p>{tmpArr[i].isOnline ? 'Online' : 'Offline'}</p>
+            <p>Default Placeholder</p>
           </div>
         </div>
       );
